@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Frames by Stuti
 
-## Getting Started
+The website for Frames by Stuti, built with Next.js 16, TypeScript and Tailwind CSS 4.
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run typecheck
+npm run lint
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Before launch
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Replace the photographs
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Photos are replaced from the visual editor, with no code changes or redeploys. See [Editing photos](#editing-photos) below. The files in `public/images/` are placeholders, shown for any spot that has nothing published yet. They're listed in `lib/images.ts`.
 
-## Learn More
+`npm run placeholders` only creates missing placeholder files and won't overwrite existing ones. Passing `--force` will.
 
-To learn more about Next.js, take a look at the following resources:
+### Replace the placeholder text
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Text is edited from the visual editor too. See [Editing text](#editing-text) below. The wording in the code is the original, shown for any text that has nothing published yet.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The original wording lives in `content/site.ts` and `content/texts.ts`: location, service area, email, phone, biography, facts, testimonials, session types, packages, prices and FAQs. Look for `[square brackets]`, `$000` and `hello@example.com`.
 
-## Deploy on Vercel
+A few sections have placeholder copy directly in the page files. Search `app/(site)/` for `[Placeholder.]` to find them.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Social icons stay hidden until a URL is set, either in the editor (**Text on this page**, then Contact details) or in `social` in `content/site.ts`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Connect the contact form
+
+The form validates in the browser and again on the server, then sends the inquiry as JSON to the URL in the `CONTACT_WEBHOOK_URL` environment variable. This can be any service that accepts a webhook, such as a form backend, an automation tool or a CRM.
+
+```bash
+CONTACT_WEBHOOK_URL=https://your-service.example/webhook
+```
+
+Until this is set, valid inquiries are **not delivered**. The visitor sees a message asking them to email you instead, so make sure `site.email` is correct.
+
+## Editing photos
+
+### For Stuti: replace a photo from your phone
+
+1. Open **yoursite.com/admin/login** on your phone and log in with your email address and password.
+2. Tap **Edit website, starting at Home**. You'll see your real website with a **Replace photo** button on every photo, and a toolbar at the bottom of the screen.
+3. Scroll to the photo you want to change and tap **Replace photo**. A panel slides up from the bottom.
+4. Tap **Upload photo** and pick a photo from your gallery, or tap **Media library** to reuse one you've uploaded before. Big camera files and iPhone HEIC photos are fine. They're resized for the web automatically, and the original on your phone isn't changed.
+5. Tap or drag on the photo to choose the part that must stay in view. Use **Zoom** if you want a tighter crop. **How it will look** shows the exact shape the page uses.
+6. Write a short **description** of the photo, for example "A couple laughing in a wheat field at sunset". Screen readers read it aloud.
+7. Tap **Done**. The page now shows your new photo, but only to you.
+8. To change photos on other pages, use the page menu in the toolbar. Your changes are kept as you move between pages.
+9. Tap **Save draft** to keep your changes without making them live, or **Publish**, then **Publish now**, to put them on the live website. A message confirms when it worked.
+
+Other things you can do:
+
+- **Preview** in the toolbar hides the editing buttons so you see the page as visitors will after publishing.
+- **More > Photos on this page** lists every photo on the page, including ones hidden at your screen size.
+- **More > Cancel unsaved changes** throws away changes you haven't saved.
+- In a photo's panel: **Restore the previously published photo** brings back the last live photo as a draft (then press Publish), **Discard saved draft** drops a draft you don't want, and **Go back to the original placeholder** does what it says.
+- The header and footer logos can be replaced too. Use a PNG or WebP with a transparent background.
+- **More > Exit editor** returns to the dashboard. The live site never shows editing buttons to visitors.
+
+## Editing text
+
+Every word on the website can be edited from the same visual editor, on the real pages.
+
+1. Log in at `/admin` and open **Edit website**.
+2. Hover over any text (or tap it on a phone). It outlines in blue; click it to open the text panel. Buttons and links inside text can be edited without following them.
+3. Type the new wording. The page updates as you type, in exactly the same font, size, colour and animation. Only the words change.
+4. **Save draft** keeps it private; **Cancel** throws the change away. **Use original wording** goes back to what the site shipped with.
+5. **Publish** (in the bottom bar) shows a list of every photo and text change and makes them live together.
+
+Some text has nothing to tap, such as form placeholders, the answers inside closed FAQs and package details. Open **More > Text on this page**, search, and pick it from the list. Social links and the email address are edited the same way (Contact details). A social link that is emptied is hidden.
+
+How it works: `content/texts.ts` lists every editable text with its original wording and a key such as `home.tagline`. Pages render `<T id="home.tagline" />` (`components/editable-text.tsx`), which keeps the element and classes the page gives it. Edits live in one table, `site_texts`, one row per key. Visitors read only published text through `get_published_texts()`, cached with the pages like photos. To make another piece of text editable, add it to `content/texts.ts` and use `<T>` where it appears.
+
+### How it works
+
+- **Login** is Supabase Auth with email and password. Only accounts listed in the `admin_users` table can edit. Every admin page and every Server Action re-checks the session and the allowlist on the server.
+- **Edit mode** uses Next.js Draft Mode, which is only switched on after that check. The editor's code is only downloaded in edit mode, so public visitors get the same static pages as before.
+- **Photos** upload straight from the browser to the Supabase Storage bucket `site-photos`, each into its own new folder, so nothing is ever overwritten. Storage policies only allow admins to upload, and nobody can overwrite or delete files through the API.
+- **Drafts and published versions** are rows in `image_versions`. Every save creates a new version, and `image_slots` points each spot at its current draft and published version. Publishing moves all drafts live in one database transaction.
+- **The public site** reads only published photos through the `get_published_images()` database function. Results are cached with the prerendered pages, and publishing expires that cache, so changes appear on the next visit without a redeploy.
+- Each spot has a permanent id, such as `home-oval` or `gallery-07`, listed in `lib/images.ts`. Two more, `logo-wordmark` and `logo-badge`, are the logos.
+
+### Set up Supabase
+
+1. Create a Supabase project, or use the existing one.
+2. Run `supabase/migrations/20261103000000_site_images.sql` and then `supabase/migrations/20261104000000_site_texts.sql` in the SQL editor, or with `supabase db push`.
+3. Under **Authentication > Sign In / Providers**, turn off **Allow new users to sign up**.
+4. Under **Authentication > Users**, choose **Add user** and create Stuti's account with her email address and a strong password.
+5. Put her email address into `supabase/add-admin.sql` and run it in the SQL editor.
+6. Copy `.env.example` to `.env.local` and fill in the project URL and publishable key from **Project Settings > API Keys**. Add the same two variables to your hosting provider, then redeploy once.
+
+No secret or service-role key is needed. The publishable key is safe in the browser because every write is checked by Row Level Security.
+
+## Project layout
+
+| Path | Purpose |
+| --- | --- |
+| `app/(site)/` | Pages: home, about, portfolio, services, contact |
+| `app/admin/` | Login, dashboard, media library and the editor's Server Actions |
+| `components/editor/` | The visual editor: toolbar, photo panel, crop tool, media library, uploads |
+| `components/editable-image.tsx` | Every photo on the site, with its Replace button for admins |
+| `lib/auth.ts` | Admin session checks |
+| `lib/site-images.ts` | Cached loading of published photos |
+| `proxy.ts` | Session refresh and login redirect for `/admin` |
+| `supabase/` | Database migration and admin allowlist script |
+| `components/` | Header and menu, footer, gallery, FAQ, packages, form, line art |
+| `content/site.ts` | Editable business details and copy |
+| `lib/images.ts` | Image slot registry and placeholders |
+| `lib/inquiry.ts` | Contact form validation |
+| `scripts/generate-placeholders.mjs` | Generates the placeholder images |
