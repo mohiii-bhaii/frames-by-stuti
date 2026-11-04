@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ApertureBloom } from "@/components/line-art";
 import { T } from "@/components/editable-text";
 import { Photo } from "@/components/photo";
@@ -51,14 +50,6 @@ export default function PortfolioPage() {
         <PortfolioGallery items={gallery} />
       </section>
 
-      {/* Call to action */}
-      <section className="paper bg-espresso px-6 py-16 text-center text-cream lg:py-24">
-        <T as="p" id="portfolio.cta.line1" className="display text-[30px] lg:text-[45px]" />
-        <T as="h2" id="portfolio.cta.line2" className="script mt-1 text-[42px] lg:text-[69px]" />
-        <Link href="/contact" className="btn mt-8">
-          <T id="portfolio.cta.button" />
-        </Link>
-      </section>
       <ScrollMotion />
     </>
   );

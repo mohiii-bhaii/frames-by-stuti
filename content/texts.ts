@@ -78,9 +78,6 @@ Object.assign(texts, {
   "portfolio.intro":
     "[Placeholder.] Introduce your portfolio here. Choose a session type, then select any photograph to see it larger.",
   "portfolio.filterAll": "All",
-  "portfolio.cta.line1": "See something you love?",
-  "portfolio.cta.line2": "let's make yours.",
-  "portfolio.cta.button": "Say hello",
 
   // Services
   "services.title": "it's all about the experience",
