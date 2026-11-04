@@ -70,8 +70,8 @@ export const testimonials = [
 ];
 
 export const about = {
-  greeting: "hello there!",
-  intro: "i'm stuti",
+  greeting: "Hello there!",
+  intro: "I'm Stuti",
   homeIntro: [
     "[Biography placeholder.] This is where I introduce myself: who I am, where I'm based and how I found my way to photography.",
     "Tell visitors what a session with you is really like and what you hope they feel when they see their photographs. Keep it warm, personal and in your own words.",

@@ -64,6 +64,9 @@ export const imageSlots = {
   "about-hero": { ...LANDSCAPE, scene: "window", alt: "Placeholder: Stuti at home" },
   "about-family": { ...PORTRAIT, scene: "field", alt: "Placeholder: Stuti outdoors" },
   "about-work": { ...PORTRAIT, scene: "field", alt: "Placeholder: Stuti working with clients" },
+  "about-moment-1": { ...PORTRAIT, scene: "studio", alt: "Placeholder: a personal photograph of Stuti" },
+  "about-moment-2": { ...SQUARE, scene: "soft", alt: "Placeholder: a second personal photograph" },
+  "about-moment-3": { ...PORTRAIT, scene: "window", alt: "Placeholder: a third personal photograph" },
   "about-banner": { ...LANDSCAPE, scene: "soft", alt: "" },
   "about-cta": { ...SQUARE, scene: "field", alt: "Placeholder: outdoor session" },
 

@@ -66,54 +66,61 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* About intro */}
+      {/* Meet your photographer */}
       <section className="paper overflow-x-clip">
-        <div className="mx-auto grid max-w-[1200px] items-start gap-y-8 px-6 pb-12 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-x-0 lg:px-0 lg:pb-[66px] lg:pt-[70px]">
-        <div className="relative order-2 mx-auto w-full max-w-[480px] pb-10 lg:order-none lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:ml-[70px] lg:pb-[108px]">
-          <ApertureBloom data-speed="-0.2" className="absolute -right-[44%] top-[11%] hidden w-[80%] text-walnut/15 md:block" />
-          <div data-reveal="left" className="rounded-[89px] border border-terracotta p-[3px] lg:p-0">
-            <Photo
-              slot="home-portrait"
-              parallax={0.06}
-              className="aspect-[480/659] w-full rounded-[87px]"
-              sizes="(min-width: 64rem) 480px, 80vw"
-            />
-          </div>
-          <div data-speed="0.18" className="absolute -right-[6%] bottom-0 w-[50%] md:-right-[14%]">
-            <Photo
-              slot="home-detail"
-              reveal="mask"
-              className="aspect-[238/311] w-full border-[5px] border-tan"
-              sizes="(min-width: 64rem) 248px, 40vw"
-            />
-          </div>
-          <Sparkle data-speed="0.3" className="absolute bottom-[10%] left-[8%] w-8" />
-          <Sparkle data-speed="0.45" className="absolute bottom-[1%] left-[26%] w-5" />
-          <Sparkle className="absolute -bottom-3 left-[47%] w-4" />
-        </div>
-
-        <div className="order-1 flex flex-wrap items-baseline justify-center gap-x-3 text-center lg:order-none lg:col-start-2 lg:row-start-1 lg:block lg:pl-[72px] lg:pr-[99px] lg:pt-[160px]">
-          <T as="p" id="home.about.greeting" data-reveal="up" className="script text-[36px] text-walnut" />
+        <div className="relative mx-auto max-w-[1200px] px-6 pb-16 pt-14 lg:px-[70px] lg:pb-[96px] lg:pt-[88px]">
           <T
             as="h2"
-            id="home.about.intro"
+            id="home.about.heading"
             data-reveal="title"
-            style={{ "--reveal-delay": "0.15s" } as CSSProperties}
-            className="script text-[44px] lowercase text-terracotta lg:text-[55px]"
+            className="display mx-auto max-w-[900px] text-center text-[38px] uppercase leading-[1.04] text-espresso md:text-[64px] lg:text-[88px]"
           />
-        </div>
 
-        <div className="order-3 text-center lg:order-none lg:col-start-2 lg:row-start-2 lg:pl-[72px] lg:pr-[99px] lg:pt-6 lg:text-left">
-          <div data-reveal="up" className="space-y-4 text-[15px] text-walnut lg:text-[16px]">
-            <T as="p" id="home.about.p1" />
-            <T as="p" id="home.about.p2" />
+          <div className="mt-10 grid items-center gap-y-10 md:mt-14 lg:mt-[72px] lg:grid-cols-[minmax(0,540px)_minmax(0,1fr)] lg:gap-x-[80px]">
+            <div className="relative mx-auto w-full max-w-[420px] pb-8 md:max-w-[480px] lg:mx-0 lg:max-w-none lg:pb-[70px]">
+              <ApertureBloom data-speed="-0.2" className="absolute -right-[30%] top-[6%] hidden w-[70%] text-walnut/15 md:block" />
+              <div data-reveal="left" className="rounded-[89px] border border-terracotta p-[3px] lg:p-0">
+                <Photo
+                  slot="home-portrait"
+                  parallax={0.06}
+                  className="aspect-[480/659] w-full rounded-[87px]"
+                  sizes="(min-width: 64rem) 540px, (min-width: 48rem) 480px, 85vw"
+                />
+              </div>
+              <div data-speed="0.18" className="absolute -right-[4%] bottom-0 w-[42%] md:-right-[10%]">
+                <Photo
+                  slot="home-detail"
+                  reveal="mask"
+                  className="aspect-[238/311] w-full border-[5px] border-tan"
+                  sizes="(min-width: 64rem) 230px, 35vw"
+                />
+              </div>
+              <Sparkle data-speed="0.3" className="absolute bottom-[10%] left-[6%] w-8" />
+              <Sparkle data-speed="0.45" className="absolute bottom-[1%] left-[24%] w-5" />
+            </div>
+
+            <div className="text-center lg:text-left">
+              <div className="flex flex-wrap items-baseline justify-center gap-x-3 lg:justify-start">
+                <T as="p" id="home.about.greeting" data-reveal="up" className="script text-[28px] text-walnut lg:text-[34px]" />
+                <T
+                  as="p"
+                  id="home.about.intro"
+                  data-reveal="title"
+                  style={{ "--reveal-delay": "0.15s" } as CSSProperties}
+                  className="script text-[36px] text-terracotta lg:text-[46px]"
+                />
+              </div>
+              <div data-reveal="up" className="mt-6 space-y-4 text-[15px] text-walnut lg:text-[16px]">
+                <T as="p" id="home.about.p1" />
+                <T as="p" id="home.about.p2" />
+              </div>
+              <div data-reveal="up" style={{ "--reveal-delay": "0.2s" } as CSSProperties} className="mt-8 flex justify-center lg:justify-start">
+                <Link href="/about" className="btn">
+                  <T id="home.about.button" />
+                </Link>
+              </div>
+            </div>
           </div>
-          <div className="mt-7 flex justify-center">
-            <Link href="/about" className="btn">
-              <T id="home.about.button" />
-            </Link>
-          </div>
-        </div>
         </div>
       </section>
 

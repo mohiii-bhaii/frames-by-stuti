@@ -50,7 +50,8 @@ Object.assign(texts, {
   "home.about.intro": about.intro,
   "home.about.p1": about.homeIntro[0],
   "home.about.p2": about.homeIntro[1],
-  "home.about.button": "More on me",
+  "home.about.heading": "Meet your photographer",
+  "home.about.button": "More about Stuti",
   "home.banner": "for the ordinary days you'll miss the most",
   "home.belief.heading": "I believe the quiet moments are the ones worth keeping",
   "home.belief.p1":
@@ -63,14 +64,16 @@ Object.assign(texts, {
   // About
   "about.title.1": "About",
   "about.title.2": "me",
+  "about.hello": "Hello there! I'm Stuti",
+  "about.moments.heading": "A few frames from my world",
   "about.heroStory": about.heroStory,
   "about.personalStory": about.personalStory,
   "about.why.heading": about.whyHeading,
   "about.why.story": about.whyStory,
   "about.why.button": "Session details",
   "about.cta.heading": "Got a moment you want to keep?",
-  "about.cta.text": "See session types and pricing details:",
-  "about.cta.button": "Let's go!",
+  "about.cta.text": "I'd love to hear about the moments you want to keep.",
+  "about.cta.button": "Let's connect",
 
   // Portfolio
   "portfolio.title": "The work",
@@ -232,6 +235,10 @@ const labelOverrides: Record<string, string> = {
   "about.personalStory": "About · Biography beside the photo",
   "about.why.heading": "About · Why I do this, heading",
   "about.why.story": "About · Why I do this, text",
+  "about.hello": "About · Greeting under the title",
+  "about.moments.heading": "About · Photo collage heading",
+  "about.cta.text": "About · Closing invitation, text",
+  "about.cta.button": "About · Closing invitation, button (opens Contact)",
 };
 
 export const MAX_TEXT_LENGTH = 1500;
