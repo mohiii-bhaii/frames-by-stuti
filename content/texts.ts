@@ -104,13 +104,8 @@ Object.assign(texts, {
   "services.faq.sub": "Everything you might want to ask",
 
   // Contact
-  "contact.title.1": "Contact me",
-  "contact.title.2": "let's",
-  "contact.title.3": "make something lovely",
-  "contact.intro.p1":
-    "[Placeholder.] Tell people what to include when they get in touch: the occasion, who will be in the photographs and anything else that would help you plan their session.",
-  "contact.intro.p2": "Not sure what you want yet? That's completely fine. We can work it out together.",
-  "contact.intro.button": "Inquire",
+  "contact.hero.line1": "Let's get you on",
+  "contact.hero.line2": "the calendar",
   "contact.form.heading": "Tell me everything",
   "contact.reach.before": "Prefer email? Write to",
   "contact.reach.middle": "or call",

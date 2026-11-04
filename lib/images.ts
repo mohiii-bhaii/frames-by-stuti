@@ -81,7 +81,7 @@ export const imageSlots = {
   "services-testimonial": { ...SQUARE, scene: "soft", alt: "Placeholder: close detail photograph" },
 
   // Contact
-  "contact-hero": { ...LANDSCAPE, scene: "window", alt: "Placeholder: portrait of Stuti" },
+  "contact-hero": { ...LANDSCAPE, scene: "window", alt: "" },
   "contact-banner": { ...LANDSCAPE, scene: "field", alt: "Placeholder: wide outdoor photograph" },
 
   // Portfolio
