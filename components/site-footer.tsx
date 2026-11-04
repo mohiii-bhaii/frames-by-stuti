@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { T } from "@/components/editable-text";
+import { InstagramHandle } from "@/components/instagram-handle";
 import { contactLink, navigation } from "@/content/site";
 import { navKey } from "@/content/texts";
 import { FullLogo } from "@/components/logo";
@@ -77,7 +78,7 @@ export function SiteFooter() {
           ))}
         </ul>
 
-        <T as="p" id="site.instagramHandle" className="px-3 pb-2 pt-2 text-center text-[13px] uppercase md:text-right" />
+        <InstagramHandle className="px-3 pb-2 pt-2 text-center text-[13px] uppercase md:text-right" />
       </div>
 
       <div className="flex flex-col gap-1 bg-cream px-2 py-3 text-center text-[11px] leading-snug text-espresso md:grid md:grid-cols-3 md:py-[2px] md:text-[12px]">

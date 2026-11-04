@@ -53,8 +53,6 @@ Object.assign(texts, {
     "Then describe how you make that happen: how you put people at ease, how you direct without posing, and how a session with you feels from start to finish.",
   "home.belief.button": "More details",
   "home.sessions.heading": "Choose your session",
-  "home.quote": "one day, these will be the photographs you reach for first.",
-  "home.quote.button": "More details",
   "home.invite.line1": "Are you ready",
   "home.invite.line2": "to be seen?",
   "home.invite.eyebrow": "I'd love to meet you",
@@ -65,7 +63,6 @@ Object.assign(texts, {
   "about.title.2": "me",
   "about.heroStory": about.heroStory,
   "about.personalStory": about.personalStory,
-  "about.facts.heading": "me in a nutshell",
   "about.why.heading": about.whyHeading,
   "about.why.story": about.whyStory,
   "about.why.button": "Session details",
@@ -178,10 +175,11 @@ testimonials.forEach((testimonial, index) => {
   texts[`testimonial.${index + 1}.author`] = testimonial.author;
 });
 
-about.facts.forEach((fact, index) => {
-  texts[`about.fact.${index + 1}.label`] = fact.label;
-  texts[`about.fact.${index + 1}.value`] = fact.value;
-});
+// The database only accepts keys of this shape (see the site_texts migrations).
+// Failing here, at build time, beats an edit that silently fails to save.
+for (const key of Object.keys(texts)) {
+  if (!/^[A-Za-z0-9.-]{1,80}$/.test(key)) throw new Error(`Text key "${key}" can't be stored. Use letters, digits, dots and dashes, up to 80 characters.`);
+}
 
 export const textDefaults: Readonly<Record<string, string>> = texts;
 export type TextKey = string;
@@ -192,6 +190,21 @@ export const isTextKey = (key: unknown): key is TextKey =>
 
 /** Text that may be emptied, which hides it on the site. */
 export const optionalTextKeys = new Set(["site.instagramUrl", "site.facebookUrl"]);
+
+/** Text that is a web address. It must be empty or start with https:// (checked again before it is saved). */
+export const urlTextKeys = new Set(["site.instagramUrl", "site.facebookUrl"]);
+
+/** Names that read better in the editor than the key does. */
+const labelOverrides: Record<string, string> = {
+  "site.instagramHandle": "Instagram username (shown in the footer)",
+  "site.instagramUrl": "Instagram profile link (web address)",
+  "site.facebookUrl": "Facebook page link (web address)",
+  "site.serviceArea": "Footer service areas",
+  "about.heroStory": "About · Biography at the top",
+  "about.personalStory": "About · Biography beside the photo",
+  "about.why.heading": "About · Why I do this, heading",
+  "about.why.story": "About · Why I do this, text",
+};
 
 export const MAX_TEXT_LENGTH = 1500;
 
@@ -237,6 +250,7 @@ const words = (part: string) =>
 
 /** A readable name for the editor, such as "Home · Belief heading". */
 export function textLabel(key: string) {
+  if (labelOverrides[key]) return labelOverrides[key];
   const [group, ...rest] = key.split(".");
   if (group === "faq") return `FAQ · ${rest[1] === "q" ? "Question" : "Answer"} ${rest[0]}`;
   const tail = rest.map((part) => (/^\d+$/.test(part) ? part : words(part))).join(" ");

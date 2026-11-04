@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { MAX_TEXT_LENGTH, optionalTextKeys, textDefaults, textLabel } from "@/content/texts";
+import { MAX_TEXT_LENGTH, optionalTextKeys, textDefaults, textLabel, urlTextKeys } from "@/content/texts";
+import { safeWebUrl } from "@/lib/links";
 import type { TextState } from "@/lib/editor-types";
 
 export type TextStatus = "unsaved" | "draft" | "live" | "original";
@@ -38,6 +39,7 @@ export function TextPanel({ id, value, saved, status, busy, onChange, onUseOrigi
   const optional = optionalTextKeys.has(id);
   const empty = value.trim() === "" && !optional;
   const tooLong = value.length > MAX_TEXT_LENGTH;
+  const badUrl = urlTextKeys.has(id) && value.trim() !== "" && !safeWebUrl(value);
   const changed = status === "unsaved";
   const badge = STATUS_TEXT[status];
 
@@ -81,21 +83,23 @@ export function TextPanel({ id, value, saved, status, busy, onChange, onUseOrigi
             onChange={(event) => onChange(event.target.value)}
             rows={2}
             maxLength={MAX_TEXT_LENGTH + 200}
-            aria-invalid={empty || tooLong}
+            aria-invalid={empty || tooLong || badUrl}
             aria-describedby={`${id}-help`}
             // 16px stops iPhones zooming the page when the field is focused.
             className="mt-1 block w-full resize-none rounded-lg border border-neutral-300 px-3 py-2 text-base leading-snug aria-invalid:border-red-600"
           />
         </label>
-        <p id={`${id}-help`} className={`mt-1 flex justify-between gap-3 text-xs ${empty || tooLong ? "text-red-700" : "text-neutral-600"}`}>
+        <p id={`${id}-help`} className={`mt-1 flex justify-between gap-3 text-xs ${empty || tooLong || badUrl ? "text-red-700" : "text-neutral-600"}`}>
           <span>
             {empty
               ? "This can't be empty. Use the original wording to go back."
               : tooLong
                 ? `Too long. Keep it under ${MAX_TEXT_LENGTH} characters.`
-                : optional
-                  ? "Leave empty to hide this."
-                  : "Only the words change. The design stays the same."}
+                : badUrl
+                  ? "Enter the full web address, starting with https://"
+                  : optional
+                    ? "Leave empty to hide this."
+                    : "Only the words change. The design stays the same."}
           </span>
           <span className="shrink-0">{value.length}</span>
         </p>
@@ -129,7 +133,7 @@ export function TextPanel({ id, value, saved, status, busy, onChange, onUseOrigi
         <button
           type="button"
           onClick={onSave}
-          disabled={busy || !changed || empty || tooLong}
+          disabled={busy || !changed || empty || tooLong || badUrl}
           className="min-h-12 flex-1 rounded-lg bg-neutral-900 font-semibold text-white disabled:bg-neutral-300"
         >
           Save draft

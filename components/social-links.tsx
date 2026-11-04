@@ -1,6 +1,7 @@
 "use client";
 
 import { useText } from "@/components/site-texts-provider";
+import { instagramProfileUrl, safeWebUrl } from "@/lib/links";
 
 function InstagramIcon() {
   return (
@@ -61,8 +62,8 @@ export function SocialLinks({
   iconClassName?: string;
   includeEmail?: boolean;
 }) {
-  const instagram = useText("site.instagramUrl");
-  const facebook = useText("site.facebookUrl");
+  const instagram = instagramProfileUrl(useText("site.instagramHandle"), useText("site.instagramUrl"));
+  const facebook = safeWebUrl(useText("site.facebookUrl"));
   const email = useText("site.email");
   const links = [
     { href: instagram, label: "Instagram", icon: <InstagramIcon /> },

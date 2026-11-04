@@ -12,7 +12,7 @@
 -- else is limited to allowlisted admins.
 
 create table public.site_texts (
-  key text primary key check (key ~ '^[a-z0-9.-]{1,80}$'),
+  key text primary key check (key ~ '^[A-Za-z0-9.-]{1,80}$'),
   published_value text check (char_length(published_value) <= 3000),
   draft_value text check (char_length(draft_value) <= 3000),
   has_draft boolean not null default false,

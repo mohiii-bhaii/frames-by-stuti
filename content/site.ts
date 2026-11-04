@@ -72,14 +72,6 @@ export const about = {
   whyHeading: "helping you hold on to the moments that pass too quickly",
   whyStory:
     "[Biography placeholder.] Explain why photography matters to you and what clients take away from working with you. This is your promise to them, so write it the way you would say it in person.",
-  facts: [
-    { label: "Fun fact", value: "[add a fun fact]" },
-    { label: "Favourite role", value: "[add your favourite role]" },
-    { label: "Can't live without", value: "[add an everyday essential]" },
-    { label: "Hidden talent", value: "[add a hidden talent]" },
-    { label: "Go-to drink", value: "[add your go-to drink]" },
-    { label: "Favourite season", value: "[add your favourite season]" },
-  ],
 };
 
 export type ServicePackage = {

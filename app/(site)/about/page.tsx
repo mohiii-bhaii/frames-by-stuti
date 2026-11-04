@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ApertureBloom, CameraSketch, LeafSprig, Sparkle } from "@/components/line-art";
+import { ApertureBloom, LeafSprig, Sparkle } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { T } from "@/components/editable-text";
 import { site } from "@/content/site";
@@ -15,11 +15,11 @@ export default function AboutPage() {
   return (
     <>
       {/* Intro over a full-width portrait that fades into the dark section */}
-      <section className="relative overflow-hidden bg-walnut text-cream">
+      <section className="paper relative overflow-hidden bg-walnut text-cream">
         <div className="absolute inset-x-0 top-0 h-[92vw] max-h-[1071px] md:h-[86vw]">
           <Photo slot="about-hero" parallax={0.06} zoom className="h-full w-full" priority position="50% 20%" />
           <div className="absolute inset-0 bg-espresso/25" />
-          <div className="absolute inset-x-0 bottom-0 h-[40%] bg-gradient-to-b from-transparent to-walnut" />
+          <div className="absolute inset-x-0 -bottom-[2px] h-[40%] bg-gradient-to-b from-transparent to-walnut" />
         </div>
 
         <div className="relative mx-auto max-w-[1200px] px-6 pb-16 pt-[112px] lg:px-0 lg:pb-[77px] lg:pt-[222px]">
@@ -52,23 +52,6 @@ export default function AboutPage() {
             />
           </div>
         </div>
-      </section>
-
-      {/* Quick facts */}
-      <section className="paper relative overflow-hidden bg-walnut px-6 pb-44 pt-12 text-center text-cream lg:h-[667px] lg:pb-0 lg:pt-[69px]">
-        <T as="h2" id="about.facts.heading" data-reveal="fade" className="script text-[48px] lowercase lg:text-[63px]" />
-        <ul className="mx-auto mt-9 grid max-w-[1000px] gap-x-12 gap-y-7 text-[14px] uppercase tracking-[0.08em] md:grid-cols-2 lg:mt-[58px] lg:gap-y-[40px] lg:text-[15px]">
-          {[1, 2, 3, 4, 5, 6].map((number, index) => (
-            <li
-              key={number}
-              data-reveal={index % 2 === 0 ? "left" : "right"}
-              className={index % 2 === 0 ? "md:text-center lg:pr-[100px]" : "md:text-center lg:pl-[100px]"}
-            >
-              <T id={`about.fact.${number}.label`} />: <T id={`about.fact.${number}.value`} />
-            </li>
-          ))}
-        </ul>
-        <CameraSketch className="absolute bottom-10 left-1/2 w-[125px] -translate-x-1/2 lg:bottom-[28px] lg:w-[190px]" />
       </section>
 
       {/* Why I do this */}

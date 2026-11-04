@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { CurvedT, T } from "@/components/editable-text";
 import { HeroSlideshow } from "@/components/hero-slideshow";
-import { ApertureBloom, CameraSketch, LeafSprig, Sparkle } from "@/components/line-art";
+import { ApertureBloom, LeafSprig, Sparkle } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { TestimonialSlider } from "@/components/testimonial-slider";
 import { categories, site } from "@/content/site";
@@ -202,26 +202,6 @@ export default function HomePage() {
           <TestimonialSlider />
         </div>
         <Photo slot="home-testimonial" parallax={0.06} className="aspect-square w-full md:aspect-auto md:h-full" sizes="(min-width: 48rem) 50vw, 100vw" />
-      </section>
-
-      {/* Quote */}
-      <section className="paper grid bg-espresso md:grid-cols-2">
-        <Photo slot="home-quote" parallax={0.06} className="aspect-square w-full md:aspect-auto md:min-h-full" sizes="(min-width: 48rem) 50vw, 100vw" />
-        <div className="relative flex flex-col items-center justify-center px-8 py-14 text-center lg:h-[658px] lg:items-start lg:pl-[125px] lg:text-left">
-          <CameraSketch className="w-[76px] text-cream/90 lg:ml-[174px]" />
-          <T
-            as="p"
-            id="home.quote"
-            data-reveal="title"
-            className="script mt-7 max-w-[425px] text-[36px] text-terracotta lg:text-[41px]"
-          />
-          <div className="mt-8 lg:ml-[100px]">
-            <Link href="/services" className="btn">
-              <T id="home.quote.button" />
-            </Link>
-          </div>
-          <Sparkle className="absolute left-[12%] top-[8%] w-6 lg:bottom-[6%] lg:top-auto" />
-        </div>
       </section>
 
       {/* Invitation */}

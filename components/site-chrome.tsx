@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { draftMode } from "next/headers";
 import { EditorLoader } from "@/components/editor/editor-loader";
-import { RevealObserver } from "@/components/reveal-observer";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SiteImagesProvider } from "@/components/site-images-provider";
@@ -37,8 +36,7 @@ export async function SiteChrome({ children }: { children: ReactNode }) {
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
-        <RevealObserver />
-        <EditorMount />
+          <EditorMount />
       </SiteTextsProvider>
     </SiteImagesProvider>
   );

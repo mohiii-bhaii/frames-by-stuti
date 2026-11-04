@@ -24,7 +24,7 @@ Photos are replaced from the visual editor, with no code changes or redeploys. S
 
 Text is edited from the visual editor too. See [Editing text](#editing-text) below. The wording in the code is the original, shown for any text that has nothing published yet.
 
-The original wording lives in `content/site.ts` and `content/texts.ts`: location, service area, email, phone, biography, facts, testimonials, session types, packages, prices and FAQs. Look for `[square brackets]`, `$000` and `hello@example.com`.
+The original wording lives in `content/site.ts` and `content/texts.ts`: location, service area, email, phone, biography, testimonials, session types, packages, prices and FAQs. Look for `[square brackets]`, `$000` and `hello@example.com`.
 
 A few sections have placeholder copy directly in the page files. Search `app/(site)/` for `[Placeholder.]` to find them.
 

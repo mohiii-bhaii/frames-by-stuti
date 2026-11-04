@@ -3,7 +3,8 @@
 import { updateTag } from "next/cache";
 import { NotAuthorisedError, requireAdminAction } from "@/lib/auth";
 import { ACCEPTED_UPLOAD_TYPES, MAX_UPLOAD_BYTES, versionToImage, type VersionRow } from "@/lib/cms";
-import { isTextKey, MAX_TEXT_LENGTH, optionalTextKeys } from "@/content/texts";
+import { isTextKey, MAX_TEXT_LENGTH, optionalTextKeys, urlTextKeys } from "@/content/texts";
+import { safeWebUrl } from "@/lib/links";
 import type {
   ActionResult,
   DraftInput,
@@ -151,6 +152,9 @@ function cleanText(input: TextDraftInput): string | null {
   if (value.length > MAX_TEXT_LENGTH) fail(`That text is too long. Keep it under ${MAX_TEXT_LENGTH} characters.`);
   if (value === "" && !optionalTextKeys.has(input.key)) {
     fail("This text can't be empty. Use the original wording instead.");
+  }
+  if (value !== "" && urlTextKeys.has(input.key) && !safeWebUrl(value)) {
+    fail("Enter the full web address, starting with https://");
   }
   return value;
 }

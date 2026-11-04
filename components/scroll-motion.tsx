@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { RevealObserver } from "@/components/reveal-observer";
 import { useEditorStore } from "@/lib/editor-store";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -40,7 +41,8 @@ export function ScrollMotion() {
     return () => media.revert();
   }, [pathname, editing]);
 
-  return null;
+  // Reveals start here too, for the same reason: not before the page above has hydrated.
+  return <RevealObserver />;
 }
 
 /** Connects every [data-parallax] and [data-speed] element on the page to the scroll position. */
