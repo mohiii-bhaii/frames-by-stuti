@@ -159,3 +159,20 @@ export function pricingTextLabel(key: string): string | null {
   };
   return `${category.name} · ${names[parts.slice(2).join(".")] ?? parts.slice(2).join(" ")}`;
 }
+
+/**
+ * Which pricing page a home page card opens, from the session it stands for
+ * (see sessionTypeForLabel). Cake Smash sits under Milestones. A card with no
+ * pricing page of its own (for example Portraits) opens the overview.
+ */
+export function pricingHrefForSession(session: string) {
+  const slug: Record<string, string> = {
+    newborn: "newborn",
+    maternity: "maternity",
+    "cake-smash": "milestones",
+    milestones: "milestones",
+    family: "lifestyle",
+    events: "events",
+  };
+  return pricingHref(slug[session]);
+}

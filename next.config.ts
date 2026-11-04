@@ -9,7 +9,13 @@ const nextConfig: NextConfig = {
   },
   // The old Services page now lives at /pricing. Temporary on purpose, until the new pages are confirmed.
   async redirects() {
-    return [{ source: "/services", destination: "/pricing", permanent: false }];
+    return [
+      { source: "/services", destination: "/pricing", permanent: false },
+      // The pricing pages also answer to the /investments addresses.
+      { source: "/investments", destination: "/pricing", permanent: false },
+      { source: "/investments/lifestyle-family", destination: "/pricing/lifestyle", permanent: false },
+      { source: "/investments/:slug(maternity|newborn|milestones|lifestyle|events|bundle)", destination: "/pricing/:slug", permanent: false },
+    ];
   },
   experimental: {
     agentFeedback: true,
