@@ -1,15 +1,15 @@
 import { categories } from "@/content/site";
 
-/** Validation shared by the browser form and the server action. */
-export const sessionTypes: string[] = categories.map((category) => category.label);
+/**
+ * Validation shared by the browser form and the server action. The database
+ * checks the same rules again, so a request that skips both is still refused.
+ */
 
-export const referralOptions = ["Instagram", "Facebook", "Google", "A friend or family member", "Other"];
+/** Session types are the photography categories, plus "other". Stored by id. */
+export const sessionTypeIds: string[] = [...categories.map((category) => category.id), "other"];
 
-export const timelineOptions = [
-  "Just looking for now",
-  "Comparing photographers",
-  "Ready to book",
-];
+/** Fixed values that are stored. The labels visitors see are editable text. */
+export const referralOptions = ["Instagram", "Google", "Friend or family", "Other"] as const;
 
 export type InquiryField =
   | "name"
@@ -18,10 +18,9 @@ export type InquiryField =
   | "instagram"
   | "sessionType"
   | "referral"
-  | "timeline"
-  | "details"
-  | "about"
-  | "inspiration";
+  | "location"
+  | "message"
+  | "preferredDate";
 
 export type InquiryValues = Record<InquiryField, string>;
 export type InquiryErrors = Partial<Record<InquiryField, string>>;
@@ -33,28 +32,33 @@ export const inquiryFields: InquiryField[] = [
   "instagram",
   "sessionType",
   "referral",
-  "timeline",
-  "details",
-  "about",
-  "inspiration",
+  "location",
+  "message",
+  "preferredDate",
 ];
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE = /^[+()\d\s.-]{7,20}$/;
+const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const SHORT_LIMIT = 120;
-const LONG_LIMIT = 4000;
+export const MESSAGE_LIMIT = 4000;
 
-export function validateInquiry(values: InquiryValues): InquiryErrors {
+/** Today as YYYY-MM-DD in the given date's local time. */
+export const isoDate = (date: Date) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
+export function validateInquiry(values: InquiryValues, today = isoDate(new Date())): InquiryErrors {
   const errors: InquiryErrors = {};
   const name = values.name.trim();
   const email = values.email.trim();
   const phone = values.phone.trim();
+  const date = values.preferredDate.trim();
 
   if (!name) errors.name = "Please enter your full name.";
   else if (name.length > SHORT_LIMIT) errors.name = "Please shorten your name.";
 
   if (!email) errors.email = "Please enter your email address.";
-  else if (email.length > SHORT_LIMIT || !EMAIL.test(email)) {
+  else if (email.length > 254 || !EMAIL.test(email)) {
     errors.email = "Please enter a valid email address, like name@example.com.";
   }
 
@@ -62,30 +66,29 @@ export function validateInquiry(values: InquiryValues): InquiryErrors {
     errors.phone = "Please enter a valid phone number, or leave this blank.";
   }
 
-  if (values.instagram.trim().length > SHORT_LIMIT) {
+  if (values.instagram.trim().length > 60) {
     errors.instagram = "Please shorten your Instagram handle.";
   }
 
-  if (!sessionTypes.includes(values.sessionType)) {
+  if (!sessionTypeIds.includes(values.sessionType)) {
     errors.sessionType = "Please choose a session type.";
   }
 
-  if (values.referral && !referralOptions.includes(values.referral)) {
+  if (values.referral && !(referralOptions as readonly string[]).includes(values.referral)) {
     errors.referral = "Please choose an option from the list.";
   }
 
-  if (values.timeline && !timelineOptions.includes(values.timeline)) {
-    errors.timeline = "Please choose an option from the list.";
+  if (values.location.trim().length > SHORT_LIMIT) {
+    errors.location = "Please shorten the location.";
   }
 
-  if (values.details.trim().length < 10) {
-    errors.details = "Please tell me a little more about your session (at least 10 characters).";
+  if (values.message.length > MESSAGE_LIMIT) {
+    errors.message = `Please keep this under ${MESSAGE_LIMIT} characters.`;
   }
 
-  for (const field of ["details", "about", "inspiration"] as const) {
-    if (values[field].length > LONG_LIMIT) {
-      errors[field] = `Please keep this under ${LONG_LIMIT} characters.`;
-    }
+  if (date) {
+    if (!DATE.test(date) || Number.isNaN(Date.parse(date))) errors.preferredDate = "Please choose a valid date.";
+    else if (date < today) errors.preferredDate = "Please choose today or a later date.";
   }
 
   return errors;
@@ -94,6 +97,6 @@ export function validateInquiry(values: InquiryValues): InquiryErrors {
 export type InquiryState =
   | { status: "idle" }
   | { status: "invalid"; errors: InquiryErrors }
-  /** Valid, but no destination is configured or delivery failed. */
-  | { status: "undelivered" }
+  /** Valid, but it could not be saved. Shows a message and keeps what was typed. */
+  | { status: "error"; message: string }
   | { status: "sent" };

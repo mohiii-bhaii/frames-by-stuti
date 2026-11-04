@@ -22,7 +22,8 @@ export default function AdminPage() {
 }
 
 async function Dashboard() {
-  const { admin } = await requireAdminPage();
+  const { admin, supabase } = await requireAdminPage();
+  const { count: unread } = await supabase.from("inquiries").select("id", { count: "exact", head: true }).eq("is_read", false);
   return (
     <>
       <div className="mt-2 flex flex-wrap items-center justify-between gap-3">
@@ -55,6 +56,17 @@ async function Dashboard() {
             </form>
           ))}
         </div>
+      </section>
+
+      <section className="mt-4 rounded-2xl bg-white p-5 shadow-sm">
+        <h2 className="text-lg font-semibold">Inquiries</h2>
+        <p className="mt-1 text-sm text-neutral-700">
+          Messages sent from the Contact page.
+          {unread ? ` You have ${unread} unread.` : ""}
+        </p>
+        <Link href="/admin/inquiries" className="mt-4 inline-flex min-h-12 items-center rounded-lg border border-neutral-300 px-4 font-medium">
+          Open inquiries{unread ? ` (${unread} new)` : ""}
+        </Link>
       </section>
 
       <section className="mt-4 rounded-2xl bg-white p-5 shadow-sm">

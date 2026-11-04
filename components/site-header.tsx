@@ -49,7 +49,7 @@ export function SiteHeader() {
             id="header.eyebrow"
             className="eyebrow absolute left-[23px] top-[14px] hidden w-[215px] text-[16px] leading-normal tracking-normal lg:block"
           />
-          <Wordmark priority className="absolute left-1/2 top-[62px] h-[58px] -translate-x-1/2 md:top-[22px] md:h-[62px]" />
+          <Wordmark priority className="absolute left-1/2 top-[52px] h-[100px] -translate-x-1/2 md:top-[6px] md:h-[92px]" />
         </div>
         <Wordmark
           tone="light"

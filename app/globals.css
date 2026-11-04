@@ -8,6 +8,8 @@
   --color-terracotta: #ca8060;
   --color-sage: #777763;
   --color-tan: #af9774;
+  /* A light, soft clay: terracotta washed out toward the cream. */
+  --color-clay: #dcc3ae;
 
   --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-bodoni), ui-serif, Georgia, serif;

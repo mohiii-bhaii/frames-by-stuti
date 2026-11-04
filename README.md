@@ -30,15 +30,17 @@ A few sections have placeholder copy directly in the page files. Search `app/(si
 
 Social icons stay hidden until a URL is set, either in the editor (**Text on this page**, then Contact details) or in `social` in `content/site.ts`.
 
-### Connect the contact form
+### The contact form and inquiries
 
-The form validates in the browser and again on the server, then sends the inquiry as JSON to the URL in the `CONTACT_WEBHOOK_URL` environment variable. This can be any service that accepts a webhook, such as a form backend, an automation tool or a CRM.
+The form validates in the browser and again on the server, then saves the inquiry in Supabase (the `inquiries` table). Only the signed-in owner can read them: log in at `/admin` and open **Inquiries**. Visitors can only add an inquiry, through the `submit_inquiry()` database function, which also limits how fast inquiries can arrive (3 per email and 40 in total per hour). Spam is further filtered by a hidden field and a minimum fill-in time.
+
+Run `supabase/migrations/20261105000000_inquiries.sql` once to create it (it is already applied to the live project).
+
+**Email notifications are not set up.** Saving an inquiry does not email anyone. To be notified, set the `CONTACT_WEBHOOK_URL` environment variable (in `.env.local` and in Vercel) to any service that accepts a webhook, such as an automation tool or email service. Each saved inquiry is then also sent there as JSON. A failing webhook never affects the visitor.
 
 ```bash
 CONTACT_WEBHOOK_URL=https://your-service.example/webhook
 ```
-
-Until this is set, valid inquiries are **not delivered**. The visitor sees a message asking them to email you instead, so make sure `site.email` is correct.
 
 ## Editing photos
 

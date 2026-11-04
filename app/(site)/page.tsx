@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { CurvedT, T } from "@/components/editable-text";
-import { HeroSlideshow } from "@/components/hero-slideshow";
+import { PhotoSlideshow } from "@/components/photo-slideshow";
 import { ApertureBloom, LeafSprig, Sparkle } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { TestimonialSlider } from "@/components/testimonial-slider";
@@ -36,7 +36,11 @@ export default function HomePage() {
           data-zoom
           className="absolute inset-x-[15%] bottom-[5%] top-[172px] overflow-hidden rounded-[38px] border-2 border-sage md:inset-x-[12.150%] md:bottom-2 md:top-[101px]"
         >
-          <HeroSlideshow slots={["hero-1", "hero-2", "hero-3"]} sizes="(min-width: 48rem) 76vw, 70vw" />
+          <PhotoSlideshow
+            priority
+            slots={["hero-1", "hero-2", "hero-3", "hero-4", "hero-5", "hero-6"]}
+            sizes="(min-width: 48rem) 76vw, 70vw"
+          />
         </div>
         <VerticalWords className="absolute left-[7.500%] top-[62%] origin-center -translate-x-1/2 -translate-y-1/2 -rotate-90 md:left-[10.700%] md:top-[55%]" />
         <VerticalWords className="absolute right-[7.500%] top-[62%] origin-center translate-x-1/2 -translate-y-1/2 rotate-90 md:right-[10.700%] md:top-[55%]" />
@@ -140,7 +144,14 @@ export default function HomePage() {
           </div>
           <div className="relative order-1 mx-auto w-[70%] max-w-[610px] -mt-8 lg:order-2 lg:-mt-[18px] lg:mr-0 lg:w-full">
             <div data-reveal="right" className="rounded-[50%] border border-terracotta p-[6px]">
-              <Photo slot="home-oval" parallax={0.06} className="aspect-[599/756] w-full rounded-[50%]" sizes="(min-width: 64rem) 600px, 70vw" />
+              <PhotoSlideshow
+                slots={["home-oval", "home-oval-2", "home-oval-3"]}
+                frameClassName="aspect-[599/756] w-full rounded-[50%]"
+                parallax={0.06}
+                intervalMs={6000}
+                fadeMs={1600}
+                sizes="(min-width: 64rem) 600px, 70vw"
+              />
             </div>
             <ApertureBloom data-speed="0.3" className="absolute bottom-[-2%] right-[-6%] w-[34%] text-walnut lg:bottom-[-6px] lg:left-[16%] lg:right-auto lg:w-[145px]" />
           </div>
@@ -148,10 +159,11 @@ export default function HomePage() {
       </section>
 
       {/* Photo into curved session heading */}
-      <section className="relative bg-black">
+      <section className="relative bg-clay">
         <Photo slot="home-banner-2" parallax={0.1} zoom className="h-[105vw] max-h-[768px] w-full md:h-[53vw]" />
-        <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-b from-transparent to-black" />
-        <div data-reveal="title" className="absolute inset-x-[3%] bottom-[-3%] mx-auto max-w-[1137px] text-terracotta">
+        {/* The photograph melts into the soft clay of the session cards below. */}
+        <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-b from-transparent to-clay" />
+        <div data-reveal="title" className="absolute inset-x-[3%] bottom-[-3%] mx-auto max-w-[1137px] text-rust">
           <h2>
             <CurvedT id="home.sessions.heading" uppercase italic={false} rise={0.11} size={76} className="w-full" />
           </h2>
@@ -159,13 +171,15 @@ export default function HomePage() {
       </section>
 
       {/* Session cards */}
-      <section className="relative overflow-hidden bg-terracotta">
-        {/* A soft photographic texture under warm copper washes, so the cards stay the focus. */}
-        <Photo slot="session-backdrop" decorative parallax={0.12} className="absolute inset-0 opacity-40 mix-blend-multiply" />
+      <section className="relative overflow-hidden bg-clay">
+        {/* A soft photographic texture under a light clay wash, so the cards stay the focus. */}
+        <Photo slot="session-backdrop" decorative parallax={0.12} className="absolute inset-0 opacity-25 mix-blend-multiply" />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_0%,rgb(202_128_96/0.15),rgb(135_65_34/0.55))]"
+          className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_0%,rgb(235_230_219/0.55),rgb(202_128_96/0.16))]"
         />
+        {/* ...and fades into the cream testimonials below. */}
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[90px] bg-gradient-to-b from-transparent to-cream" />
         <ul className="relative mx-auto grid max-w-[270px] grid-cols-1 gap-y-12 py-14 md:max-w-[1200px] md:grid-cols-4 md:gap-x-5 md:px-6 lg:gap-x-7 lg:px-[29px] lg:pb-[80px] lg:pt-[84px]">
           {categories.map((category, index) => (
             <li
@@ -173,8 +187,8 @@ export default function HomePage() {
               data-reveal="up"
               style={{ "--reveal-delay": `${index * 0.12}s` } as CSSProperties}
             >
-              <Link href={`/portfolio#${category.id}`} className="group block text-center text-cream">
-                <span className="relative block overflow-hidden rounded-[12px] shadow-[0_24px_40px_-28px_rgb(53_48_38/0.8)] transition-[translate,box-shadow] duration-700 ease-[var(--ease-soft)] group-hover:-translate-y-1.5 group-hover:shadow-[0_30px_50px_-26px_rgb(53_48_38/0.9)]">
+              <Link href={`/contact?session=${category.id}#inquiry`} className="group block text-center text-espresso">
+                <span className="relative block overflow-hidden rounded-[12px] shadow-[0_24px_40px_-28px_rgb(53_48_38/0.55)] transition-[translate,box-shadow] duration-700 ease-[var(--ease-soft)] group-hover:-translate-y-1.5 group-hover:shadow-[0_30px_50px_-26px_rgb(53_48_38/0.65)]">
                   <Photo
                     slot={category.image}
                     className="aspect-square w-full rounded-[12px]"
@@ -189,7 +203,7 @@ export default function HomePage() {
                   <ApertureBloom className="absolute bottom-[8%] left-1/2 h-7 w-7 -translate-x-1/2 transition-[rotate] duration-700 group-hover:rotate-45" />
                 </span>
                 <span
-                  className="mx-auto block h-[42px] w-px origin-top bg-cream/80 transition-[scale] duration-700 group-hover:scale-y-125"
+                  className="mx-auto block h-[42px] w-px origin-top bg-espresso/45 transition-[scale] duration-700 group-hover:scale-y-125"
                   aria-hidden="true"
                 />
                 <T as="h3" id={`category.${category.id}`} className="display text-[34px] md:text-[26px] lg:text-[35px]" />

@@ -1,9 +1,9 @@
 "use client";
 
-import { createContext, use, type ReactNode } from "react";
+import { createContext, use, useMemo, type ReactNode } from "react";
 import type { ImageMap } from "@/lib/cms";
 import { editorStore, useEditorStore } from "@/lib/editor-store";
-import { getFallbackImage, type SlotId, type SlotImage } from "@/lib/images";
+import { getFallbackImage, type ImageSlot, type SlotId, type SlotImage } from "@/lib/images";
 
 const PublishedImages = createContext<ImageMap>({});
 
@@ -27,3 +27,21 @@ export function useIsEditing() {
 }
 
 export { editorStore };
+
+/**
+ * The slots of a slideshow that have a real photograph published. A slideshow
+ * works with one, two or all of its photos: empty spots are simply skipped, and
+ * if none has a photo yet the first slot shows its placeholder.
+ */
+export function usePublishedSlides(slots: ImageSlot[]): ImageSlot[] {
+  const published = use(PublishedImages);
+  // While the owner previews, drafts count as well, so Preview shows what Publish would.
+  const drafts = useEditorStore((current) => (current.active ? current.display : null));
+  return useMemo(() => {
+    const real = slots.filter((slot) => {
+      const src = (drafts?.[slot] ?? published[slot])?.src;
+      return Boolean(src) && !src!.startsWith("/images/");
+    });
+    return real.length > 0 ? real : slots.slice(0, 1);
+  }, [published, drafts, slots]);
+}
