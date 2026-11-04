@@ -102,7 +102,7 @@ export function SiteHeader() {
               onClick={() => setView("main")}
               className="eyebrow absolute left-3 top-3 flex min-h-11 items-center gap-2 px-2 text-[13px] text-walnut transition-colors duration-500 hover:text-rust"
             >
-              <span aria-hidden="true">←</span>
+              <span aria-hidden="true">«</span>
               <T id="nav.pricing.back" plain />
             </button>
           ) : null}
@@ -150,7 +150,7 @@ export function SiteHeader() {
                         className="inline-flex items-center gap-2 uppercase transition-colors duration-500 hover:text-terracotta aria-[current=page]:underline aria-[current=page]:underline-offset-6"
                       >
                         <T id={navKey(item.href)} plain />
-                        <span aria-hidden="true">→</span>
+                        <span aria-hidden="true">»</span>
                       </button>
                     ) : (
                       <Link
