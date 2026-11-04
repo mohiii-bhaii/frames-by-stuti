@@ -77,7 +77,7 @@ export default function HomePage() {
           />
 
           <div className="mt-10 grid items-center gap-y-10 md:mt-14 lg:mt-[72px] lg:grid-cols-[minmax(0,540px)_minmax(0,1fr)] lg:gap-x-[80px]">
-            <div className="relative mx-auto w-full max-w-[420px] pb-8 md:max-w-[480px] lg:mx-0 lg:max-w-none lg:pb-[70px]">
+            <div className="relative mx-auto w-full max-w-[420px] md:max-w-[480px] lg:mx-0 lg:max-w-none">
               <ApertureBloom data-speed="-0.2" className="absolute -right-[30%] top-[6%] hidden w-[70%] text-walnut/15 md:block" />
               <div data-reveal="left" className="rounded-[89px] border border-terracotta p-[3px] lg:p-0">
                 <Photo
@@ -87,16 +87,8 @@ export default function HomePage() {
                   sizes="(min-width: 64rem) 540px, (min-width: 48rem) 480px, 85vw"
                 />
               </div>
-              <div data-speed="0.18" className="absolute -right-[4%] bottom-0 w-[42%] md:-right-[10%]">
-                <Photo
-                  slot="home-detail"
-                  reveal="mask"
-                  className="aspect-[238/311] w-full border-[5px] border-tan"
-                  sizes="(min-width: 64rem) 230px, 35vw"
-                />
-              </div>
-              <Sparkle data-speed="0.3" className="absolute bottom-[10%] left-[6%] w-8" />
-              <Sparkle data-speed="0.45" className="absolute bottom-[1%] left-[24%] w-5" />
+              <Sparkle data-speed="0.3" className="absolute -top-4 right-[6%] w-8" />
+              <Sparkle data-speed="0.45" className="absolute -top-8 right-[18%] w-5" />
             </div>
 
             <div className="text-center lg:text-left">
