@@ -27,3 +27,14 @@ export function useText(key: string): string {
 export function useIsEditingText() {
   return useEditorStore((current) => current.active && current.mode === "edit");
 }
+
+/** Several texts at once, for a component that needs to know them all (for example to hide the empty ones). */
+export function useTexts(keys: readonly string[]): string[] {
+  const published = use(PublishedTexts);
+  const display = useEditorStore((current) => (current.active ? current.textDisplay : null));
+  return keys.map((key) => {
+    const editing = display?.[key];
+    if (editing !== undefined) return editing ?? textDefaults[key];
+    return published[key] ?? textDefaults[key];
+  });
+}

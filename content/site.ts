@@ -10,7 +10,8 @@ export const site = {
   description:
     "Frames by Stuti is a photography studio creating warm, honest portraits of people and the moments that matter to them.",
   location: "[City, State]",
-  serviceArea: "[Area one] | [Area two] | [Area three] | [Area four] | [Area five]",
+  /** Shown in the footer, separated by " | ". Any can be emptied in the editor to hide it. */
+  serviceAreas: ["[Area one]", "[Area two]", "[Area three]", "[Area four]", "[Area five]"],
   email: "hello@example.com",
   phone: "[000-000-0000]",
   instagramHandle: "@[instagram-handle]",

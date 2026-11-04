@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${bodoni.variable} antialiased`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${montserrat.variable} ${bodoni.variable} antialiased`}>
       <body className="relative min-h-svh">{children}</body>
     </html>
   );

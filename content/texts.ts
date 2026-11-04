@@ -17,6 +17,12 @@ const texts: Record<string, string> = {};
 export const navKey = (href: string) => `nav.${href === "/" ? "home" : href.slice(1)}`;
 
 for (const item of [...navigation, contactLink]) texts[navKey(item.href)] = item.label;
+
+/** The footer's service areas, each its own text so they can be changed or hidden one by one. */
+export const areaKeys = site.serviceAreas.map((_, index) => `site.area.${index + 1}`);
+areaKeys.forEach((key, index) => {
+  texts[key] = site.serviceAreas[index];
+});
 for (const category of categories) texts[`category.${category.id}`] = category.label;
 
 // Business details. Social links are hidden on the site while they are empty.
@@ -25,7 +31,6 @@ Object.assign(texts, {
   "site.phone": site.phone,
   "site.location": site.location,
   "site.instagramHandle": site.instagramHandle,
-  "site.serviceArea": site.serviceArea,
   "site.instagramUrl": site.social.instagram,
   "site.facebookUrl": site.social.facebook,
 });
@@ -53,10 +58,6 @@ Object.assign(texts, {
     "Then describe how you make that happen: how you put people at ease, how you direct without posing, and how a session with you feels from start to finish.",
   "home.belief.button": "More details",
   "home.sessions.heading": "Choose your session",
-  "home.invite.line1": "Are you ready",
-  "home.invite.line2": "to be seen?",
-  "home.invite.eyebrow": "I'd love to meet you",
-  "home.invite.button": "Say hello",
 
   // About
   "about.title.1": "About",
@@ -193,7 +194,7 @@ export const isTextKey = (key: unknown): key is TextKey =>
   typeof key === "string" && Object.hasOwn(texts, key);
 
 /** Text that may be emptied, which hides it on the site. */
-export const optionalTextKeys = new Set(["site.instagramUrl", "site.facebookUrl"]);
+export const optionalTextKeys = new Set(["site.instagramUrl", "site.facebookUrl", ...areaKeys]);
 
 /** Text that is a web address. It must be empty or start with https:// (checked again before it is saved). */
 export const urlTextKeys = new Set(["site.instagramUrl", "site.facebookUrl"]);
@@ -203,7 +204,7 @@ const labelOverrides: Record<string, string> = {
   "site.instagramHandle": "Instagram username (shown in the footer)",
   "site.instagramUrl": "Instagram profile link (web address)",
   "site.facebookUrl": "Facebook page link (web address)",
-  "site.serviceArea": "Footer service areas",
+  ...Object.fromEntries(areaKeys.map((key, index) => [key, `Footer area ${index + 1} (leave empty to hide)`])),
   "about.heroStory": "About · Biography at the top",
   "about.personalStory": "About · Biography beside the photo",
   "about.why.heading": "About · Why I do this, heading",

@@ -73,8 +73,8 @@ function Slide({
 export function PhotoSlideshow({
   slots,
   sizes,
-  intervalMs = 5000,
-  fadeMs = 1200,
+  intervalMs = 2500,
+  fadeMs = 900,
   frameClassName,
   parallax,
   priority = false,

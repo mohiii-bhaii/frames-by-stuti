@@ -49,6 +49,8 @@ type TextProps = Omit<HTMLAttributes<HTMLElement>, "children"> & {
   as?: TextTag;
   /** Shows the text without making it clickable in the editor, for places the editor can't reach (such as the menu panel). */
   plain?: boolean;
+  /** For text that may be emptied: what the editor shows, and makes clickable, while it is empty. Visitors see nothing. */
+  emptyLabel?: string;
 };
 
 /**
@@ -56,10 +58,12 @@ type TextProps = Omit<HTMLAttributes<HTMLElement>, "children"> & {
  * page gives it, so typography, colour, spacing and animation stay with the
  * page. Only the words come from the editor and the database.
  */
-export function T({ id, as = "span", plain = false, ...props }: TextProps) {
+export function T({ id, as = "span", plain = false, emptyLabel, ...props }: TextProps) {
   const text = useText(id);
   const edit = useTextEdit(id);
-  return createElement(as, { ...props, ...(plain ? null : edit) }, <Lines text={text} />);
+  const editing = useIsEditingText();
+  const shown = text === "" && editing && emptyLabel ? emptyLabel : text;
+  return createElement(as, { ...props, ...(plain ? null : edit) }, <Lines text={shown} />);
 }
 
 /** Editable text set along an arc. */

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { T } from "@/components/editable-text";
 import { InstagramHandle } from "@/components/instagram-handle";
+import { ServiceAreas } from "@/components/service-areas";
 import { contactLink, navigation } from "@/content/site";
 import { navKey } from "@/content/texts";
 import { FullLogo } from "@/components/logo";
@@ -40,11 +41,7 @@ export function SiteFooter() {
               id="footer.blurb"
               className="mt-6 max-w-[729px] text-center text-[13px] uppercase leading-[1.8] tracking-[0.04em] md:text-[15px] lg:text-[17px]"
             />
-            <T
-              as="p"
-              id="site.serviceArea"
-              className="mt-3 text-center text-[11px] uppercase leading-[1.8] tracking-[0.04em] lg:text-[12px]"
-            />
+            <ServiceAreas className="mt-3 text-center text-[11px] uppercase leading-[1.8] tracking-[0.04em] lg:text-[12px]" />
           </div>
 
           <div className="order-3 flex flex-col items-center md:order-none">

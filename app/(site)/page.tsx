@@ -148,8 +148,6 @@ export default function HomePage() {
                 slots={["home-oval", "home-oval-2", "home-oval-3"]}
                 frameClassName="aspect-[599/756] w-full rounded-[50%]"
                 parallax={0.06}
-                intervalMs={6000}
-                fadeMs={1600}
                 sizes="(min-width: 64rem) 600px, 70vw"
               />
             </div>
@@ -221,30 +219,6 @@ export default function HomePage() {
         <Photo slot="home-testimonial" parallax={0.06} className="aspect-square w-full md:aspect-auto md:h-full" sizes="(min-width: 48rem) 50vw, 100vw" />
       </section>
 
-      {/* Invitation */}
-      <section className="paper overflow-x-clip bg-espresso text-cream">
-        <div className="relative mx-auto grid max-w-[1200px] grid-cols-[1fr_27%] items-start gap-x-2 px-4 pb-12 pt-6 md:grid-cols-[1fr_34.500%] md:px-0 lg:h-[558px] lg:pb-0">
-          <div data-reveal="up" className="pt-4 text-center md:pt-12 lg:pl-[150px] lg:pr-[60px] lg:pt-[140px]">
-            <T as="p" id="home.invite.line1" className="display text-[30px] lg:text-[45px]" />
-            <T as="h2" id="home.invite.line2" className="script text-[42px] leading-[1] md:text-[56px] lg:text-[69px]" />
-            <T as="p" id="home.invite.eyebrow" className="eyebrow mt-5 text-[14px] md:text-[16px]" />
-            <Link href="/contact" className="btn mt-7">
-              <T id="home.invite.button" />
-            </Link>
-          </div>
-          <div className="relative mt-4 md:-mt-[70px] md:mr-[54px]">
-            <Photo
-              slot="home-invite"
-              parallax={0.06}
-              className="aspect-[414/601] w-full rounded-[80px] md:rounded-[148px]"
-              sizes="(min-width: 64rem) 414px, 34vw"
-            />
-            <Sparkle data-speed="0.3" className="absolute -left-[12%] top-[6%] w-10 md:w-12" />
-            <Sparkle data-speed="0.5" className="absolute -left-[46%] top-[14%] hidden w-14 md:block" />
-            <Sparkle className="absolute -left-[58%] top-[4%] hidden w-6 md:block" />
-          </div>
-        </div>
-      </section>
       <ScrollMotion />
     </>
   );
