@@ -32,9 +32,11 @@ Social icons stay hidden until a URL is set, either in the editor (**Text on thi
 
 ### The contact form and inquiries
 
-The form validates in the browser and again on the server, then saves the inquiry in Supabase (the `inquiries` table). Only the signed-in owner can read them: log in at `/admin` and open **Inquiries**. Visitors can only add an inquiry, through the `submit_inquiry()` database function, which also limits how fast inquiries can arrive (3 per email and 40 in total per hour). Spam is further filtered by a hidden field and a minimum fill-in time.
+The Contact page has a long-form inquiry: first and last name, phone, email, session type (Newborn, Maternity, Cake Smash, Family / Lifestyle, Milestones, Engagement / Couple, Portraits, Seniors / Graduation, Events, Other), a due date that only appears for Maternity and Newborn, location preference and city, the weekdays that work best (at least one), a required message, and how they heard about you. Every label, hint and option is editable text in the visual editor. The home page cards open this form with the matching session type chosen, using the card's current name (so a card renamed "Cake Smash" selects Cake Smash).
 
-Run `supabase/migrations/20261105000000_inquiries.sql` once to create it (it is already applied to the live project).
+The form validates in the browser and again on the server, then saves the inquiry in Supabase (the `inquiries` table). Each submission carries a one-time token, so a double tap or a retry is saved once. Only the signed-in owner can read them: log in at `/admin` and open **Inquiries**. Visitors can only add an inquiry, through the `submit_inquiry()` database function, which also limits how fast inquiries can arrive (3 per email and 40 in total per hour). Spam is further filtered by a hidden field and a minimum fill-in time.
+
+Run `supabase/migrations/20261105000000_inquiries.sql`, then `20261106000000_inquiries_long_form.sql` and `20261106010000_retire_short_inquiry_function.sql`, once each, in that order (they are already applied to the live project).
 
 **Email notifications** use [Resend](https://resend.com) (free for this volume). They are off until you set two environment variables, in `.env.local` and in Vercel (Project, Settings, Environment Variables, then redeploy):
 

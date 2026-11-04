@@ -1,9 +1,9 @@
 "use server";
 
 import {
-  inquiryFields,
-  isoDate,
+  dueDateSessions,
   validateInquiry,
+  weekdays,
   type InquiryState,
   type InquiryValues,
 } from "@/lib/inquiry";
@@ -31,31 +31,49 @@ export async function submitInquiry(
   const startedAt = Number(formData.get("startedAt"));
   if (startedAt && Date.now() - startedAt < MIN_FILL_MS) return { status: "sent" };
 
-  const values = Object.fromEntries(
-    inquiryFields.map((field) => {
-      const value = formData.get(field);
-      return [field, typeof value === "string" ? value : ""];
-    }),
-  ) as InquiryValues;
+  const text = (name: string) => {
+    const value = formData.get(name);
+    return typeof value === "string" ? value : "";
+  };
+  const days = formData.getAll("preferredDays").filter((day): day is string => typeof day === "string");
+  const values: InquiryValues = {
+    firstName: text("firstName"),
+    lastName: text("lastName"),
+    phone: text("phone"),
+    email: text("email"),
+    sessionType: text("sessionType"),
+    // Only newborn and maternity sessions have a due date.
+    dueDate: dueDateSessions.includes(text("sessionType")) ? text("dueDate") : "",
+    locationPreference: text("locationPreference"),
+    location: text("location"),
+    // In week order, each day once.
+    preferredDays: weekdays.filter((day) => days.includes(day)),
+    message: text("message"),
+    referral: text("referral"),
+  };
+  // Sent by the form so a repeat of the same submission can be recognised.
+  const token = /^[0-9a-f-]{36}$/i.test(text("token")) ? text("token") : null;
 
-  // A day of slack so the visitor's own time zone never rejects "today".
-  const errors = validateInquiry(values, isoDate(new Date(Date.now() - 24 * 60 * 60 * 1000)));
+  const errors = validateInquiry(values);
   if (Object.keys(errors).length > 0) return { status: "invalid", errors };
 
   if (!isSupabaseConfigured) {
     return { status: "error", message: "The inquiry form isn't connected yet. Please email me directly instead." };
   }
 
-  const { error } = await createPublicClient().rpc("submit_inquiry", {
-    p_name: values.name,
-    p_email: values.email,
+  const { data: savedId, error } = await createPublicClient().rpc("submit_inquiry", {
+    p_token: token,
+    p_first_name: values.firstName,
+    p_last_name: values.lastName,
     p_phone: values.phone,
-    p_instagram: values.instagram,
+    p_email: values.email,
     p_session_type: values.sessionType,
-    p_referral: values.referral,
+    p_due_date: values.dueDate || null,
+    p_location_preference: values.locationPreference,
     p_location: values.location,
+    p_preferred_days: values.preferredDays,
     p_message: values.message,
-    p_preferred_date: values.preferredDate || null,
+    p_referral: values.referral,
   });
   if (error) {
     console.error("Could not save inquiry:", error.message);
@@ -65,6 +83,9 @@ export async function submitInquiry(
       message: error.code === "P0001" ? error.message : "Sorry, your inquiry couldn't be sent. Please try again, or email me directly.",
     };
   }
+
+  // The database returns nothing for a repeat of a submission it already saved. Say thanks, but don't notify twice.
+  if (!savedId) return { status: "sent" };
 
   // Notifications are best effort: the inquiry is already saved, so none of this can fail the visit.
   try {

@@ -26,22 +26,24 @@ export function isEmailConfigured(env: Record<string, string | undefined> = proc
 }
 
 export function buildInquiryEmail(values: InquiryValues, texts: TextMap, env: Record<string, string | undefined> = process.env) {
-  const sessionKey = values.sessionType === "other" ? "form.sessionType.other" : `category.${values.sessionType}`;
+  const sessionKey = `form.session.${values.sessionType}`;
   const session = texts[sessionKey] ?? textDefaults[sessionKey] ?? values.sessionType;
+  const name = oneLine(`${values.firstName} ${values.lastName}`);
   // Lines the visitor left blank are null and dropped; "" is a deliberate blank line.
   const optional = (label: string, value: string, max = 120) => (value.trim() ? `${label}: ${oneLine(value, max)}` : null);
   const lines: (string | null)[] = [
-    `New inquiry from ${oneLine(values.name)}`,
+    `New inquiry from ${name}`,
     "",
     `Session type: ${session}`,
+    optional("Due date", values.dueDate, 10),
+    `Phone: ${oneLine(values.phone, 40)}`,
     `Email: ${oneLine(values.email, 254)}`,
-    optional("Phone", values.phone, 40),
-    optional("Instagram", values.instagram, 60),
-    optional("Location", values.location),
-    optional("Preferred date", values.preferredDate, 10),
+    optional("Location preference", values.locationPreference, 20),
+    optional("City or area", values.location),
+    `Days that work best: ${values.preferredDays.join(", ")}`,
     optional("Heard about you via", values.referral, 40),
     "",
-    values.message.trim() ? `Message:\n${values.message.trim()}` : "(No message)",
+    `Message:\n${values.message.trim()}`,
     "",
     "Reply to this email to answer them directly. All inquiries are also in your dashboard at /admin/inquiries.",
   ];
@@ -51,7 +53,7 @@ export function buildInquiryEmail(values: InquiryValues, texts: TextMap, env: Re
     to: [env.INQUIRY_NOTIFY_EMAIL!],
     // Replying goes to the customer, not back to the website.
     reply_to: oneLine(values.email, 254),
-    subject: `New inquiry: ${oneLine(values.name, 60)} (${session})`,
+    subject: `New inquiry: ${oneLine(name, 60)} (${session})`,
     text: lines.filter((line): line is string => line !== null).join("\n"),
   };
 }

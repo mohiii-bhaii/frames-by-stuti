@@ -1,94 +1,148 @@
-import { categories } from "@/content/site";
-
 /**
- * Validation shared by the browser form and the server action. The database
- * checks the same rules again, so a request that skips both is still refused.
+ * The long-form inquiry: its fields, options and validation. Shared by the
+ * browser form and the server action. The database checks the same rules again,
+ * so a request that skips both is still refused.
  */
 
-/** Session types are the photography categories, plus "other". Stored by id. */
-export const sessionTypeIds: string[] = [...categories.map((category) => category.id), "other"];
+/** Stored value and the original label. The label shown on the site is editable text (form.session.<value>). */
+export const sessionOptions = [
+  { value: "newborn", label: "Newborn" },
+  { value: "maternity", label: "Maternity" },
+  { value: "cake-smash", label: "Cake Smash" },
+  { value: "family", label: "Family / Lifestyle" },
+  { value: "milestones", label: "Milestones" },
+  { value: "couples", label: "Engagement / Couple" },
+  { value: "portraits", label: "Portraits" },
+  { value: "seniors", label: "Seniors / Graduation" },
+  { value: "events", label: "Events" },
+  { value: "other", label: "Other / Custom Session" },
+] as const;
+
+export const sessionTypeIds: string[] = sessionOptions.map((option) => option.value);
+
+/** Sessions that ask for a due date. */
+export const dueDateSessions: string[] = ["newborn", "maternity"];
+
+export const locationPreferences = ["Studio", "Outdoor", "At Home", "Other"] as const;
+
+export const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as const;
 
 /** Fixed values that are stored. The labels visitors see are editable text. */
-export const referralOptions = ["Instagram", "Google", "Friend or family", "Other"] as const;
+export const referralOptions = ["Instagram", "Google", "Friend or family", "Previous client", "Other"] as const;
 
-export type InquiryField =
-  | "name"
-  | "email"
-  | "phone"
-  | "instagram"
-  | "sessionType"
-  | "referral"
-  | "location"
-  | "message"
-  | "preferredDate";
+/**
+ * A session type for a card's label on the home page. Cards can be renamed in
+ * the editor, so the card says what it is called and this finds the matching
+ * session. Returns "" when nothing matches.
+ */
+export function sessionTypeForLabel(label: string): string {
+  const text = label.toLowerCase();
+  const rules: [RegExp, string][] = [
+    [/newborn/, "newborn"],
+    [/maternity|pregnan/, "maternity"],
+    [/cake/, "cake-smash"],
+    [/senior|graduat/, "seniors"],
+    [/milestone|birthday/, "milestones"],
+    [/engage|couple/, "couples"],
+    [/event/, "events"],
+    [/family|lifestyle/, "family"],
+    [/portrait/, "portraits"],
+  ];
+  return rules.find(([pattern]) => pattern.test(text))?.[1] ?? "";
+}
 
-export type InquiryValues = Record<InquiryField, string>;
+export type InquiryValues = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  sessionType: string;
+  dueDate: string;
+  locationPreference: string;
+  location: string;
+  preferredDays: string[];
+  message: string;
+  referral: string;
+};
+
+export type InquiryField = keyof InquiryValues;
 export type InquiryErrors = Partial<Record<InquiryField, string>>;
 
+/** The order errors are reported and focused in, which follows the form from top to bottom. */
 export const inquiryFields: InquiryField[] = [
-  "name",
-  "email",
+  "firstName",
+  "lastName",
   "phone",
-  "instagram",
+  "email",
   "sessionType",
-  "referral",
+  "dueDate",
+  "locationPreference",
   "location",
+  "preferredDays",
   "message",
-  "preferredDate",
+  "referral",
 ];
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const PHONE = /^[+()\d\s.-]{7,20}$/;
+const PHONE_CHARS = /^[+()\d\s.-]+$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
+const NAME_LIMIT = 80;
 const SHORT_LIMIT = 120;
 export const MESSAGE_LIMIT = 4000;
 
-/** Today as YYYY-MM-DD in the given date's local time. */
-export const isoDate = (date: Date) =>
-  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-
-export function validateInquiry(values: InquiryValues, today = isoDate(new Date())): InquiryErrors {
+export function validateInquiry(values: InquiryValues): InquiryErrors {
   const errors: InquiryErrors = {};
-  const name = values.name.trim();
-  const email = values.email.trim();
+  const firstName = values.firstName.trim();
+  const lastName = values.lastName.trim();
   const phone = values.phone.trim();
-  const date = values.preferredDate.trim();
+  const email = values.email.trim();
+  const digits = phone.replace(/\D/g, "");
 
-  if (!name) errors.name = "Please enter your full name.";
-  else if (name.length > SHORT_LIMIT) errors.name = "Please shorten your name.";
+  if (!firstName) errors.firstName = "Please enter your first name.";
+  else if (firstName.length > NAME_LIMIT) errors.firstName = "Please shorten your first name.";
+
+  if (!lastName) errors.lastName = "Please enter your last name.";
+  else if (lastName.length > NAME_LIMIT) errors.lastName = "Please shorten your last name.";
+
+  if (!phone) errors.phone = "Please enter your phone number.";
+  else if (!PHONE_CHARS.test(phone) || digits.length < 10 || digits.length > 15) {
+    errors.phone = "Please enter a valid phone number with the area code, like 613-555-0142.";
+  }
 
   if (!email) errors.email = "Please enter your email address.";
   else if (email.length > 254 || !EMAIL.test(email)) {
     errors.email = "Please enter a valid email address, like name@example.com.";
   }
 
-  if (phone && !PHONE.test(phone)) {
-    errors.phone = "Please enter a valid phone number, or leave this blank.";
-  }
-
-  if (values.instagram.trim().length > 60) {
-    errors.instagram = "Please shorten your Instagram handle.";
-  }
-
   if (!sessionTypeIds.includes(values.sessionType)) {
-    errors.sessionType = "Please choose a session type.";
+    errors.sessionType = "Please choose the type of session you're looking for.";
   }
+
+  // Only asked of newborn and maternity sessions, so it is ignored for the rest.
+  const dueDate = values.dueDate.trim();
+  if (dueDateSessions.includes(values.sessionType) && dueDate) {
+    if (!DATE.test(dueDate) || Number.isNaN(Date.parse(dueDate))) errors.dueDate = "Please choose a valid date.";
+  }
+
+  if (values.locationPreference && !(locationPreferences as readonly string[]).includes(values.locationPreference)) {
+    errors.locationPreference = "Please choose an option from the list.";
+  }
+
+  if (values.location.trim().length > SHORT_LIMIT) errors.location = "Please shorten the city or area.";
+
+  if (values.preferredDays.length === 0) {
+    errors.preferredDays = "Please choose at least one day that works for you.";
+  } else if (!values.preferredDays.every((day) => (weekdays as readonly string[]).includes(day))) {
+    errors.preferredDays = "Please choose from the days listed.";
+  }
+
+  const message = values.message.trim();
+  if (!message) errors.message = "Please tell us a little about your session.";
+  else if (message.length < 10) errors.message = "Please tell us a little more (at least 10 characters).";
+  else if (message.length > MESSAGE_LIMIT) errors.message = `Please keep this under ${MESSAGE_LIMIT} characters.`;
 
   if (values.referral && !(referralOptions as readonly string[]).includes(values.referral)) {
     errors.referral = "Please choose an option from the list.";
-  }
-
-  if (values.location.trim().length > SHORT_LIMIT) {
-    errors.location = "Please shorten the location.";
-  }
-
-  if (values.message.length > MESSAGE_LIMIT) {
-    errors.message = `Please keep this under ${MESSAGE_LIMIT} characters.`;
-  }
-
-  if (date) {
-    if (!DATE.test(date) || Number.isNaN(Date.parse(date))) errors.preferredDate = "Please choose a valid date.";
-    else if (date < today) errors.preferredDate = "Please choose today or a later date.";
   }
 
   return errors;

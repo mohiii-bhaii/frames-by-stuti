@@ -13,16 +13,23 @@ type Inquiry = {
   id: string;
   created_at: string;
   name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   phone: string;
   instagram: string;
   session_type: string;
-  referral: string;
+  due_date: string | null;
+  location_preference: string;
   location: string;
+  preferred_days: string[];
+  referral: string;
   message: string;
   preferred_date: string | null;
   is_read: boolean;
 };
+
+const locationLabels: Record<string, string> = { Other: "Other / not sure yet" };
 
 export default function InquiriesPage() {
   return (
@@ -65,10 +72,7 @@ async function InquiryList() {
   ]);
   if (error) return <p role="alert" className="text-red-700">Could not load inquiries. Please try again.</p>;
 
-  const sessionLabel = (id: string) => {
-    if (id === "other") return texts["form.sessionType.other"] ?? textDefaults["form.sessionType.other"];
-    return texts[`category.${id}`] ?? textDefaults[`category.${id}`] ?? id;
-  };
+  const sessionLabel = (id: string) => texts[`form.session.${id}`] ?? textDefaults[`form.session.${id}`] ?? id;
 
   const inquiries = data as Inquiry[];
   if (inquiries.length === 0) {
@@ -82,7 +86,7 @@ async function InquiryList() {
           <div className="flex flex-wrap items-start justify-between gap-2">
             <div>
               <p className="flex items-center gap-2 text-base font-semibold">
-                {inquiry.name}
+                {inquiry.first_name ? `${inquiry.first_name} ${inquiry.last_name}`.trim() : inquiry.name}
                 {inquiry.is_read ? null : (
                   <span className="rounded-full bg-[#2f6fed] px-2 py-0.5 text-xs font-medium text-white">New</span>
                 )}
@@ -102,18 +106,32 @@ async function InquiryList() {
           {inquiry.message ? <p className="mt-3 whitespace-pre-wrap text-[15px] leading-relaxed">{inquiry.message}</p> : null}
 
           <dl className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
-            {[
-              ["Phone", inquiry.phone],
-              ["Instagram", inquiry.instagram],
-              ["Location", inquiry.location],
-              ["Preferred date", inquiry.preferred_date ?? ""],
-              ["Heard about you via", inquiry.referral],
-            ]
+            {(
+              [
+                ["Phone", inquiry.phone, inquiry.phone ? `tel:${inquiry.phone.replace(/[^\d+]/g, "")}` : ""],
+                ["Due date", inquiry.due_date ?? "", ""],
+                ["Location preference", locationLabels[inquiry.location_preference] ?? inquiry.location_preference, ""],
+                ["City or area", inquiry.location, ""],
+                ["Days that work best", (inquiry.preferred_days ?? []).join(", "), ""],
+                ["Heard about you via", inquiry.referral, ""],
+                // Older inquiries, from before the long form.
+                ["Instagram", inquiry.instagram, ""],
+                ["Preferred date", inquiry.preferred_date ?? "", ""],
+              ] as [string, string, string][]
+            )
               .filter(([, value]) => value)
-              .map(([label, value]) => (
+              .map(([label, value, link]) => (
                 <div key={label} className="flex gap-2">
-                  <dt className="text-neutral-600">{label}:</dt>
-                  <dd className="break-words">{value}</dd>
+                  <dt className="shrink-0 text-neutral-600">{label}:</dt>
+                  <dd className="break-words">
+                    {link ? (
+                      <a href={link} className="text-[#2f6fed] underline">
+                        {value}
+                      </a>
+                    ) : (
+                      value
+                    )}
+                  </dd>
                 </div>
               ))}
           </dl>

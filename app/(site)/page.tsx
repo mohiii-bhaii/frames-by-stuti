@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { CurvedT, T } from "@/components/editable-text";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
+import { SessionLink } from "@/components/session-link";
 import { ApertureBloom, LeafSprig, Sparkle } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { TestimonialSlider } from "@/components/testimonial-slider";
@@ -185,7 +186,7 @@ export default function HomePage() {
               data-reveal="up"
               style={{ "--reveal-delay": `${index * 0.12}s` } as CSSProperties}
             >
-              <Link href={`/contact?session=${category.id}#inquiry`} className="group block text-center text-espresso">
+              <SessionLink categoryId={category.id} className="group block text-center text-espresso">
                 <span className="relative block overflow-hidden rounded-[12px] shadow-[0_24px_40px_-28px_rgb(53_48_38/0.55)] transition-[translate,box-shadow] duration-700 ease-[var(--ease-soft)] group-hover:-translate-y-1.5 group-hover:shadow-[0_30px_50px_-26px_rgb(53_48_38/0.65)]">
                   <Photo
                     slot={category.image}
@@ -205,7 +206,7 @@ export default function HomePage() {
                   aria-hidden="true"
                 />
                 <T as="h3" id={`category.${category.id}`} className="display text-[34px] md:text-[26px] lg:text-[35px]" />
-              </Link>
+              </SessionLink>
             </li>
           ))}
         </ul>

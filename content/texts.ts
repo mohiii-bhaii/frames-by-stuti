@@ -1,4 +1,5 @@
 import { about, categories, contactLink, faqs, navigation, packageDetails, site, testimonials } from "@/content/site";
+import { locationPreferences, referralOptions, sessionOptions, weekdays } from "@/lib/inquiry";
 
 /**
  * Every editable piece of website text, with its original wording.
@@ -113,33 +114,6 @@ Object.assign(texts, {
   "contact.reach.middle": "or call",
   "contact.reach.after": "Based in",
 
-  // Contact form
-  "form.required": "Fields marked * are required.",
-  "form.name.label": "Your full name",
-  "form.name.placeholder": "Your name here",
-  "form.email.label": "Email",
-  "form.email.placeholder": "name@example.com",
-  "form.phone.label": "Phone number",
-  "form.phone.placeholder": "000-000-0000",
-  "form.instagram.label": "Instagram handle (if you have one)",
-  "form.instagram.placeholder": "@yourhandle",
-  "form.sessionType.label": "Session type",
-  "form.referral.label": "How did you hear about me?",
-  "form.location.label": "Where are you looking for a photographer?",
-  "form.location.placeholder": "City or area, for example Ottawa",
-  "form.message.label": "Tell me about your session",
-  "form.message.placeholder": "The occasion, the people, the feeling you'd like to capture",
-  "form.date.label": "Preferred session date",
-  "form.select.placeholder": "Select an option",
-  "form.sessionType.other": "Other",
-  "form.referral.option.1": "Instagram",
-  "form.referral.option.2": "Google",
-  "form.referral.option.3": "Friend or family referral",
-  "form.referral.option.4": "Other",
-  "form.submit": "Send inquiry",
-  "form.sending": "Sending...",
-  "form.thanks.heading": "thank you!",
-  "form.thanks.text": "Your inquiry is on its way. I'll reply as soon as I can.",
 
   // Footer
   "footer.menu": "Menu",
@@ -152,6 +126,58 @@ Object.assign(texts, {
 
   // Packages: shared button
   "packages.inquire": "Inquire",
+});
+
+// Contact form: every label, hint and option can be edited.
+Object.assign(texts, {
+  "form.required": "Fields marked * are required.",
+  "form.name.heading": "Name",
+  "form.firstName.label": "First name",
+  "form.lastName.label": "Last name",
+  "form.phone.label": "Phone number",
+  "form.phone.placeholder": "(613) 555-0142",
+  "form.email.label": "Email address",
+  "form.email.placeholder": "name@example.com",
+  "form.sessionType.label": "What type of session are you looking for?",
+  "form.select.placeholder": "Select an option",
+  "form.maternity.heading": "Maternity + Newborn Only",
+  "form.dueDate.label": "What is your due date?",
+  "form.locationPreference.label": "Do you have a location preference?",
+  "form.location.label": "Preferred city or area (optional)",
+  "form.location.placeholder": "City or area, for example Ottawa",
+  "form.days.label": "What days of the week work best for you?",
+  "form.days.hint": "Choose all that apply.",
+  "form.message.label": "Tell us more about your session.",
+  "form.message.hint":
+    "Is there something specific you’re hoping for? Tell me about your ideas, the people involved, and the moments you’d love to capture.",
+  "form.referral.label": "How did you hear about Frames by Stuti?",
+  "form.submit": "Submit inquiry",
+  "form.sending": "Sending...",
+  "form.thanks.heading": "thank you!",
+  "form.thanks.text": "Your inquiry is on its way. I'll reply as soon as I can.",
+});
+for (const option of sessionOptions) texts[`form.session.${option.value}`] = option.label;
+const locationLabels: Record<(typeof locationPreferences)[number], string> = {
+  Studio: "Studio",
+  Outdoor: "Outdoor",
+  "At Home": "At Home",
+  Other: "Other / Not Sure Yet",
+};
+locationPreferences.forEach((value, index) => {
+  texts[`form.locationPreference.option.${index + 1}`] = locationLabels[value];
+});
+const referralLabels: Record<(typeof referralOptions)[number], string> = {
+  Instagram: "Instagram",
+  Google: "Google Search",
+  "Friend or family": "Friend or Family Referral",
+  "Previous client": "Previous Client",
+  Other: "Other",
+};
+referralOptions.forEach((value, index) => {
+  texts[`form.referral.option.${index + 1}`] = referralLabels[value];
+});
+weekdays.forEach((day, index) => {
+  texts[`form.day.${index + 1}`] = day;
 });
 
 for (const category of categories) {
