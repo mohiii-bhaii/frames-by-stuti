@@ -68,7 +68,7 @@ export const TIERS_PER_CATEGORY = 4;
 export const tierNumbers = Array.from({ length: TIERS_PER_CATEGORY }, (_, index) => index + 1);
 
 /** Fields of one package tier, in the order they appear on the page. */
-export const tierFields = ["name", "price", "duration", "details", "includes", "location", "sessions", "individual", "savings"] as const;
+export const tierFields = ["name", "price", "caption", "details", "duration", "includes", "location", "sessions", "individual", "savings", "note"] as const;
 export type TierField = (typeof tierFields)[number];
 
 export const tierKey = (slug: string, n: number, field: TierField) => `pricing.${slug}.t${n}.${field}`;
@@ -101,11 +101,11 @@ export const pricingTexts: Record<string, string> = {
   "pricing.back": "All pricing & packages",
   "pricing.more": "More session types",
   "pricing.label.duration": "Session length",
-  "pricing.label.includes": "What's included",
+  "pricing.label.includes": "This package includes:",
   "pricing.label.location": "Outfits & location",
   "pricing.label.sessions": "Sessions included",
   "pricing.label.individual": "Individual prices",
-  "pricing.label.savings": "You save",
+  "pricing.label.savings": "Total savings:",
 };
 
 for (const category of pricingCategories) {
@@ -113,6 +113,7 @@ for (const category of pricingCategories) {
   Object.assign(pricingTexts, {
     [`${base}.name`]: category.name,
     [`${base}.title`]: category.name,
+    [`${base}.subtitle`]: "",
     [`${base}.intro`]: category.intro,
     [`${base}.packages.heading`]: category.kind === "bundle" ? "Bundles" : category.kind === "event" ? "Event packages" : "Packages",
     [`${base}.empty`]: "Packages and pricing for this session are shared on inquiry. Send a message and I will reply with the details.",
@@ -128,7 +129,9 @@ const fieldLabels: Record<TierField, string> = {
   price: "Price (leave empty to show “Inquire for pricing”)",
   duration: "Session length",
   details: "Description",
-  includes: "What's included (one item per line)",
+  caption: "Caption under the package photo",
+  note: "Footnotes (shown in italics, one per line)",
+  includes: "What's included (one item per line; start a line with - for an indented sub-item)",
   location: "Outfits & location",
   sessions: "Sessions included (bundles)",
   individual: "Individual prices (bundles)",
@@ -146,6 +149,7 @@ export function pricingTextLabel(key: string): string | null {
   const names: Record<string, string> = {
     name: "Name in menus and cards",
     title: "Page heading",
+    subtitle: "Subtitle under the heading",
     intro: "Introduction",
     "packages.heading": "Packages heading",
     empty: "Message while no package is published",
