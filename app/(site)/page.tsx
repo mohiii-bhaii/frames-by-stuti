@@ -145,7 +145,7 @@ export default function HomePage() {
               <T as="p" id="home.belief.p2" />
             </div>
             <div className="mt-7">
-              <Link href="/services" className="btn">
+              <Link href="/pricing" className="btn">
                 <T id="home.belief.button" />
               </Link>
             </div>

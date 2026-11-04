@@ -168,6 +168,12 @@ export function ContactForm() {
     () => new URLSearchParams(window.location.search).get("session") ?? "",
     () => "",
   );
+  // A pricing page can also say which package the visitor is asking about.
+  const requestedPackage = useSyncExternalStore(
+    subscribeNever,
+    () => (new URLSearchParams(window.location.search).get("package") ?? "").slice(0, 120),
+    () => "",
+  );
   const [picked, setPicked] = useState<string | null>(null);
   const session = picked ?? (sessionTypeIds.includes(requested) ? requested : "");
   const askDueDate = dueDateSessions.includes(session);
@@ -355,7 +361,12 @@ export function ContactForm() {
 
       <Field name="message" labelId="form.message.label" hintId="form.message.hint" required variant="question" index={8} errors={errors}>
         {(props) => (
-          <textarea {...props} rows={6} maxLength={MESSAGE_LIMIT} className={`${props.className} min-h-[170px] resize-y leading-relaxed`} />
+          <textarea
+            {...props}
+            key={requestedPackage}
+            defaultValue={requestedPackage ? `I'd like to ask about the "${requestedPackage}" package.` : ""}
+            rows={6}
+            maxLength={MESSAGE_LIMIT} className={`${props.className} min-h-[170px] resize-y leading-relaxed`} />
         )}
       </Field>
 

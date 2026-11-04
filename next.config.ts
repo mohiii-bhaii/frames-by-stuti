@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: supabaseUrl ? [new URL("/storage/v1/object/public/site-photos/**", supabaseUrl)] : [],
   },
+  // The old Services page now lives at /pricing. Temporary on purpose, until the new pages are confirmed.
+  async redirects() {
+    return [{ source: "/services", destination: "/pricing", permanent: false }];
+  },
   experimental: {
     agentFeedback: true,
   },

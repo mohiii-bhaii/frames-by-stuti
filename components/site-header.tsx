@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { T } from "@/components/editable-text";
+import { pricingCategories, pricingHref } from "@/content/pricing";
 import { contactLink, navigation } from "@/content/site";
 import { navKey } from "@/content/texts";
 import { FullLogo, Wordmark } from "@/components/logo";
@@ -20,6 +21,8 @@ export function SiteHeader() {
   const current = mounted ? pathname : null;
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+  // "main" is the menu; "pricing" is the Pricing & Packages sub-menu with its own Back button.
+  const [view, setView] = useState<"main" | "pricing">("main");
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -32,7 +35,10 @@ export function SiteHeader() {
     };
   }, [isOpen]);
 
-  const close = () => setIsOpen(false);
+  const close = () => {
+    setIsOpen(false);
+    setView("main");
+  };
 
   return (
     <>
@@ -90,34 +96,87 @@ export function SiteHeader() {
             </svg>
           </button>
 
+          {view === "pricing" ? (
+            <button
+              type="button"
+              onClick={() => setView("main")}
+              className="eyebrow absolute left-3 top-3 flex min-h-11 items-center gap-2 px-2 text-[13px] text-walnut transition-colors duration-500 hover:text-rust"
+            >
+              <span aria-hidden="true">←</span>
+              <T id="nav.pricing.back" plain />
+            </button>
+          ) : null}
+
           <FullLogo link={false} className="w-[190px] md:w-[220px]" />
 
-          <nav aria-label="Main" className="mt-6 md:mt-0">
-            <ul className="flex flex-col items-center gap-6 text-center text-xl uppercase md:gap-5 md:text-[15px] md:tracking-[0.06em]">
-              {navigation.map((item) => (
-                <li key={item.href}>
+          {view === "pricing" ? (
+            <nav aria-label="Pricing & Packages" key="pricing" className="mt-6 animate-[fade-in_0.4s_ease] md:mt-0">
+              <ul className="flex flex-col items-center gap-5 text-center text-xl uppercase md:gap-4 md:text-[15px] md:tracking-[0.06em]">
+                <li>
                   <Link
-                    href={item.href}
+                    href="/pricing"
                     onClick={close}
-                    aria-current={current === item.href ? "page" : undefined}
-                    className="transition-colors duration-500 hover:text-terracotta aria-[current=page]:underline aria-[current=page]:underline-offset-6"
+                    aria-current={current === "/pricing" ? "page" : undefined}
+                    className="text-rust transition-colors duration-500 hover:text-terracotta aria-[current=page]:underline aria-[current=page]:underline-offset-6"
                   >
-                    <T id={navKey(item.href)} plain />
+                    <T id="nav.pricing.all" plain />
                   </Link>
                 </li>
-              ))}
-              <li className="mt-5 text-[28px] text-rust md:mt-3 md:text-[19px]">
-                <Link
-                  href={contactLink.href}
-                  onClick={close}
-                  aria-current={current === contactLink.href ? "page" : undefined}
-                  className="transition-colors duration-500 hover:text-terracotta aria-[current=page]:underline aria-[current=page]:underline-offset-6"
-                >
-                  <T id={navKey(contactLink.href)} plain />
-                </Link>
-              </li>
-            </ul>
-          </nav>
+                {pricingCategories.map((category) => (
+                  <li key={category.slug}>
+                    <Link
+                      href={pricingHref(category.slug)}
+                      onClick={close}
+                      aria-current={current === pricingHref(category.slug) ? "page" : undefined}
+                      className="transition-colors duration-500 hover:text-terracotta aria-[current=page]:underline aria-[current=page]:underline-offset-6"
+                    >
+                      <T id={`pricing.${category.slug}.name`} plain />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ) : (
+            <nav aria-label="Main" key="main" className="mt-6 animate-[fade-in_0.4s_ease] md:mt-0">
+              <ul className="flex flex-col items-center gap-6 text-center text-xl uppercase md:gap-5 md:text-[15px] md:tracking-[0.06em]">
+                {navigation.map((item) => (
+                  <li key={item.href}>
+                    {item.href === "/pricing" ? (
+                      <button
+                        type="button"
+                        onClick={() => setView("pricing")}
+                        aria-haspopup="true"
+                        aria-current={current?.startsWith("/pricing") ? "page" : undefined}
+                        className="inline-flex items-center gap-2 uppercase transition-colors duration-500 hover:text-terracotta aria-[current=page]:underline aria-[current=page]:underline-offset-6"
+                      >
+                        <T id={navKey(item.href)} plain />
+                        <span aria-hidden="true">→</span>
+                      </button>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        onClick={close}
+                        aria-current={current === item.href ? "page" : undefined}
+                        className="transition-colors duration-500 hover:text-terracotta aria-[current=page]:underline aria-[current=page]:underline-offset-6"
+                      >
+                        <T id={navKey(item.href)} plain />
+                      </Link>
+                    )}
+                  </li>
+                ))}
+                <li className="mt-5 text-[28px] text-rust md:mt-3 md:text-[19px]">
+                  <Link
+                    href={contactLink.href}
+                    onClick={close}
+                    aria-current={current === contactLink.href ? "page" : undefined}
+                    className="transition-colors duration-500 hover:text-terracotta aria-[current=page]:underline aria-[current=page]:underline-offset-6"
+                  >
+                    <T id={navKey(contactLink.href)} plain />
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          )}
 
           <SocialLinks includeEmail className="mt-10 gap-4 text-rust md:mt-0" iconClassName="h-7 w-7 md:h-6 md:w-6" />
         </div>

@@ -27,7 +27,7 @@ export const navigation = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/services", label: "Services" },
+  { href: "/pricing", label: "Pricing & Packages" },
 ] as const;
 
 export const contactLink = { href: "/contact", label: "Contact" } as const;

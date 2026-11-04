@@ -1,4 +1,5 @@
 import { about, categories, sessionCards, contactLink, faqs, navigation, packageDetails, site, testimonials } from "@/content/site";
+import { pricingCategories, pricingHref, pricingTexts, pricingTextLabel } from "@/content/pricing";
 import { locationPreferences, referralOptions, sessionOptions, weekdays } from "@/lib/inquiry";
 
 /**
@@ -25,6 +26,7 @@ areaKeys.forEach((key, index) => {
   texts[key] = site.serviceAreas[index];
 });
 for (const category of sessionCards) texts[`category.${category.id}`] = category.label;
+Object.assign(texts, pricingTexts);
 
 // Business details. Social links are hidden on the site while they are empty.
 Object.assign(texts, {
@@ -257,6 +259,12 @@ const groupRoutes: Record<string, string[]> = {
 };
 
 export function textAppearsOn(key: string, pathname: string) {
+  const [group, second] = key.split(".");
+  if (group === "pricing") {
+    const category = pricingCategories.find((item) => item.slug === second);
+    return pathname === pricingHref(category?.slug);
+  }
+  if (key.startsWith("nav.pricing.")) return true;
   const routes = groupRoutes[key.split(".")[0]];
   return !routes || routes.includes(pathname);
 }
@@ -276,6 +284,7 @@ const groupNames: Record<string, string> = {
   form: "Contact form",
   site: "Contact details",
   header: "Header",
+  pricing: "Pricing & Packages",
 };
 
 const words = (part: string) =>
@@ -286,6 +295,8 @@ const words = (part: string) =>
 /** A readable name for the editor, such as "Home · Belief heading". */
 export function textLabel(key: string) {
   if (labelOverrides[key]) return labelOverrides[key];
+  const pricingLabel = pricingTextLabel(key);
+  if (pricingLabel) return pricingLabel;
   const [group, ...rest] = key.split(".");
   if (group === "faq") return `FAQ · ${rest[1] === "q" ? "Question" : "Answer"} ${rest[0]}`;
   const tail = rest.map((part) => (/^\d+$/.test(part) ? part : words(part))).join(" ");

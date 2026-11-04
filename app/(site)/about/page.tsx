@@ -101,7 +101,7 @@ export default function AboutPage() {
               data-reveal="up"
               className="mt-6 text-[16px] tracking-[0.05em] lg:text-[18px] lg:leading-[1.6] lg:tracking-[0.08em]"
             />
-            <Link href="/services" className="btn mt-9">
+            <Link href="/pricing" className="btn mt-9">
               <T id="about.why.button" />
             </Link>
           </div>

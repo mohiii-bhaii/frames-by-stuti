@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { openEditor, signOut } from "@/app/admin/auth-actions";
 import { FullLogo } from "@/components/logo";
+import { pricingCategories, pricingHref } from "@/content/pricing";
 import { contactLink, navigation } from "@/content/site";
 import { requireAdminPage } from "@/lib/auth";
 
@@ -52,6 +53,23 @@ async function Dashboard() {
                 }`}
               >
                 {page.href === "/" ? "Edit website, starting at Home" : `Edit ${page.label}`}
+              </button>
+            </form>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-4 rounded-2xl bg-white p-5 shadow-sm">
+        <h2 className="text-lg font-semibold">Pricing &amp; Packages</h2>
+        <p className="mt-1 text-sm text-neutral-700">
+          Opens a pricing page in edit mode. Click any name, price, description or photo to change it. A package with no name stays hidden. Press Publish when you are ready.
+        </p>
+        <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+          {[{ href: pricingHref(), label: "Pricing & Packages (overview)" }, ...pricingCategories.map((category) => ({ href: pricingHref(category.slug), label: category.name }))].map((page) => (
+            <form key={page.href} action={openEditor}>
+              <input type="hidden" name="path" value={page.href} />
+              <button type="submit" className="min-h-12 w-full rounded-lg border border-neutral-300 px-4 text-left font-medium">
+                Edit {page.label}
               </button>
             </form>
           ))}

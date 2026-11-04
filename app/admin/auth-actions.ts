@@ -2,13 +2,14 @@
 
 import { draftMode } from "next/headers";
 import { redirect } from "next/navigation";
+import { pricingPaths } from "@/content/pricing";
 import { getAdminSession } from "@/lib/auth";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createSessionClient } from "@/lib/supabase/server";
 
 export type LoginState = { error?: string; email?: string };
 
-const sitePaths = new Set(["/", "/about", "/portfolio", "/services", "/contact"]);
+const sitePaths = new Set(["/", "/about", "/portfolio", "/services", "/contact", ...pricingPaths]);
 
 export async function signIn(_previous: LoginState, formData: FormData): Promise<LoginState> {
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
