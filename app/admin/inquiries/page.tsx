@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { setInquiryRead } from "@/app/admin/inquiry-actions";
 import { textDefaults } from "@/content/texts";
 import { requireAdminPage } from "@/lib/auth";
+import { isEmailConfigured } from "@/lib/inquiry-email";
 import { getPublishedTexts } from "@/lib/site-texts";
 
 export const metadata: Metadata = { title: "Inquiries" };
@@ -31,6 +32,16 @@ export default function InquiriesPage() {
       </Link>
       <h1 className="mt-2 text-xl font-semibold">Inquiries</h1>
       <p className="mt-1 text-sm text-neutral-600">Messages sent from the Contact page. Only you can see these.</p>
+      {isEmailConfigured() ? (
+        <p className="mt-3 rounded-lg bg-emerald-50 p-3 text-sm text-emerald-900">
+          Email notifications are on. You get an email for each new inquiry, and you can reply to it directly.
+        </p>
+      ) : (
+        <p className="mt-3 rounded-lg bg-amber-50 p-3 text-sm text-amber-900">
+          Email notifications are off, so new inquiries only appear here. To turn them on, add <code>RESEND_API_KEY</code> and{" "}
+          <code>INQUIRY_NOTIFY_EMAIL</code> in Vercel (steps are in the README).
+        </p>
+      )}
       <div className="mt-6">
         <Suspense fallback={<p className="text-neutral-600">Loading…</p>}>
           <InquiryList />

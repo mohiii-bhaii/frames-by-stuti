@@ -36,7 +36,17 @@ The form validates in the browser and again on the server, then saves the inquir
 
 Run `supabase/migrations/20261105000000_inquiries.sql` once to create it (it is already applied to the live project).
 
-**Email notifications are not set up.** Saving an inquiry does not email anyone. To be notified, set the `CONTACT_WEBHOOK_URL` environment variable (in `.env.local` and in Vercel) to any service that accepts a webhook, such as an automation tool or email service. Each saved inquiry is then also sent there as JSON. A failing webhook never affects the visitor.
+**Email notifications** use [Resend](https://resend.com) (free for this volume). They are off until you set two environment variables, in `.env.local` and in Vercel (Project, Settings, Environment Variables, then redeploy):
+
+| Variable | Value |
+| --- | --- |
+| `RESEND_API_KEY` | An API key from Resend (**API Keys**, then **Create API Key**, "Sending access"). Mark it **Sensitive** in Vercel. |
+| `INQUIRY_NOTIFY_EMAIL` | The address that should receive each inquiry. |
+| `INQUIRY_FROM_EMAIL` | Optional. Leave it out to use Resend's test sender, `onboarding@resend.dev`. |
+
+The test sender can only deliver to the email address the Resend account was created with, so sign up to Resend with the address you want the notifications at. To send from your own domain instead, verify the domain in Resend and set `INQUIRY_FROM_EMAIL` to something like `Frames by Stuti <hello@yourdomain.com>`. Each email's Reply-To is the customer, so replying answers them directly. The Inquiries page in the dashboard says whether notifications are on. A failed email never affects the visitor, and the inquiry is always saved first.
+
+You can also forward each inquiry as JSON to any webhook service:
 
 ```bash
 CONTACT_WEBHOOK_URL=https://your-service.example/webhook

@@ -7,6 +7,8 @@ import {
   type InquiryState,
   type InquiryValues,
 } from "@/lib/inquiry";
+import { sendInquiryEmail } from "@/lib/inquiry-email";
+import { getPublishedTexts } from "@/lib/site-texts";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createPublicClient } from "@/lib/supabase/server";
 
@@ -15,9 +17,10 @@ const MIN_FILL_MS = 2500;
 
 /**
  * Validates an inquiry and stores it in Supabase, where only the signed-in
- * owner can read it. If CONTACT_WEBHOOK_URL is set, the inquiry is also
- * forwarded there as JSON (for example to an email or automation service), but
- * the visitor's inquiry counts as received once it is saved.
+ * owner can read it. It is then emailed to the owner if email notifications
+ * are set up (see lib/inquiry-email.ts), and forwarded as JSON to
+ * CONTACT_WEBHOOK_URL if that is set. The inquiry counts as received once it
+ * is saved, whatever happens after.
  */
 export async function submitInquiry(
   _previous: InquiryState,
@@ -61,6 +64,13 @@ export async function submitInquiry(
       status: "error",
       message: error.code === "P0001" ? error.message : "Sorry, your inquiry couldn't be sent. Please try again, or email me directly.",
     };
+  }
+
+  // Notifications are best effort: the inquiry is already saved, so none of this can fail the visit.
+  try {
+    await sendInquiryEmail(values, await getPublishedTexts());
+  } catch (emailError) {
+    console.error("Inquiry email failed:", emailError);
   }
 
   const webhook = process.env.CONTACT_WEBHOOK_URL;
