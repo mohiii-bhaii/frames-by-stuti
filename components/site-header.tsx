@@ -2,16 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { T } from "@/components/editable-text";
 import { contactLink, navigation } from "@/content/site";
 import { navKey } from "@/content/texts";
 import { FullLogo, Wordmark } from "@/components/logo";
 import { SocialLinks } from "@/components/social-links";
 
+const subscribeNever = () => () => {};
+
 export function SiteHeader() {
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  // False on the server and while hydrating, true afterwards. The URL the server
+  // sees for a prerendered page isn't always the visitor's, so anything that
+  // reads the pathname waits until the browser has taken over.
+  const mounted = useSyncExternalStore(subscribeNever, () => true, () => false);
+  const current = mounted ? pathname : null;
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,32 +33,35 @@ export function SiteHeader() {
   }, [isOpen]);
 
   const close = () => setIsOpen(false);
-  const tone = isHome ? "text-espresso" : "text-cream";
 
   return (
     <>
-      <header className={`absolute inset-x-0 top-0 z-30 ${tone}`}>
-        {isHome ? (
-          <div className="relative mx-auto h-[150px] max-w-[1440px] md:h-[100px]">
-            <T
-              as="p"
-              id="header.eyebrow"
-              className="eyebrow absolute left-[23px] top-[14px] hidden w-[215px] text-[16px] leading-normal tracking-normal lg:block"
-            />
-            <Wordmark priority className="absolute left-1/2 top-[62px] h-[58px] -translate-x-1/2 md:top-[22px] md:h-[62px]" />
-          </div>
-        ) : (
-          <Wordmark tone="light" priority className="absolute left-4 top-3 h-[46px] md:left-[23px] md:top-4 md:h-[54px]" />
-        )}
+      {/*
+        The homepage and the other pages draw the header differently. Both
+        versions are in the HTML and CSS shows one, keyed on the homepage's
+        [data-page-home] marker (see globals.css). That keeps the server's HTML
+        and the browser's identical, with no flash and no mismatch.
+      */}
+      <header className="site-header absolute inset-x-0 top-0 z-30">
+        <div className="header-home relative mx-auto h-[150px] max-w-[1440px] md:h-[100px]">
+          <T
+            as="p"
+            id="header.eyebrow"
+            className="eyebrow absolute left-[23px] top-[14px] hidden w-[215px] text-[16px] leading-normal tracking-normal lg:block"
+          />
+          <Wordmark priority className="absolute left-1/2 top-[62px] h-[58px] -translate-x-1/2 md:top-[22px] md:h-[62px]" />
+        </div>
+        <Wordmark
+          tone="light"
+          className="header-inner absolute left-4 top-3 h-[46px] md:left-[23px] md:top-4 md:h-[54px]"
+        />
         <button
           type="button"
           onClick={() => setIsOpen(true)}
           aria-label="Open menu"
           aria-haspopup="dialog"
           aria-expanded={isOpen}
-          className={`absolute top-1 flex h-12 w-14 items-center justify-center md:right-3 md:top-1 ${
-            isHome ? "left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0" : "right-1"
-          }`}
+          className="header-burger absolute right-1 top-1 flex h-12 w-14 items-center justify-center md:right-3 md:top-1"
         >
           <svg viewBox="0 0 52 20" className="w-[42px] md:w-[50px]" fill="none" stroke="currentColor" strokeWidth="1.800" aria-hidden="true">
             <path d="M1 2h50M1 10h50M1 18h50" />
@@ -90,7 +99,7 @@ export function SiteHeader() {
                   <Link
                     href={item.href}
                     onClick={close}
-                    aria-current={pathname === item.href ? "page" : undefined}
+                    aria-current={current === item.href ? "page" : undefined}
                     className="transition-colors duration-500 hover:text-terracotta aria-[current=page]:underline aria-[current=page]:underline-offset-6"
                   >
                     <T id={navKey(item.href)} plain />
@@ -101,7 +110,7 @@ export function SiteHeader() {
                 <Link
                   href={contactLink.href}
                   onClick={close}
-                  aria-current={pathname === contactLink.href ? "page" : undefined}
+                  aria-current={current === contactLink.href ? "page" : undefined}
                   className="transition-colors duration-500 hover:text-terracotta aria-[current=page]:underline aria-[current=page]:underline-offset-6"
                 >
                   <T id={navKey(contactLink.href)} plain />

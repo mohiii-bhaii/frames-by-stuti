@@ -23,6 +23,9 @@ function VerticalWords({ className = "" }: { className?: string }) {
 export default function HomePage() {
   return (
     <>
+      {/* Tells the header it is on the homepage (see globals.css). */}
+      <span hidden data-page-home />
+
       {/* Hero */}
       <section className="paper relative h-[190vw] max-h-[900px] min-h-[640px] md:h-svh md:max-h-none md:min-h-[720px]">
         <h1 className="sr-only">

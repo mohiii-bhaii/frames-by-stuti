@@ -379,3 +379,41 @@ dialog.lightbox[open] {
 body {
   overflow-wrap: break-word;
 }
+
+/* Site header. The homepage draws it centred in espresso; every other page
+   draws it top-left in cream. The homepage carries a [data-page-home] marker,
+   and the header follows it here, so the choice never depends on the URL the
+   server believes it is rendering. */
+.site-header {
+  color: var(--color-cream);
+}
+
+.header-home {
+  display: none;
+}
+
+body:has([data-page-home]) .site-header {
+  color: var(--color-espresso);
+}
+
+body:has([data-page-home]) .header-home {
+  display: block;
+}
+
+body:has([data-page-home]) .header-inner {
+  display: none;
+}
+
+body:has([data-page-home]) .header-burger {
+  left: 50%;
+  right: auto;
+  translate: -50% 0;
+}
+
+@media (min-width: 48rem) {
+  body:has([data-page-home]) .header-burger {
+    left: auto;
+    right: 0.75rem;
+    translate: none;
+  }
+}
