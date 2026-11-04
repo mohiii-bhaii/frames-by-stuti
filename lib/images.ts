@@ -49,6 +49,7 @@ export const imageSlots = {
   "session-couples": { ...SQUARE, scene: "field", alt: "Placeholder: couples session" },
   "session-family": { ...SQUARE, scene: "window", alt: "Placeholder: family session" },
   "session-milestones": { ...SQUARE, scene: "soft", alt: "Placeholder: milestone session" },
+  "session-events": { ...SQUARE, scene: "field", alt: "Placeholder: events photography" },
   "home-testimonial": { ...SQUARE, scene: "field", alt: "Placeholder: client photograph" },
 
   // Footer

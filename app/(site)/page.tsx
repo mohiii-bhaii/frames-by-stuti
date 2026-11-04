@@ -6,7 +6,7 @@ import { SessionLink } from "@/components/session-link";
 import { ApertureBloom, LeafSprig, Sparkle } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { TestimonialSlider } from "@/components/testimonial-slider";
-import { categories, site } from "@/content/site";
+import { sessionCards, site } from "@/content/site";
 import { ScrollMotion } from "@/components/scroll-motion";
 
 function VerticalWords({ className = "" }: { className?: string }) {
@@ -179,10 +179,11 @@ export default function HomePage() {
         />
         {/* ...and fades into the cream testimonials below. */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[90px] bg-gradient-to-b from-transparent to-cream" />
-        <ul className="relative mx-auto grid max-w-[270px] grid-cols-1 gap-y-12 py-14 md:max-w-[1200px] md:grid-cols-4 md:gap-x-5 md:px-6 lg:gap-x-7 lg:px-[29px] lg:pb-[80px] lg:pt-[84px]">
-          {categories.map((category, index) => (
+        <ul className="relative mx-auto grid max-w-[270px] grid-cols-1 gap-y-12 py-14 md:max-w-[1200px] md:grid-cols-8 md:gap-x-5 md:px-6 lg:gap-x-7 lg:px-[29px] lg:pb-[80px] lg:pt-[84px]">
+          {sessionCards.map((category, index) => (
             <li
               key={category.id}
+              className={index === 4 ? "md:col-span-2 md:col-start-4" : "md:col-span-2"}
               data-reveal="up"
               style={{ "--reveal-delay": `${index * 0.12}s` } as CSSProperties}
             >

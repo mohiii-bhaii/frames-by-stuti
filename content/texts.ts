@@ -1,4 +1,4 @@
-import { about, categories, contactLink, faqs, navigation, packageDetails, site, testimonials } from "@/content/site";
+import { about, categories, sessionCards, contactLink, faqs, navigation, packageDetails, site, testimonials } from "@/content/site";
 import { locationPreferences, referralOptions, sessionOptions, weekdays } from "@/lib/inquiry";
 
 /**
@@ -24,7 +24,7 @@ export const areaKeys = site.serviceAreas.map((_, index) => `site.area.${index +
 areaKeys.forEach((key, index) => {
   texts[key] = site.serviceAreas[index];
 });
-for (const category of categories) texts[`category.${category.id}`] = category.label;
+for (const category of sessionCards) texts[`category.${category.id}`] = category.label;
 
 // Business details. Social links are hidden on the site while they are empty.
 Object.assign(texts, {

@@ -41,6 +41,16 @@ export const categories = [
 
 export type CategoryId = (typeof categories)[number]["id"];
 
+/**
+ * The cards in the home page's "Choose your session" section. These are the
+ * categories above plus Events, which has a card (and an editable title and
+ * photo) but no Services packages or Portfolio filter yet.
+ */
+export const sessionCards = [
+  ...categories,
+  { id: "events", label: "Events", image: "session-events" },
+] as const;
+
 export const testimonials = [
   {
     quote:
