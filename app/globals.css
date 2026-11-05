@@ -10,6 +10,8 @@
   --color-tan: #af9774;
   /* A light, soft clay: terracotta washed out toward the cream. */
   --color-clay: #dcc3ae;
+  /* The soft, pencil-like brown of the line-art decorations. */
+  --color-pencil: #8e7b6a;
 
   --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-bodoni), ui-serif, Georgia, serif;
@@ -424,26 +426,19 @@ body:has([data-page-home]) .header-home {
   display: block;
 }
 
-/* Phone homepage only: a short, editorial header. A centred menu icon with the
-   brand name underneath replaces the large camera logo. Tablet, desktop and
-   every other page keep the logo header. */
-.header-brand {
-  display: none;
-}
-
+/* Phone homepage only: a compact header. The menu icon is centred at the top and the
+   logo sits under it at about 72% of its usual phone size. Tablet, desktop and every
+   other page keep the standard header. */
 @media (max-width: 47.999rem) {
   body:has([data-page-home]) .header-logo {
-    display: none;
-  }
-
-  body:has([data-page-home]) .header-brand {
-    display: flex;
+    top: 52px;
+    width: 137px;
   }
 
   body:has([data-page-home]) .header-burger {
     left: 50%;
     right: auto;
-    top: 10px;
+    top: 6px;
     transform: translateX(-50%);
   }
 }

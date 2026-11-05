@@ -29,7 +29,7 @@ export default function HomePage() {
       <HomeMarker />
 
       {/* Hero */}
-      <section className="paper relative overflow-x-clip h-[calc(196vw-48px)] max-h-[920px] min-h-[640px] md:h-[calc(100svh+123px)] md:max-h-none md:min-h-[843px] lg:h-[calc(100svh+159px)] lg:min-h-[879px]">
+      <section className="paper relative overflow-x-clip h-[calc(196vw+4px)] max-h-[920px] min-h-[640px] md:h-[calc(100svh+123px)] md:max-h-none md:min-h-[843px] lg:h-[calc(100svh+159px)] lg:min-h-[879px]">
         <h1 className="sr-only">
           {site.name}: {site.location} photographer
         </h1>
@@ -40,7 +40,7 @@ export default function HomePage() {
           before). The flower is placed on the outer box's top-right corner, so it
           stays on that corner at every screen size and whatever photo is showing.
         */}
-        <div className="absolute inset-x-[15%] bottom-[5%] top-[140px] md:inset-x-[12.150%] md:bottom-2 md:top-[224px] lg:top-[260px]">
+        <div className="absolute inset-x-[15%] bottom-[5%] top-[192px] md:inset-x-[12.150%] md:bottom-2 md:top-[224px] lg:top-[260px]">
           <div
             data-parallax="0.04"
             data-zoom
@@ -55,12 +55,12 @@ export default function HomePage() {
           {/* Centred 16px in from the box corner along both edges, which puts about half of the round flower inside the curved frame and half outside. Not interactive. */}
           <ApertureBloom className="pointer-events-none absolute right-0 top-0 z-10 hidden w-[74px] translate-x-[calc(50%-16px)] -translate-y-[calc(50%-16px)] text-walnut md:block" />
           {/* Phone: a dragonfly hovering over the frame's top-right corner, about half outside and half inside. */}
-          <Dragonfly className="pointer-events-none overflow-visible absolute right-0 top-0 z-10 w-[clamp(84px,27vw,108px)] translate-x-[34%] -translate-y-[40%] text-espresso md:hidden" />
+          <Dragonfly className="pointer-events-none overflow-visible absolute right-0 top-0 z-10 w-[clamp(66px,21vw,84px)] translate-x-[32%] -translate-y-[42%] text-pencil opacity-90 md:hidden" />
           {/* Phone: a branch reaching in from outside the frame at the lower-left corner. */}
-          <BotanicalBranch className="pointer-events-none absolute bottom-[-3%] left-0 z-10 w-[178px] -translate-x-[40%] origin-bottom-left -rotate-[14deg] text-espresso md:hidden" />
+          <BotanicalBranch className="pointer-events-none absolute bottom-[-3%] left-0 z-10 w-[124px] -translate-x-[42%] origin-bottom-left -rotate-[10deg] text-pencil opacity-90 md:hidden" />
         </div>
-        <VerticalWords className="absolute left-[10.200%] top-[43%] origin-center -translate-x-1/2 -translate-y-1/2 -rotate-90 md:left-[10.700%] md:top-[60%] lg:top-[62%]" />
-        <VerticalWords className="absolute right-[10.200%] top-[66%] origin-center translate-x-1/2 -translate-y-1/2 rotate-90 md:right-[10.700%] md:top-[60%] lg:top-[62%]" />
+        <VerticalWords className="absolute left-[10.200%] top-[47%] origin-center -translate-x-1/2 -translate-y-1/2 -rotate-90 md:left-[10.700%] md:top-[60%] lg:top-[62%]" />
+        <VerticalWords className="absolute right-[10.200%] top-[68%] origin-center translate-x-1/2 -translate-y-1/2 rotate-90 md:right-[10.700%] md:top-[60%] lg:top-[62%]" />
         <LeafSprig data-speed="0.35" className="absolute -left-2 bottom-[2%] hidden w-[120px] text-walnut md:bottom-[-6px] md:block md:left-[1.500%] md:w-[270px]" />
         <T
           as="p"
