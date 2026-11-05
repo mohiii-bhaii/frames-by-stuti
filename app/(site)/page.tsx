@@ -4,7 +4,7 @@ import { CurvedT, SplitT, T } from "@/components/editable-text";
 import { HomeMarker } from "@/components/home-marker";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
 import { SessionLink } from "@/components/session-link";
-import { ApertureBloom, BotanicalBranch, Dragonfly, LeafSprig, PoppyOutline, Sparkle } from "@/components/line-art";
+import { ApertureBloom, BotanicalBranch, Dragonfly, FlowerOutline, LeafSprig, Sparkle } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { sessionCards, site } from "@/content/site";
@@ -98,10 +98,8 @@ export default function HomePage() {
 
           <div className="mt-9 grid items-center gap-y-8 md:mt-14 md:gap-y-10 lg:mt-[72px] lg:grid-cols-[minmax(0,540px)_minmax(0,1fr)] lg:gap-x-[80px]">
             <div className="relative mx-auto w-[64%] max-w-[250px] md:w-full md:max-w-[480px] lg:mx-0 lg:max-w-none">
-              {/* Phone: a large, faint poppy in the background behind the portrait, running off the right edge. */}
-              <PoppyOutline className="pointer-events-none absolute left-[54%] top-[-12%] w-[96%] text-walnut/25 md:hidden" />
               <ApertureBloom data-speed="-0.2" className="absolute -right-[30%] top-[6%] hidden w-[70%] text-walnut/15 md:block" />
-              <div data-reveal="left" className="relative rounded-t-[999px] rounded-b-[36px] border border-terracotta p-[3px]">
+              <div data-reveal="left" className="rounded-t-[999px] rounded-b-[36px] border border-terracotta p-[3px]">
                 <Photo
                   slot="home-portrait"
                   parallax={0.06}
@@ -110,6 +108,8 @@ export default function HomePage() {
                   sizes="(min-width: 64rem) 540px, (min-width: 48rem) 480px, 250px"
                 />
               </div>
+              {/* Phone: a fine-line flower that overlaps the arch's right edge, low enough to stay clear of the face. */}
+              <FlowerOutline className="pointer-events-none absolute -right-[26%] top-[46%] z-10 w-[58%] text-walnut md:hidden" />
               <Sparkle data-speed="0.3" className="absolute -top-4 right-[6%] w-8" />
               <Sparkle data-speed="0.45" className="absolute -top-8 right-[18%] w-5" />
               <Sparkle data-speed="0.2" className="absolute -left-[14%] bottom-[12%] w-5 md:hidden" />

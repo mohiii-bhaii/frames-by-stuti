@@ -194,32 +194,21 @@ export function BotanicalBranch({ className, "data-speed": speed }: ArtProps) {
   );
 }
 
-/**
- * A large, open poppy in fine line with a long stem and leaf. Meant to sit faintly behind a photograph
- * (a pale line colour, partly hidden by the photo and running off the page edge), like a watermark.
- */
-export function PoppyOutline({ className, "data-speed": speed }: ArtProps) {
-  const petal = (
-    <g>
-      <path d="M110 166C70 156 36 104 52 62c4-18 16-34 36-40 8-9 18 0 26-6 10-6 20 2 28 8 16 6 26 22 26 38 6 44-22 94-58 104Z" />
-      <path d="M110 156C100 116 100 74 112 30M110 156C84 124 68 94 64 66M110 156c26-30 42-58 46-90" strokeWidth="1" />
-      <path d="M72 44c10-6 24-8 34-4M140 36c12 4 22 12 28 22" strokeWidth="0.9" />
-    </g>
-  );
+/** A single open flower in fine line: five petals with veins around a seeded centre, on a short leafy stem. */
+export function FlowerOutline({ className, "data-speed": speed }: ArtProps) {
+  const petals = [0, 72, 144, 216, 288];
   return (
-    <svg viewBox="0 0 300 380" className={className} data-speed={speed} aria-hidden="true" {...stroke} strokeWidth="1.700">
-      <g transform="rotate(-62 110 166) scale(0.92) translate(9 14)">{petal}</g>
-      <g transform="rotate(64 110 166) scale(0.9) translate(12 17)">{petal}</g>
-      {petal}
-      {/* Seed pod and the ring of stamens around it */}
-      <path d="M88 150C88 126 132 126 132 150l-2 22c-10 9-28 9-38 0Z" />
-      <path d="M96 138c8-6 20-6 28 0M100 150v20M110 148v24M120 150v20" strokeWidth="1" />
-      <path d="M84 176c-6 8-8 14-6 18M96 184c-4 10-4 16-2 20M124 184c4 10 4 16 2 20M136 176c6 8 8 14 6 18" strokeWidth="1" />
-      <circle cx="78" cy="196" r="2.200" /><circle cx="94" cy="206" r="2.200" /><circle cx="126" cy="206" r="2.200" /><circle cx="142" cy="196" r="2.200" />
-      {/* Stem and leaves */}
-      <path d="M110 176C116 232 98 296 122 372" />
-      <path d="M112 262C150 244 196 252 220 282 184 298 140 292 112 262ZM112 262C146 262 180 270 210 280" />
-      <path d="M108 304C78 290 44 296 24 322 56 336 92 330 108 304Z" />
+    <svg viewBox="0 0 140 170" className={className} data-speed={speed} aria-hidden="true" {...stroke} strokeWidth="1.500">
+      {petals.map((angle) => (
+        <g key={angle} transform={`rotate(${angle} 70 62)`}>
+          <path d="M70 62C52 52 46 28 58 12c6-8 18-8 24 0 12 16 6 40-12 50Z" />
+          <path d="M70 58C68 44 68 30 70 18M64 52C60 42 59 32 61 24M76 52C80 42 81 32 79 24" strokeWidth="0.9" />
+        </g>
+      ))}
+      <circle cx="70" cy="62" r="9" />
+      <path d="M66 58h.1M74 58h.1M70 65h.1M65 64h.1M75 64h.1" strokeWidth="2.200" />
+      <path d="M70 100C72 124 66 146 56 166" />
+      <path d="M69 124C56 120 46 110 44 98c12 0 22 10 25 26ZM71 138c12-4 22-14 24-26-12 0-22 8-24 26Z" strokeWidth="1.200" />
     </svg>
   );
 }
