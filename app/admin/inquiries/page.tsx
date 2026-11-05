@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
-import { setInquiryRead } from "@/app/admin/inquiry-actions";
+import { resendInquiryEmail, setInquiryRead } from "@/app/admin/inquiry-actions";
 import { textDefaults } from "@/content/texts";
 import { requireAdminPage } from "@/lib/auth";
 import { isEmailConfigured, missingEmailSettings } from "@/lib/inquiry-email";
@@ -155,6 +155,15 @@ async function InquiryList() {
             {emailBadge[inquiry.email_status ?? "pending"].label}
             {inquiry.email_status === "failed" || inquiry.email_status === "not_configured" ? `: ${inquiry.email_error}` : ""}
           </p>
+
+          {(inquiry.email_status === "failed" || inquiry.email_status === "not_configured") && isEmailConfigured() ? (
+            <form action={resendInquiryEmail} className="mt-3 block">
+              <input type="hidden" name="id" value={inquiry.id} />
+              <button type="submit" className="min-h-11 rounded-lg bg-[#2f6fed] px-3 text-sm font-medium text-white">
+                Send notification email again
+              </button>
+            </form>
+          ) : null}
 
           <form action={setInquiryRead} className="mt-3 block">
             <input type="hidden" name="id" value={inquiry.id} />

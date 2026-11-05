@@ -134,3 +134,7 @@ No secret or service-role key is needed. The publishable key is safe in the brow
 | `lib/images.ts` | Image slot registry and placeholders |
 | `lib/inquiry.ts` | Contact form validation |
 | `scripts/generate-placeholders.mjs` | Generates the placeholder images |
+
+### If a notification fails or was never set up
+
+The inquiry is always saved first. On **/admin/inquiries**, any inquiry whose email failed (or was saved before email was set up) has a **Send notification email again** button. It is safe to click more than once: only one send runs at a time, an inquiry already emailed is never sent again, and every attempt uses the same Resend `Idempotency-Key` (`inquiry-<id>`), so Resend will not deliver a duplicate. Temporary Resend errors (5xx, rate limits, network) are also retried automatically up to 3 times at submit time.

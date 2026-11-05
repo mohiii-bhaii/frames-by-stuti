@@ -90,7 +90,7 @@ export async function submitInquiry(
 
   // The inquiry is saved, so the visitor is told thanks whatever happens next. The email is attempted,
   // logged loudly if it cannot be sent, and its result is recorded with the inquiry (see the dashboard).
-  const emailOutcome = await notifyOwnerByEmail(values, await getPublishedTexts());
+  const emailOutcome = await notifyOwnerByEmail(values, await getPublishedTexts(), { idempotencyKey: `inquiry-${savedId}` });
   const { error: recordError } = await supabase.rpc("record_inquiry_email", {
     p_id: savedId,
     p_token: token,
