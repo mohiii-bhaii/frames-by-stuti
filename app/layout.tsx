@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Bodoni_Moda, Montserrat } from "next/font/google";
+import { Allura, Bodoni_Moda, Montserrat } from "next/font/google";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -16,6 +16,12 @@ const bodoni = Bodoni_Moda({
   axes: ["opsz"],
 });
 
+const allura = Allura({
+  variable: "--font-allura",
+  subsets: ["latin"],
+  weight: "400",
+});
+
 export const metadata: Metadata = {
   title: {
     default: `${site.name} | Photography`,
@@ -26,7 +32,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${montserrat.variable} ${bodoni.variable} antialiased`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${montserrat.variable} ${bodoni.variable} ${allura.variable} antialiased`}>
       <body className="relative min-h-svh">{children}</body>
     </html>
   );
