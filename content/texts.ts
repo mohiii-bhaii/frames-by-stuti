@@ -70,8 +70,6 @@ Object.assign(texts, {
   "about.eyebrow": "Behind the lens",
   "about.hello": "Hello there, I'm Stuti",
   "about.heroStory": about.heroStory,
-  "about.heart.heading": "The heart behind the photographs",
-  "about.why.story": about.whyStory,
   "about.cta.heading": "Let's make some memories together.",
   "about.cta.text": "I'd love to hear your story and capture the moments that mean the most to you.",
   "about.cta.button": "Get in touch",
@@ -225,14 +223,21 @@ const labelOverrides: Record<string, string> = {
   "about.eyebrow": "About · Small line above the heading",
   "about.hello": "About · Main heading",
   "about.heroStory": "About · Introduction beside the portrait",
-  "about.heart.heading": "About · Heading below the flower",
-  "about.why.story": "About · Paragraph below that heading",
   "about.cta.heading": "About · Closing invitation, heading",
   "about.cta.text": "About · Closing invitation, text",
   "about.cta.button": "About · Closing invitation, button (opens Contact)",
 };
 
-export const MAX_TEXT_LENGTH = 1500;
+/** Titles, buttons and other short wording. */
+export const SHORT_TEXT_LIMIT = 1500;
+/** Biographies and other long-form text. The database allows 30000 for every text. */
+export const LONG_TEXT_LIMIT = 30000;
+const longTextKeys = new Set(["about.heroStory", "home.about.p1", "home.about.p2"]);
+
+/** How long a piece of text may be: long for biographies and paragraph-length text, short for the rest. */
+export function maxTextLength(key: string) {
+  return longTextKeys.has(key) || (textDefaults[key]?.length ?? 0) > 200 ? LONG_TEXT_LIMIT : SHORT_TEXT_LIMIT;
+}
 
 /** The route each group of text appears on. Anything not listed shows on every page. */
 const groupRoutes: Record<string, string[]> = {

@@ -23,12 +23,19 @@ export const site = {
   year: 2026,
 };
 
+/**
+ * Every page, for the editor's page picker and the dashboard. `inMenu: false`
+ * keeps a page out of the site menu and footer menu while it stays editable.
+ */
 export const navigation = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
+  { href: "/about", label: "About", inMenu: false },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/pricing", label: "Pricing & Packages" },
-] as const;
+] as readonly { href: string; label: string; inMenu?: boolean }[];
+
+/** The pages shown in the site menu and the footer menu. */
+export const menuNavigation = navigation.filter((item) => item.inMenu !== false);
 
 export const contactLink = { href: "/contact", label: "Contact" } as const;
 

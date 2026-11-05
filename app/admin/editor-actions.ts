@@ -3,7 +3,7 @@
 import { updateTag } from "next/cache";
 import { NotAuthorisedError, requireAdminAction } from "@/lib/auth";
 import { ACCEPTED_UPLOAD_TYPES, MAX_UPLOAD_BYTES, versionToImage, type VersionRow } from "@/lib/cms";
-import { isTextKey, MAX_TEXT_LENGTH, optionalTextKeys, urlTextKeys } from "@/content/texts";
+import { isTextKey, maxTextLength, optionalTextKeys, urlTextKeys } from "@/content/texts";
 import { safeWebUrl } from "@/lib/links";
 import type {
   ActionResult,
@@ -149,7 +149,8 @@ function cleanText(input: TextDraftInput): string | null {
   if (!isTextKey(input?.key)) fail("Unknown piece of text.");
   if (input.value === null) return null;
   const value = String(input.value).replace(/\r\n?/g, "\n").trim();
-  if (value.length > MAX_TEXT_LENGTH) fail(`That text is too long. Keep it under ${MAX_TEXT_LENGTH} characters.`);
+  const limit = maxTextLength(input.key);
+  if (value.length > limit) fail(`That text is too long. Keep it under ${limit.toLocaleString("en-US")} characters.`);
   if (value === "" && !optionalTextKeys.has(input.key)) {
     fail("This text can't be empty. Use the original wording instead.");
   }

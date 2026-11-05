@@ -2,7 +2,7 @@ import Link from "next/link";
 import { T } from "@/components/editable-text";
 import { InstagramHandle } from "@/components/instagram-handle";
 import { ServiceAreas } from "@/components/service-areas";
-import { contactLink, navigation } from "@/content/site";
+import { contactLink, menuNavigation } from "@/content/site";
 import { navKey } from "@/content/texts";
 import { FullLogo } from "@/components/logo";
 import { Photo } from "@/components/photo";
@@ -18,7 +18,7 @@ export function SiteFooter() {
           <div className="order-2 text-center md:order-none md:text-left">
             <T as="h2" id="footer.menu" className="display text-[36px] text-terracotta md:text-cream" />
             <ul className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[13px] uppercase tracking-[0.1em] md:flex-col md:gap-y-[11px] md:text-[14px]">
-              {navigation.map((item) => (
+              {menuNavigation.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className="transition-opacity duration-500 hover:opacity-60">
                     <T id={navKey(item.href)} />

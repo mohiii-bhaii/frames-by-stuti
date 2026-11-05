@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { MAX_TEXT_LENGTH, optionalTextKeys, textDefaults, textLabel, urlTextKeys } from "@/content/texts";
+import { maxTextLength, optionalTextKeys, textDefaults, textLabel, urlTextKeys } from "@/content/texts";
 import { safeWebUrl } from "@/lib/links";
 import type { TextState } from "@/lib/editor-types";
 
@@ -38,7 +38,8 @@ export function TextPanel({ id, value, saved, status, busy, onChange, onUseOrigi
   const original = textDefaults[id];
   const optional = optionalTextKeys.has(id);
   const empty = value.trim() === "" && !optional;
-  const tooLong = value.length > MAX_TEXT_LENGTH;
+  const limit = maxTextLength(id);
+  const tooLong = value.length > limit;
   const badUrl = urlTextKeys.has(id) && value.trim() !== "" && !safeWebUrl(value);
   const changed = status === "unsaved";
   const badge = STATUS_TEXT[status];
@@ -82,7 +83,7 @@ export function TextPanel({ id, value, saved, status, busy, onChange, onUseOrigi
             value={value}
             onChange={(event) => onChange(event.target.value)}
             rows={2}
-            maxLength={MAX_TEXT_LENGTH + 200}
+            maxLength={limit + 200}
             aria-invalid={empty || tooLong || badUrl}
             aria-describedby={`${id}-help`}
             // 16px stops iPhones zooming the page when the field is focused.
@@ -94,7 +95,7 @@ export function TextPanel({ id, value, saved, status, busy, onChange, onUseOrigi
             {empty
               ? "This can't be empty. Use the original wording to go back."
               : tooLong
-                ? `Too long. Keep it under ${MAX_TEXT_LENGTH} characters.`
+                ? `Too long. Keep it under ${limit.toLocaleString("en-US")} characters.`
                 : badUrl
                   ? "Enter the full web address, starting with https://"
                   : optional

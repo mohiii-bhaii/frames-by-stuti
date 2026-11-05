@@ -89,6 +89,8 @@ Every word on the website can be edited from the same visual editor, on the real
 
 Some text has nothing to tap, such as form placeholders, the answers inside closed FAQs and package details. Open **More > Text on this page**, search, and pick it from the list. Social links and the email address are edited the same way (Contact details). A social link that is emptied is hidden.
 
+Long text: biographies and paragraph-length text can be up to 30,000 characters; titles and button labels stay at 1,500 (`maxTextLength` in `content/texts.ts`). The database ceiling was raised to 30,000 by `supabase/migrations/20261107000000_site_texts_long_text.sql` (already applied to the live project).
+
 How it works: `content/texts.ts` lists every editable text with its original wording and a key such as `home.tagline`. Pages render `<T id="home.tagline" />` (`components/editable-text.tsx`), which keeps the element and classes the page gives it. Edits live in one table, `site_texts`, one row per key. Visitors read only published text through `get_published_texts()`, cached with the pages like photos. To make another piece of text editable, add it to `content/texts.ts` and use `<T>` where it appears.
 
 ### How it works

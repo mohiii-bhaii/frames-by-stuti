@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { T } from "@/components/editable-text";
 import { pricingCategories, pricingHref } from "@/content/pricing";
-import { contactLink, navigation } from "@/content/site";
+import { contactLink, menuNavigation } from "@/content/site";
 import { navKey } from "@/content/texts";
 import { FullLogo, HeaderLogo } from "@/components/logo";
 import { SocialLinks } from "@/components/social-links";
@@ -141,7 +141,7 @@ export function SiteHeader() {
           ) : (
             <nav aria-label="Main" key="main" className="mt-6 animate-[fade-in_0.4s_ease] md:mt-0">
               <ul className="flex flex-col items-center gap-6 text-center text-xl uppercase md:gap-5 md:text-[15px] md:tracking-[0.06em]">
-                {navigation.map((item) => (
+                {menuNavigation.map((item) => (
                   <li key={item.href}>
                     {item.href === "/pricing" ? (
                       <button
