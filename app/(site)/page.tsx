@@ -177,11 +177,21 @@ export default async function HomePage() {
       {/* Full-width photo with overlay line */}
       <section className="relative">
         <Photo slot="home-banner-1" parallax={0.1} className="h-[143vw] max-h-[768px] w-full md:h-[53vw]" />
+        {/* A soft, feathered warm-espresso glow behind the line so it reads over light clothing, water or sky.
+            It sits between the photograph and the text, has no edges, and leaves the rest of the photo untouched. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-[calc(48%-90px)] h-[320px] md:top-[calc(48%-70px)] md:h-[240px]"
+          style={{
+            background:
+              "radial-gradient(ellipse 62% 50% at 50% 50%, rgba(53,48,38,0.34) 0%, rgba(53,48,38,0.24) 38%, rgba(53,48,38,0.09) 68%, rgba(53,48,38,0) 100%)",
+          }}
+        />
         <T
           as="p"
           id="home.banner"
           data-reveal="title"
-          className="script absolute inset-x-6 top-[48%] text-center text-[34px] text-cream md:text-[36px]"
+          className="script absolute inset-x-6 top-[48%] text-center text-[34px] text-cream [text-shadow:0_1px_14px_rgba(53,48,38,0.35)] md:text-[36px]"
         />
       </section>
 
