@@ -1,96 +1,70 @@
-// Builds the transparent logo files from the brand reference.
-// Run with: npm run logo
+// Builds the logo files from the brand artwork. Run with: npm run logo
 //
-// The reference is a JPEG on an off-white background. Each pixel's background
-// is removed by "colour to alpha", so soft edges stay smooth with no light
-// fringe. Two inks are written: the original dark ink for cream areas, and a
-// cream ink for photos and the dark footer, where the tan accents are kept.
+// Source: scripts/brand/frames-by-stuti-logo.png, the real Frames by Stuti logo
+// (a transparent PNG with a lot of empty space around the artwork). It is
+// trimmed to the artwork so it can be sized exactly, then written twice:
+//   logo.png        the original dark ink, for cream backgrounds
+//   logo-light.png  the same artwork in cream, for the dark footer and photos
+// The favicon is the camera in cream on an espresso tile.
 import { mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const source = join(root, "scripts", "brand", "logo-reference.jpg");
+const source = join(root, "scripts", "brand", "frames-by-stuti-logo.png");
 const outDir = join(root, "public", "brand");
 mkdirSync(outDir, { recursive: true });
 
-const BACKGROUND = [253, 251, 246];
 const CREAM = [235, 230, 219]; // --color-cream
-const ESPRESSO = [53, 48, 38]; // --color-espresso, for the favicon tile
+const ESPRESSO = [53, 48, 38]; // --color-espresso
+const PAD = 12;
 
-const { data, info } = await sharp(source).removeAlpha().raw().toBuffer({ resolveWithObject: true });
-const { width } = info;
+const { data, info } = await sharp(source).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+const { width, height } = info;
 
-/** Separates each pixel into an ink colour and an opacity over the background. */
-function unmix(r, g, b) {
-  const channels = [r, g, b];
-  let alpha = 0;
-  // The ink is always darker than the paper, so only darkening counts. Pixels
-  // a little lighter than the background are JPEG noise.
-  channels.forEach((value, i) => {
-    alpha = Math.max(alpha, (BACKGROUND[i] - value) / BACKGROUND[i]);
-  });
-  // JPEG noise in the background becomes fully transparent.
-  if (alpha < 0.05) return null;
-  alpha = Math.min(1, (alpha - 0.05) / 0.95);
-  const ink = channels.map((value, i) => {
-    const bg = BACKGROUND[i];
-    return Math.max(0, Math.min(255, Math.round((value - bg) / Math.max(alpha, 0.01) + bg)));
-  });
-  return { ink, alpha };
-}
-
-/** Near-black ink becomes cream; the tan accents keep their colour. */
-function toLight([r, g, b]) {
-  const lightness = (Math.max(r, g, b) + Math.min(r, g, b)) / 510;
-  const keep = Math.min(1, Math.max(0, (lightness - 0.2) / 0.25));
-  return [r, g, b].map((value, i) => Math.round(CREAM[i] * (1 - keep) + value * keep));
-}
-
-function render({ left, top, w, h, light, skip }) {
-  const out = Buffer.alloc(w * h * 4);
-  for (let y = 0; y < h; y += 1) {
-    for (let x = 0; x < w; x += 1) {
-      const sx = left + x;
-      const sy = top + y;
-      if (skip?.(sx, sy)) continue;
-      const i = (sy * width + sx) * 3;
-      const pixel = unmix(data[i], data[i + 1], data[i + 2]);
-      if (!pixel) continue;
-      const [r, g, b] = light ? toLight(pixel.ink) : pixel.ink;
-      const o = (y * w + x) * 4;
-      out[o] = r;
-      out[o + 1] = g;
-      out[o + 2] = b;
-      out[o + 3] = Math.round(pixel.alpha * 255);
+// The artwork's bounds: anything noticeably opaque.
+let minX = width, minY = height, maxX = 0, maxY = 0;
+for (let y = 0; y < height; y += 1) {
+  for (let x = 0; x < width; x += 1) {
+    if (data[(y * width + x) * 4 + 3] > 24) {
+      minX = Math.min(minX, x);
+      maxX = Math.max(maxX, x);
+      minY = Math.min(minY, y);
+      maxY = Math.max(maxY, y);
     }
   }
-  return sharp(out, { raw: { width: w, height: h, channels: 4 } });
+}
+const box = {
+  left: Math.max(0, minX - PAD),
+  top: Math.max(0, minY - PAD),
+  width: Math.min(width, maxX + PAD + 1) - Math.max(0, minX - PAD),
+  height: Math.min(height, maxY + PAD + 1) - Math.max(0, minY - PAD),
+};
+
+/** The artwork, trimmed. With `light`, every pixel becomes cream and keeps its opacity. */
+async function render({ light, region = box }) {
+  const cropped = await sharp(source).ensureAlpha().extract(region).raw().toBuffer({ resolveWithObject: true });
+  const out = Buffer.from(cropped.data);
+  if (light) {
+    for (let i = 0; i < out.length; i += 4) {
+      out[i] = CREAM[0];
+      out[i + 1] = CREAM[1];
+      out[i + 2] = CREAM[2];
+    }
+  }
+  return sharp(out, { raw: { width: cropped.info.width, height: cropped.info.height, channels: 4 } });
 }
 
-const PAD = 8;
-// Measured from the reference: camera and corners 235-542, name 574-895, tagline 957-982.
-const full = { left: 134 - PAD, top: 235 - PAD, w: 1116 - 134 + 1 + PAD * 2, h: 982 - 235 + 1 + PAD * 2 };
-// "FRAMES" with its swash and "BY STUTI", without the camera or the corner marks.
-const wordmark = { left: 134 - PAD, top: 574 - PAD, w: 1116 - 134 + 1 + PAD * 2, h: 895 - 574 + 1 + PAD * 2 };
-const outsideName = (x, y) => y >= 765 && (x < 300 || x > 955);
-
-const jobs = [
-  ["logo.png", { ...full, light: false }],
-  ["logo-light.png", { ...full, light: true }],
-  ["wordmark.png", { ...wordmark, light: false, skip: outsideName }],
-  ["wordmark-light.png", { ...wordmark, light: true, skip: outsideName }],
-];
-
-for (const [name, job] of jobs) {
-  await render(job).png({ compressionLevel: 9, palette: false }).toFile(join(outDir, name));
-  console.log(`Wrote public/brand/${name} (${job.w}×${job.h})`);
+for (const [name, light] of [["logo.png", false], ["logo-light.png", true]]) {
+  await (await render({ light })).png({ compressionLevel: 9 }).toFile(join(outDir, name));
+  console.log(`Wrote public/brand/${name} (${box.width}×${box.height})`);
 }
 
-// Favicon: the camera in cream on an espresso tile, which stays legible at 16px.
-const camera = { left: 290, top: 226, w: 676, h: 324, light: true };
-const mark = await render(camera).resize({ width: 420 }).png().toBuffer();
+// Favicon: the top of the camera outline in cream on an espresso tile.
+// Cut above the lettering, so only the camera top (body, bump and lens arc) is left.
+const camera = { left: box.left, top: box.top, width: box.width, height: 255 };
+const mark = await (await render({ light: true, region: camera })).resize({ width: 400 }).png().toBuffer();
 await sharp({
   create: { width: 512, height: 512, channels: 4, background: { r: ESPRESSO[0], g: ESPRESSO[1], b: ESPRESSO[2], alpha: 1 } },
 })

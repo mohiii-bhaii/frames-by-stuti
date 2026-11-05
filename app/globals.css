@@ -392,12 +392,12 @@ body {
 
 /* The cream bar under the header on every page but the homepage. */
 .header-spacer {
-  height: 96px;
+  height: 144px;
 }
 
 @media (min-width: 48rem) {
   .header-spacer {
-    height: 112px;
+    height: 156px;
   }
 }
 

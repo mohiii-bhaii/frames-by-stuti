@@ -7,7 +7,7 @@ import { T } from "@/components/editable-text";
 import { pricingCategories, pricingHref } from "@/content/pricing";
 import { contactLink, navigation } from "@/content/site";
 import { navKey } from "@/content/texts";
-import { FullLogo, Wordmark } from "@/components/logo";
+import { FullLogo, HeaderLogo } from "@/components/logo";
 import { SocialLinks } from "@/components/social-links";
 
 const subscribeNever = () => () => {};
@@ -57,11 +57,11 @@ export function SiteHeader() {
             id="header.eyebrow"
             className="eyebrow absolute left-[23px] top-[14px] hidden w-[215px] text-[16px] leading-normal tracking-normal lg:block"
           />
-          <Wordmark priority className="absolute left-1/2 top-[52px] h-[100px] -translate-x-1/2 md:top-[6px] md:h-[92px]" />
+          <HeaderLogo priority className="absolute left-1/2 top-[52px] h-[100px] -translate-x-1/2 md:top-[6px] md:h-[92px]" />
         </div>
-        <Wordmark
+        <HeaderLogo
           priority
-          className="header-inner absolute left-1/2 top-3 h-[72px] -translate-x-1/2 md:top-[14px] md:h-[84px]"
+          className="header-inner absolute left-1/2 top-3 h-[120px] -translate-x-1/2 md:h-[132px]"
         />
         <button
           type="button"
@@ -69,7 +69,7 @@ export function SiteHeader() {
           aria-label="Open menu"
           aria-haspopup="dialog"
           aria-expanded={isOpen}
-          className="header-burger absolute right-1 top-6 flex h-12 w-14 items-center justify-center md:right-3 md:top-8"
+          className="header-burger absolute right-1 top-12 flex h-12 w-14 items-center justify-center md:right-3 md:top-[54px]"
         >
           <svg viewBox="0 0 52 20" className="w-[42px] md:w-[50px]" fill="none" stroke="currentColor" strokeWidth="1.800" aria-hidden="true">
             <path d="M1 2h50M1 10h50M1 18h50" />

@@ -74,7 +74,7 @@ Other things you can do:
 - **More > Photos on this page** lists every photo on the page, including ones hidden at your screen size.
 - **More > Cancel unsaved changes** throws away changes you haven't saved.
 - In a photo's panel: **Restore the previously published photo** brings back the last live photo as a draft (then press Publish), **Discard saved draft** drops a draft you don't want, and **Go back to the original placeholder** does what it says.
-- The header and footer logos can be replaced too. Use a PNG or WebP with a transparent background.
+- The logo is a fixed brand file (`public/brand/logo.png` for cream backgrounds, `logo-light.png` for the dark footer), built from `scripts/brand/frames-by-stuti-logo.png` with `npm run logo`. It has no Replace button in the editor. To change it, replace that source file and run `npm run logo`.
 - **More > Exit editor** returns to the dashboard. The live site never shows editing buttons to visitors.
 
 ## Editing text
@@ -98,7 +98,7 @@ How it works: `content/texts.ts` lists every editable text with its original wor
 - **Photos** upload straight from the browser to the Supabase Storage bucket `site-photos`, each into its own new folder, so nothing is ever overwritten. Storage policies only allow admins to upload, and nobody can overwrite or delete files through the API.
 - **Drafts and published versions** are rows in `image_versions`. Every save creates a new version, and `image_slots` points each spot at its current draft and published version. Publishing moves all drafts live in one database transaction.
 - **The public site** reads only published photos through the `get_published_images()` database function. Results are cached with the prerendered pages, and publishing expires that cache, so changes appear on the next visit without a redeploy.
-- Each spot has a permanent id, such as `home-oval` or `gallery-07`, listed in `lib/images.ts`. Two more, `logo-wordmark` and `logo-badge`, are the logos.
+- Each spot has a permanent id, such as `home-oval` or `gallery-07`, listed in `lib/images.ts`. (`logo-wordmark` and `logo-badge` are older editor spots for the logo and are no longer used.)
 
 ### Set up Supabase
 
