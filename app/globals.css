@@ -130,6 +130,18 @@
   opacity: 0.6;
 }
 
+/* A smaller, more delicate version of the button, for the homepage's Save my memories. */
+@media (max-width: 47.99rem) {
+  .btn.btn-compact {
+    min-width: 156px;
+    min-height: 40px;
+    padding: 6px 20px;
+    border-radius: 9px;
+    font-size: 12.500px;
+    letter-spacing: 0.14em;
+  }
+}
+
 @media (max-width: 47.99rem) {
   .btn {
     min-width: 170px;

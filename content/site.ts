@@ -66,8 +66,8 @@ export const sessionCards = [
 export const TESTIMONIAL_SLOTS = 3;
 
 export const about = {
-  greeting: "Hello there!",
-  intro: "I'm Stuti",
+  greeting: "hi there!",
+  intro: "i'm Stuti",
   homeIntro: [
     "[Biography placeholder.] This is where I introduce myself: who I am, where I'm based and how I found my way to photography.",
     "Tell visitors what a session with you is really like and what you hope they feel when they see their photographs. Keep it warm, personal and in your own words.",

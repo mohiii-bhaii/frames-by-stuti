@@ -11,7 +11,19 @@ type CurvedTextProps = {
   size?: number;
   uppercase?: boolean;
   italic?: boolean;
+  /**
+   * Shows text that was typed in capitals as a sentence ("Creating timeless images, to last a lifetime"),
+   * and tidies stray spaces and line breaks. The words are unchanged. Text with its own mixed case is left alone.
+   */
+  softCase?: boolean;
 } & Omit<SVGAttributes<SVGSVGElement>, "className" | "children">;
+
+function toSoftCase(text: string) {
+  const tidy = text.replace(/\s*\n\s*/g, " ").replace(/\s+([,.;:!?])/g, "$1").replace(/\s{2,}/g, " ").trim();
+  if (tidy !== tidy.toUpperCase()) return tidy;
+  const lower = tidy.toLowerCase();
+  return lower.charAt(0).toUpperCase() + lower.slice(1);
+}
 
 /** Share of the arc the text may fill. Glyphs past the end of a text path are not drawn, so stay inside it. */
 const FILL = 0.95;
@@ -29,12 +41,13 @@ export function CurvedText({
   size = 94,
   uppercase = false,
   italic = true,
+  softCase = false,
   ...rest
 }: CurvedTextProps) {
   const id = useId();
   const pathRef = useRef<SVGPathElement>(null);
   const textRef = useRef<SVGTextElement>(null);
-  const shown = uppercase ? text.toUpperCase() : text;
+  const shown = uppercase ? text.toUpperCase() : softCase ? toSoftCase(text) : text;
 
   const height = 1000 * rise + size * 1.5;
   const baseline = height - size * 0.45;
