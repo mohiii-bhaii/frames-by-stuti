@@ -421,18 +421,13 @@ body:has([data-page-home]) .header-inner {
   display: none;
 }
 
+/* On the homepage the menu icon sits on the right, level with the centre of the logo. */
 body:has([data-page-home]) .header-burger {
-  top: 0.25rem;
-  left: 50%;
-  right: auto;
-  translate: -50% 0;
+  top: 78px;
 }
 
 @media (min-width: 48rem) {
   body:has([data-page-home]) .header-burger {
-    top: 0.25rem;
-    left: auto;
-    right: 0.75rem;
-    translate: none;
+    top: 28px;
   }
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { CurvedT, T } from "@/components/editable-text";
+import { HomeMarker } from "@/components/home-marker";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
 import { SessionLink } from "@/components/session-link";
 import { ApertureBloom, LeafSprig, Sparkle } from "@/components/line-art";
@@ -25,7 +26,7 @@ export default function HomePage() {
   return (
     <>
       {/* Tells the header it is on the homepage (see globals.css). */}
-      <span hidden data-page-home />
+      <HomeMarker />
 
       {/* Hero */}
       <section className="paper relative h-[190vw] max-h-[900px] min-h-[640px] md:h-svh md:max-h-none md:min-h-[720px]">
