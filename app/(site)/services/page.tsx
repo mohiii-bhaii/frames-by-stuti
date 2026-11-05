@@ -5,7 +5,7 @@ import { FaqAccordion } from "@/components/faq-accordion";
 import { ApertureBloom, LeafSprig } from "@/components/line-art";
 import { PackageExplorer } from "@/components/package-explorer";
 import { Photo } from "@/components/photo";
-import { TestimonialSlider } from "@/components/testimonial-slider";
+import { TestimonialsSection } from "@/components/testimonials-section";
 import { site } from "@/content/site";
 import { ScrollMotion } from "@/components/scroll-motion";
 
@@ -135,12 +135,11 @@ export default function ServicesPage() {
       </section>
 
       {/* Testimonial */}
-      <section className="paper grid md:grid-cols-2">
-        <div className="order-2 flex items-center justify-center px-6 py-12 md:order-1 md:py-10 lg:h-[660px]">
-          <TestimonialSlider large />
-        </div>
-        <Photo slot="services-testimonial" className="order-1 aspect-square w-full md:order-2 md:aspect-auto md:h-full" sizes="(min-width: 48rem) 50vw, 100vw" />
-      </section>
+      <TestimonialsSection
+        large
+        reverse
+        photo={<Photo slot="services-testimonial" className="aspect-square w-full md:aspect-auto md:h-full" sizes="(min-width: 48rem) 50vw, 100vw" />}
+      />
       <ScrollMotion />
     </>
   );

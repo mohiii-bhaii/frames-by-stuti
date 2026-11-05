@@ -93,6 +93,8 @@ Some text has nothing to tap, such as form placeholders, the answers inside clos
 
 Long text: biographies and paragraph-length text can be up to 30,000 characters; titles and button labels stay at 1,500 (`maxTextLength` in `content/texts.ts`). The database ceiling was raised to 30,000 by `supabase/migrations/20261107000000_site_texts_long_text.sql` (already applied to the live project).
 
+Testimonials: the Testimonials band (with its photo) is shown only once at least one testimonial has both a real review and a client name; with none, nothing of it is drawn. Add them in the editor on the Home page (**More > Text on this page**, then "Testimonial 1 · The review" and "... Client name"; there is room for three), and publish. Empty, one-sided or [bracketed] testimonials are ignored. With one testimonial the arrows are hidden; with two or more they appear. The editor always shows the band so testimonials can be added.
+
 How it works: `content/texts.ts` lists every editable text with its original wording and a key such as `home.tagline`. Pages render `<T id="home.tagline" />` (`components/editable-text.tsx`), which keeps the element and classes the page gives it. Edits live in one table, `site_texts`, one row per key. Visitors read only published text through `get_published_texts()`, cached with the pages like photos. To make another piece of text editable, add it to `content/texts.ts` and use `<T>` where it appears.
 
 ### How it works

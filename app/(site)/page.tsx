@@ -6,7 +6,7 @@ import { PhotoSlideshow } from "@/components/photo-slideshow";
 import { SessionLink } from "@/components/session-link";
 import { ApertureBloom, LeafSprig, Sparkle } from "@/components/line-art";
 import { Photo } from "@/components/photo";
-import { TestimonialSlider } from "@/components/testimonial-slider";
+import { TestimonialsSection } from "@/components/testimonials-section";
 import { sessionCards, site } from "@/content/site";
 import { ScrollMotion } from "@/components/scroll-motion";
 
@@ -223,13 +223,10 @@ export default function HomePage() {
         </ul>
       </section>
 
-      {/* Testimonials */}
-      <section className="paper grid md:grid-cols-2">
-        <div className="flex items-center justify-center px-6 py-14 md:py-10 lg:h-[660px]">
-          <TestimonialSlider />
-        </div>
-        <Photo slot="home-testimonial" parallax={0.06} className="aspect-square w-full md:aspect-auto md:h-full" sizes="(min-width: 48rem) 50vw, 100vw" />
-      </section>
+      {/* Testimonials: drawn only once there is at least one real one (see components/testimonials-section.tsx). */}
+      <TestimonialsSection
+        photo={<Photo slot="home-testimonial" parallax={0.06} className="aspect-square w-full md:aspect-auto md:h-full" sizes="(min-width: 48rem) 50vw, 100vw" />}
+      />
 
       <ScrollMotion />
     </>

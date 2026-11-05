@@ -58,23 +58,12 @@ export const sessionCards = [
   { id: "events", label: "Events", image: "session-events" },
 ] as const;
 
-export const testimonials = [
-  {
-    quote:
-      "[Client testimonial placeholder. Replace this with a real review describing what the session felt like and how the photographs turned out.]",
-    author: "[Client name]",
-  },
-  {
-    quote:
-      "[Second testimonial placeholder. A short, specific quote from a real client works best here.]",
-    author: "[Client name]",
-  },
-  {
-    quote:
-      "[Third testimonial placeholder. Ask a past client what they would tell a friend who was thinking of booking.]",
-    author: "[Client name]",
-  },
-];
+/**
+ * Room for three client testimonials. They start empty on purpose: the
+ * Testimonials section only appears on the website once a testimonial has both
+ * a review and a client name (see lib/testimonials.ts). Add them in the editor.
+ */
+export const TESTIMONIAL_SLOTS = 3;
 
 export const about = {
   greeting: "Hello there!",

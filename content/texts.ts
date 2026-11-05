@@ -1,4 +1,4 @@
-import { about, categories, sessionCards, contactLink, faqs, navigation, packageDetails, site, testimonials } from "@/content/site";
+import { about, categories, sessionCards, contactLink, faqs, navigation, packageDetails, site, TESTIMONIAL_SLOTS } from "@/content/site";
 import { portfolioCategories } from "@/content/portfolio";
 import { pricingCategories, pricingHref, pricingTexts, pricingTextLabel } from "@/content/pricing";
 import { locationPreferences, referralOptions, sessionOptions, weekdays } from "@/lib/inquiry";
@@ -190,10 +190,11 @@ faqs.forEach((faq, index) => {
   texts[`faq.${index + 1}.a`] = faq.answer;
 });
 
-testimonials.forEach((testimonial, index) => {
-  texts[`testimonial.${index + 1}.quote`] = testimonial.quote;
-  texts[`testimonial.${index + 1}.author`] = testimonial.author;
-});
+// Empty on purpose (see TESTIMONIAL_SLOTS): no testimonial, no section.
+for (let n = 1; n <= TESTIMONIAL_SLOTS; n += 1) {
+  texts[`testimonial.${n}.quote`] = "";
+  texts[`testimonial.${n}.author`] = "";
+}
 
 // The database only accepts keys of this shape (see the site_texts migrations).
 // Failing here, at build time, beats an edit that silently fails to save.
@@ -209,7 +210,13 @@ export const isTextKey = (key: unknown): key is TextKey =>
   typeof key === "string" && Object.hasOwn(texts, key);
 
 /** Text that may be emptied, which hides it on the site. */
-export const optionalTextKeys = new Set(["site.instagramUrl", "site.facebookUrl", ...areaKeys]);
+export const testimonialKeys = Array.from({ length: TESTIMONIAL_SLOTS }, (_, index) => [
+  `testimonial.${index + 1}.quote`,
+  `testimonial.${index + 1}.author`,
+]).flat();
+
+/** Texts that may be emptied (an emptied testimonial is how one is removed). */
+export const optionalTextKeys = new Set(["site.instagramUrl", "site.facebookUrl", ...areaKeys, ...testimonialKeys]);
 
 /** Text that is a web address. It must be empty or start with https:// (checked again before it is saved). */
 export const urlTextKeys = new Set(["site.instagramUrl", "site.facebookUrl"]);
@@ -220,6 +227,12 @@ const labelOverrides: Record<string, string> = {
   "site.instagramUrl": "Instagram profile link (web address)",
   "site.facebookUrl": "Facebook page link (web address)",
   ...Object.fromEntries(areaKeys.map((key, index) => [key, `Footer area ${index + 1} (leave empty to hide)`])),
+  ...Object.fromEntries(
+    testimonialKeys.map((key) => {
+      const [, n, field] = key.split(".");
+      return [key, field === "quote" ? `Testimonial ${n} · The review` : `Testimonial ${n} · Client name (both are needed for it to show)`];
+    }),
+  ),
   "about.eyebrow": "About · Small line above the heading",
   "about.hello": "About · Main heading",
   "about.heroStory": "About · Introduction beside the portrait",
