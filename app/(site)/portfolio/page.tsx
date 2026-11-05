@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { IntroPhoto } from "@/components/portfolio/intro-photo";
 import { PortfolioGalleries } from "@/components/portfolio/portfolio-galleries";
 import { ScrollMotion } from "@/components/scroll-motion";
 import { portfolioCategories } from "@/content/portfolio";
@@ -15,8 +14,7 @@ export default function PortfolioPage() {
     <>
       <section className="paper relative overflow-x-clip">
         <h1 className="sr-only">Portfolio</h1>
-        <div className="pb-16 pt-4 md:pb-24 md:pt-8">
-          <IntroPhoto />
+        <div className="pb-16 pt-6 md:pb-24 md:pt-10">
           <PortfolioGalleries categories={portfolioCategories} />
         </div>
       </section>

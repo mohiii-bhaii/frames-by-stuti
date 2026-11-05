@@ -22,14 +22,8 @@ export type PortfolioCategory = {
 };
 
 export const portfolioCategories: PortfolioCategory[] = [
+  { id: "newborns", title: "Newborn", word: "tiny", slots: pf("newborns", 1, 12) },
   { id: "maternity", title: "Maternity", word: "waiting", slots: pf("maternity", 1, 12) },
-  { id: "newborns", title: "Newborns", word: "tiny", slots: pf("newborns", 1, 12) },
-  {
-    id: "milestones",
-    title: "Milestones",
-    word: "growing",
-    slots: ["gallery-04", "gallery-08", "gallery-12", "gallery-16", ...pf("milestones", 5, 12)],
-  },
   {
     id: "lifestyle",
     title: "Lifestyle / Family",
@@ -40,6 +34,12 @@ export const portfolioCategories: PortfolioCategory[] = [
       "gallery-02", "gallery-06", "gallery-10", "gallery-14",
       ...pf("lifestyle", 13, 16),
     ],
+  },
+  {
+    id: "milestones",
+    title: "Milestones",
+    word: "growing",
+    slots: ["gallery-04", "gallery-08", "gallery-12", "gallery-16", ...pf("milestones", 5, 12)],
   },
   { id: "events", title: "Events", word: "celebrate", slots: pf("events", 1, 12) },
 ];
