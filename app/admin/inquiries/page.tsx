@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { setInquiryRead } from "@/app/admin/inquiry-actions";
 import { textDefaults } from "@/content/texts";
 import { requireAdminPage } from "@/lib/auth";
-import { isEmailConfigured } from "@/lib/inquiry-email";
+import { isEmailConfigured, missingEmailSettings } from "@/lib/inquiry-email";
 import { getPublishedTexts } from "@/lib/site-texts";
 
 export const metadata: Metadata = { title: "Inquiries" };
@@ -27,7 +27,16 @@ type Inquiry = {
   message: string;
   preferred_date: string | null;
   is_read: boolean;
+  email_status: "pending" | "sent" | "failed" | "not_configured";
+  email_error: string;
 };
+
+const emailBadge = {
+  sent: { label: "Notification email sent", className: "bg-emerald-50 text-emerald-900" },
+  failed: { label: "Notification email failed", className: "bg-red-50 text-red-900" },
+  not_configured: { label: "No notification email (not set up)", className: "bg-amber-50 text-amber-900" },
+  pending: { label: "Notification not recorded", className: "bg-neutral-100 text-neutral-800" },
+} as const;
 
 const locationLabels: Record<string, string> = { Other: "Other / not sure yet" };
 
@@ -45,8 +54,14 @@ export default function InquiriesPage() {
         </p>
       ) : (
         <p className="mt-3 rounded-lg bg-amber-50 p-3 text-sm text-amber-900">
-          Email notifications are off, so new inquiries only appear here. To turn them on, add <code>RESEND_API_KEY</code> and{" "}
-          <code>INQUIRY_NOTIFY_EMAIL</code> in Vercel (steps are in the README).
+          Email notifications are off, so new inquiries only appear here. Still missing in Vercel:{" "}
+          {missingEmailSettings().map((name, index) => (
+            <span key={name}>
+              {index > 0 ? " and " : ""}
+              <code>{name}</code>
+            </span>
+          ))}{" "}
+          (steps are in the README).
         </p>
       )}
       <div className="mt-6">
@@ -136,7 +151,12 @@ async function InquiryList() {
               ))}
           </dl>
 
-          <form action={setInquiryRead} className="mt-3">
+          <p className={`mt-3 inline-block rounded-lg px-2.5 py-1 text-xs font-medium ${emailBadge[inquiry.email_status ?? "pending"].className}`}>
+            {emailBadge[inquiry.email_status ?? "pending"].label}
+            {inquiry.email_status === "failed" || inquiry.email_status === "not_configured" ? `: ${inquiry.email_error}` : ""}
+          </p>
+
+          <form action={setInquiryRead} className="mt-3 block">
             <input type="hidden" name="id" value={inquiry.id} />
             <input type="hidden" name="read" value={inquiry.is_read ? "false" : "true"} />
             <button type="submit" className="min-h-11 rounded-lg border border-neutral-300 px-3 text-sm">

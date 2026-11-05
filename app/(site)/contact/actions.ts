@@ -7,7 +7,7 @@ import {
   type InquiryState,
   type InquiryValues,
 } from "@/lib/inquiry";
-import { sendInquiryEmail } from "@/lib/inquiry-email";
+import { notifyOwnerByEmail } from "@/lib/inquiry-email";
 import { getPublishedTexts } from "@/lib/site-texts";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createPublicClient } from "@/lib/supabase/server";
@@ -17,8 +17,8 @@ const MIN_FILL_MS = 2500;
 
 /**
  * Validates an inquiry and stores it in Supabase, where only the signed-in
- * owner can read it. It is then emailed to the owner if email notifications
- * are set up (see lib/inquiry-email.ts), and forwarded as JSON to
+ * owner can read it. It is then emailed to the owner (see lib/inquiry-email.ts;
+ * the result, including "not set up", is recorded with the inquiry), and forwarded as JSON to
  * CONTACT_WEBHOOK_URL if that is set. The inquiry counts as received once it
  * is saved, whatever happens after.
  */
@@ -61,7 +61,8 @@ export async function submitInquiry(
     return { status: "error", message: "The inquiry form isn't connected yet. Please email me directly instead." };
   }
 
-  const { data: savedId, error } = await createPublicClient().rpc("submit_inquiry", {
+  const supabase = createPublicClient();
+  const { data: savedId, error } = await supabase.rpc("submit_inquiry", {
     p_token: token,
     p_first_name: values.firstName,
     p_last_name: values.lastName,
@@ -87,12 +88,16 @@ export async function submitInquiry(
   // The database returns nothing for a repeat of a submission it already saved. Say thanks, but don't notify twice.
   if (!savedId) return { status: "sent" };
 
-  // Notifications are best effort: the inquiry is already saved, so none of this can fail the visit.
-  try {
-    await sendInquiryEmail(values, await getPublishedTexts());
-  } catch (emailError) {
-    console.error("Inquiry email failed:", emailError);
-  }
+  // The inquiry is saved, so the visitor is told thanks whatever happens next. The email is attempted,
+  // logged loudly if it cannot be sent, and its result is recorded with the inquiry (see the dashboard).
+  const emailOutcome = await notifyOwnerByEmail(values, await getPublishedTexts());
+  const { error: recordError } = await supabase.rpc("record_inquiry_email", {
+    p_id: savedId,
+    p_token: token,
+    p_status: emailOutcome.status,
+    p_error: emailOutcome.error,
+  });
+  if (recordError) console.error("Could not record the email status for the inquiry:", recordError.message);
 
   const webhook = process.env.CONTACT_WEBHOOK_URL;
   if (webhook) {
