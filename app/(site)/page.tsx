@@ -185,7 +185,7 @@ export default function HomePage() {
         <Photo slot="session-backdrop" decorative parallax={0.12} className="absolute inset-0 opacity-25 mix-blend-multiply" />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_0%,rgb(235_230_219/0.55),rgb(202_128_96/0.16))]"
+          className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_0%,rgb(235_230_219/0.55),rgb(202_128_96/0.09))]"
         />
         {/* ...and fades into the cream testimonials below. */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[90px] bg-gradient-to-b from-transparent to-cream" />
@@ -207,7 +207,7 @@ export default function HomePage() {
                   />
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 rounded-[12px] bg-gradient-to-t from-espresso/45 via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-100"
+                    className="pointer-events-none absolute inset-0 rounded-[12px] bg-gradient-to-t from-espresso/20 via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-100"
                   />
                   <span aria-hidden="true" className="pointer-events-none absolute inset-[8px] rounded-[8px] border border-cream/70" />
                   <ApertureBloom className="absolute bottom-[8%] left-1/2 h-7 w-7 -translate-x-1/2 transition-[rotate] duration-700 group-hover:rotate-45" />

@@ -19,11 +19,11 @@ export default function PricingPage() {
     <>
       <section className="relative flex h-[110vw] max-h-[820px] min-h-[460px] items-center justify-center overflow-hidden bg-espresso md:h-[52vw]">
         <Photo slot="pricing-landing-hero" parallax={0.08} zoom className="absolute inset-0" priority />
-        <div className="absolute inset-0 bg-espresso/35" />
+        <div className="absolute inset-0 bg-espresso/15" />
         <T
           as="h1"
           id="pricing.landing.title"
-          className="display relative max-w-[900px] px-6 pt-16 text-center text-[46px] uppercase leading-[1.04] text-cream md:text-[72px] lg:text-[96px]"
+          className="display relative max-w-[900px] px-6 pt-16 text-center text-[46px] uppercase leading-[1.04] text-cream [text-shadow:0_2px_28px_rgb(53_48_38/0.45)] md:text-[72px] lg:text-[96px]"
         />
       </section>
 
@@ -46,7 +46,7 @@ export default function PricingPage() {
                       imageClassName="transition-[scale] duration-[1.4s] ease-[var(--ease-soft)] group-hover:scale-[1.06]"
                       sizes="(min-width: 48rem) 33vw, 360px"
                     />
-                    <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-[12px] bg-gradient-to-t from-espresso/45 via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-100" />
+                    <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-[12px] bg-gradient-to-t from-espresso/20 via-transparent to-transparent opacity-80 transition-opacity duration-700 group-hover:opacity-100" />
                     <span aria-hidden="true" className="pointer-events-none absolute inset-[8px] rounded-[8px] border border-cream/70" />
                     <ApertureBloom className="absolute bottom-[8%] left-1/2 h-7 w-7 -translate-x-1/2 transition-[rotate] duration-700 group-hover:rotate-45" />
                   </span>

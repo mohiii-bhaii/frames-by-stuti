@@ -5,6 +5,8 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
 const nextConfig: NextConfig = {
   images: {
+    // 75 is the default; photographs are served at 85 to keep fine detail (skin, lace, hair).
+    qualities: [75, 85],
     remotePatterns: supabaseUrl ? [new URL("/storage/v1/object/public/site-photos/**", supabaseUrl)] : [],
   },
   // The old Services page now lives at /pricing. Temporary on purpose, until the new pages are confirmed.

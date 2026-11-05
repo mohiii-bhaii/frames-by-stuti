@@ -68,7 +68,7 @@ function LightboxPhoto({ slot }: { slot: ImageSlot }) {
   const image = useSlotImage(slot);
   if (!image.src) return null;
   return (
-    <Image key={image.src} src={image.src} alt={image.alt} fill sizes="100vw" className="animate-[fade-in_0.3s_ease] object-contain p-2 md:px-20" />
+    <Image quality={85} key={image.src} src={image.src} alt={image.alt} fill sizes="100vw" className="animate-[fade-in_0.3s_ease] object-contain p-2 md:px-20" />
   );
 }
 

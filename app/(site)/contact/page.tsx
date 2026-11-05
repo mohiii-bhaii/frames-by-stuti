@@ -21,9 +21,9 @@ export default function ContactPage() {
         {/* A soft shade behind the heading only, so white text stays readable on a light photograph. */}
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(70%_38%_at_50%_50%,rgb(53_48_38/0.38),transparent)]"
+          className="absolute inset-0 bg-[radial-gradient(70%_38%_at_50%_50%,rgb(53_48_38/0.16),transparent)]"
         />
-        <h1 className="display relative px-6 text-center text-[clamp(28px,8.2vw,40px)] uppercase leading-[1.18] tracking-[0.03em] text-white md:text-[64px] lg:text-[88px]">
+        <h1 className="display relative px-6 text-center text-[clamp(28px,8.2vw,40px)] uppercase leading-[1.18] tracking-[0.03em] text-white [text-shadow:0_2px_28px_rgb(53_48_38/0.5)] md:text-[64px] lg:text-[88px]">
           <T id="contact.hero.line1" />
           <br />
           <T id="contact.hero.line2" />

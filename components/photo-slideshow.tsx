@@ -45,7 +45,7 @@ function Slide({
   useRegisterSlot(slot);
   if (!image.src) return null;
   return (
-    <Image
+    <Image quality={85}
       src={image.src}
       alt={state === "active" ? image.alt : ""}
       fill

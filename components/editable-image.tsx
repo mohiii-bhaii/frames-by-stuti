@@ -59,7 +59,7 @@ export function EditableImage({
       data-reveal={reveal}
     >
       {image.src ? (
-        <Image
+        <Image quality={85}
           src={image.src}
           alt={decorative ? "" : image.alt}
           fill
