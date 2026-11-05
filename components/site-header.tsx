@@ -64,10 +64,9 @@ export function SiteHeader() {
         <Link
           href="/"
           aria-label={`${site.name}, home`}
-          className="header-brand absolute inset-x-0 top-[54px] mx-auto w-fit flex-col items-center"
+          className="header-brand absolute inset-x-0 top-[62px] mx-auto w-fit flex-col items-center"
         >
           <span className="font-display text-[clamp(30px,9.6vw,38px)] font-normal leading-none tracking-[-0.01em] text-espresso">frames by stuti</span>
-          <span className="eyebrow mt-[7px] text-[10px] font-normal leading-none tracking-[0.5em] pl-[0.5em] text-walnut">Photography</span>
         </Link>
         <button
           type="button"
