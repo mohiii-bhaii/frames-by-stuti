@@ -49,13 +49,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* A little more about me */}
+      {/* The heart behind the photographs */}
       <section className="paper relative overflow-x-clip">
         <div className="mx-auto max-w-[720px] px-6 pb-16 pt-4 text-center lg:pb-[104px]">
           <ApertureBloom className="mx-auto mb-6 w-10 text-walnut" />
-          <T as="h2" id="about.more.heading" data-reveal="title" className="display text-[34px] text-espresso lg:text-[52px]" />
-          <T as="p" id="about.personalStory" data-reveal="up" className="mt-8 text-[16px] leading-[1.85] text-walnut lg:text-[18px]" />
-          <T as="h3" id="about.heart.heading" data-reveal="title" className="script mt-14 text-[32px] text-terracotta lg:text-[44px]" />
+          <T as="h3" id="about.heart.heading" data-reveal="title" className="script text-[32px] text-terracotta lg:text-[44px]" />
           <T as="p" id="about.why.story" data-reveal="up" className="mt-6 text-[16px] leading-[1.85] text-walnut lg:text-[18px]" />
           <LeafSprig className="mx-auto mt-12 w-[110px] text-walnut/70" />
         </div>
