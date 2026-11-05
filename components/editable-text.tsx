@@ -72,27 +72,3 @@ export function CurvedT({ id, ...props }: { id: string } & Omit<React.ComponentP
   const edit = useTextEdit(id);
   return <CurvedText text={text} {...props} {...edit} />;
 }
-
-/**
- * Editable text shown in two parts: its first word and the rest ("i'm" and "Stuti"). The two parts are
- * separate flex items of the parent (display: contents), so the page can size and place them on their own
- * lines. Clicking either opens the one text in the editor.
- */
-export function SplitT({
-  id,
-  leadClassName,
-  restClassName,
-  ...props
-}: { id: string; leadClassName?: string; restClassName?: string } & Omit<HTMLAttributes<HTMLElement>, "children">) {
-  const text = useText(id);
-  const edit = useTextEdit(id);
-  const space = text.trim().indexOf(" ");
-  const lead = space < 0 ? "" : text.trim().slice(0, space);
-  const rest = space < 0 ? text.trim() : text.trim().slice(space + 1);
-  return (
-    <p {...props} {...edit} className={`contents ${props.className ?? ""}`.trim()}>
-      {lead ? <span className={leadClassName}>{lead}</span> : null}
-      <span className={restClassName}>{rest}</span>
-    </p>
-  );
-}
