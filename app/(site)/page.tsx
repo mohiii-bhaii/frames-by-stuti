@@ -33,20 +33,30 @@ export default function HomePage() {
         <h1 className="sr-only">
           {site.name}: {site.location} photographer
         </h1>
-        <div
-          data-parallax="0.04"
-          data-zoom
-          className="absolute inset-x-[15%] bottom-[5%] top-[190px] overflow-hidden rounded-[38px] border-2 border-sage md:inset-x-[12.150%] md:bottom-2 md:top-[224px] lg:top-[260px]"
-        >
-          <PhotoSlideshow
-            priority
-            slots={["hero-1", "hero-2", "hero-3", "hero-4", "hero-5", "hero-6"]}
-            sizes="(min-width: 48rem) 76vw, 70vw"
-          />
+        {/*
+          The outer box has the frame's position and size and does no clipping, so
+          the flower can cross the border. The photograph is cropped by the inner
+          frame, which fills the outer box exactly (same size, shape and border as
+          before). The flower is placed on the outer box's top-right corner, so it
+          stays on that corner at every screen size and whatever photo is showing.
+        */}
+        <div className="absolute inset-x-[15%] bottom-[5%] top-[190px] md:inset-x-[12.150%] md:bottom-2 md:top-[224px] lg:top-[260px]">
+          <div
+            data-parallax="0.04"
+            data-zoom
+            className="absolute inset-0 overflow-hidden rounded-[38px] border-2 border-sage"
+          >
+            <PhotoSlideshow
+              priority
+              slots={["hero-1", "hero-2", "hero-3", "hero-4", "hero-5", "hero-6"]}
+              sizes="(min-width: 48rem) 76vw, 70vw"
+            />
+          </div>
+          {/* Centred 16px in from the box corner along both edges, which puts about half of the round flower inside the curved frame and half outside. Not interactive. */}
+          <ApertureBloom className="pointer-events-none absolute right-0 top-0 z-10 w-[64px] translate-x-[calc(50%-16px)] -translate-y-[calc(50%-16px)] text-walnut md:w-[74px]" />
         </div>
         <VerticalWords className="absolute left-[7.500%] top-[62%] origin-center -translate-x-1/2 -translate-y-1/2 -rotate-90 md:left-[10.700%] md:top-[60%] lg:top-[62%]" />
         <VerticalWords className="absolute right-[7.500%] top-[62%] origin-center translate-x-1/2 -translate-y-1/2 rotate-90 md:right-[10.700%] md:top-[60%] lg:top-[62%]" />
-        <ApertureBloom data-speed="0.25" className="absolute right-[3%] top-[120px] w-[64px] text-walnut md:right-[9%] md:top-[34px] md:w-[74px]" />
         <LeafSprig data-speed="0.35" className="absolute -left-2 bottom-[2%] w-[120px] text-walnut md:bottom-[-6px] md:left-[1.500%] md:w-[270px]" />
         <T
           as="p"
