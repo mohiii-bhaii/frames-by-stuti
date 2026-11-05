@@ -431,3 +431,12 @@ body:has([data-page-home]) .header-burger {
     top: 28px;
   }
 }
+
+/* A scrolling row without its scrollbar (touch, trackpad, arrows and dragging still work). */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

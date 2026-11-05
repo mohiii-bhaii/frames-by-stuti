@@ -1,4 +1,5 @@
 import { about, categories, sessionCards, contactLink, faqs, navigation, packageDetails, site, testimonials } from "@/content/site";
+import { portfolioCategories } from "@/content/portfolio";
 import { pricingCategories, pricingHref, pricingTexts, pricingTextLabel } from "@/content/pricing";
 import { locationPreferences, referralOptions, sessionOptions, weekdays } from "@/lib/inquiry";
 
@@ -27,6 +28,8 @@ areaKeys.forEach((key, index) => {
 });
 for (const category of sessionCards) texts[`category.${category.id}`] = category.label;
 Object.assign(texts, pricingTexts);
+for (const category of portfolioCategories) texts[`portfolio.${category.id}.title`] = category.title;
+texts["portfolio.empty"] = "New photographs are coming soon.";
 
 // Business details. Social links are hidden on the site while they are empty.
 Object.assign(texts, {
@@ -75,11 +78,6 @@ Object.assign(texts, {
   "about.cta.button": "Get in touch",
 
   // Portfolio
-  "portfolio.title": "The work",
-  "portfolio.heading": "a few favourite frames",
-  "portfolio.intro":
-    "[Placeholder.] Introduce your portfolio here. Choose a session type, then select any photograph to see it larger.",
-  "portfolio.filterAll": "All",
 
   // Services
   "services.title": "it's all about the experience",
