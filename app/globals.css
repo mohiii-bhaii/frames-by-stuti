@@ -390,14 +390,20 @@ body {
   color: var(--color-espresso);
 }
 
-/* The cream bar under the header on every page but the homepage. */
+/* The cream bar under the header on every page but the homepage. Tall enough for the logo (190px, 230px and 270px wide) with a little air above and below. */
 .header-spacer {
-  height: 144px;
+  height: 182px;
 }
 
 @media (min-width: 48rem) {
   .header-spacer {
-    height: 156px;
+    height: 216px;
+  }
+}
+
+@media (min-width: 64rem) {
+  .header-spacer {
+    height: 252px;
   }
 }
 
@@ -415,21 +421,6 @@ body:has([data-page-home]) .site-header {
 
 body:has([data-page-home]) .header-home {
   display: block;
-}
-
-body:has([data-page-home]) .header-inner {
-  display: none;
-}
-
-/* On the homepage the menu icon sits on the right, level with the centre of the logo. */
-body:has([data-page-home]) .header-burger {
-  top: 78px;
-}
-
-@media (min-width: 48rem) {
-  body:has([data-page-home]) .header-burger {
-    top: 28px;
-  }
 }
 
 /* A scrolling row without its scrollbar (touch, trackpad, arrows and dragging still work). */

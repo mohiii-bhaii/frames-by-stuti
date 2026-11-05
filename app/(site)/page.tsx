@@ -29,14 +29,14 @@ export default function HomePage() {
       <HomeMarker />
 
       {/* Hero */}
-      <section className="paper relative h-[190vw] max-h-[900px] min-h-[640px] md:h-svh md:max-h-none md:min-h-[720px]">
+      <section className="paper relative h-[196vw] max-h-[920px] min-h-[660px] md:h-[calc(100svh+123px)] md:max-h-none md:min-h-[843px] lg:h-[calc(100svh+159px)] lg:min-h-[879px]">
         <h1 className="sr-only">
           {site.name}: {site.location} photographer
         </h1>
         <div
           data-parallax="0.04"
           data-zoom
-          className="absolute inset-x-[15%] bottom-[5%] top-[172px] overflow-hidden rounded-[38px] border-2 border-sage md:inset-x-[12.150%] md:bottom-2 md:top-[101px]"
+          className="absolute inset-x-[15%] bottom-[5%] top-[190px] overflow-hidden rounded-[38px] border-2 border-sage md:inset-x-[12.150%] md:bottom-2 md:top-[224px] lg:top-[260px]"
         >
           <PhotoSlideshow
             priority
@@ -44,8 +44,8 @@ export default function HomePage() {
             sizes="(min-width: 48rem) 76vw, 70vw"
           />
         </div>
-        <VerticalWords className="absolute left-[7.500%] top-[62%] origin-center -translate-x-1/2 -translate-y-1/2 -rotate-90 md:left-[10.700%] md:top-[55%]" />
-        <VerticalWords className="absolute right-[7.500%] top-[62%] origin-center translate-x-1/2 -translate-y-1/2 rotate-90 md:right-[10.700%] md:top-[55%]" />
+        <VerticalWords className="absolute left-[7.500%] top-[62%] origin-center -translate-x-1/2 -translate-y-1/2 -rotate-90 md:left-[10.700%] md:top-[60%] lg:top-[62%]" />
+        <VerticalWords className="absolute right-[7.500%] top-[62%] origin-center translate-x-1/2 -translate-y-1/2 rotate-90 md:right-[10.700%] md:top-[60%] lg:top-[62%]" />
         <ApertureBloom data-speed="0.25" className="absolute right-[3%] top-[120px] w-[64px] text-walnut md:right-[9%] md:top-[34px] md:w-[74px]" />
         <LeafSprig data-speed="0.35" className="absolute -left-2 bottom-[2%] w-[120px] text-walnut md:bottom-[-6px] md:left-[1.500%] md:w-[270px]" />
         <T

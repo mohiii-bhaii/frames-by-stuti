@@ -180,11 +180,13 @@ export type ImageSlot = keyof typeof imageSlots;
 
 /**
  * The brand logo can also be replaced from the editor. Until a logo image is
- * published, the original typeset logo is shown, so these have no placeholder file.
+ * published, the bundled brand logo (public/brand) is shown, so these have no
+ * placeholder file. (The earlier spots, logo-wordmark and logo-badge, are no
+ * longer used. Anything uploaded to them stays in the database, unused.)
  */
 export const logoSlots = {
-  "logo-wordmark": { width: 600, height: 200, alt: "Frames by Stuti" },
-  "logo-badge": { width: 600, height: 420, alt: "Frames by Stuti" },
+  "logo-header": { width: 1098, height: 957, alt: "Frames by Stuti" },
+  "logo-footer": { width: 1098, height: 957, alt: "Frames by Stuti" },
 } satisfies Record<string, Omit<SlotSpec, "scene">>;
 
 export type LogoSlot = keyof typeof logoSlots;

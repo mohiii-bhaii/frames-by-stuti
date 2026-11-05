@@ -2,6 +2,7 @@
 
 import { registerMedia } from "@/app/admin/editor-actions";
 import { ACCEPTED_UPLOAD_TYPES, MAX_UPLOAD_BYTES } from "@/lib/cms";
+import { trimCrop } from "@/components/editor/trim";
 import type { MediaItem } from "@/lib/editor-types";
 import { getBrowserClient } from "@/lib/supabase/browser";
 import { MEDIA_BUCKET, supabaseKey, supabaseUrl } from "@/lib/supabase/config";
@@ -43,9 +44,34 @@ export async function prepareImage(file: File): Promise<Prepared> {
     bitmap = await decode(source);
   }
 
-  const { width, height } = bitmap;
+  // A PNG or WebP (usually a logo) with a wide empty transparent border is trimmed to its artwork,
+  // so it fills the space it is given instead of looking small. Photographs are never cropped.
+  let crop = { left: 0, top: 0, width: bitmap.width, height: bitmap.height };
+  let trimmed = false;
+  if (source.type === "image/png" || source.type === "image/webp") {
+    const probeScale = Math.min(1, 800 / Math.max(bitmap.width, bitmap.height));
+    const probe = document.createElement("canvas");
+    probe.width = Math.max(1, Math.round(bitmap.width * probeScale));
+    probe.height = Math.max(1, Math.round(bitmap.height * probeScale));
+    const probeContext = probe.getContext("2d", { willReadFrequently: true });
+    if (probeContext) {
+      probeContext.drawImage(bitmap, 0, 0, probe.width, probe.height);
+      const found = trimCrop(probeContext.getImageData(0, 0, probe.width, probe.height).data, probe.width, probe.height);
+      if (found) {
+        crop = {
+          left: Math.floor(found.left / probeScale),
+          top: Math.floor(found.top / probeScale),
+          width: Math.min(bitmap.width, Math.ceil(found.width / probeScale)),
+          height: Math.min(bitmap.height, Math.ceil(found.height / probeScale)),
+        };
+        trimmed = true;
+      }
+    }
+  }
+
+  const { width, height } = crop;
   const accepted = (ACCEPTED_UPLOAD_TYPES as readonly string[]).includes(source.type);
-  if (accepted && Math.max(width, height) <= MAX_EDGE && source.size <= PASSTHROUGH_BYTES) {
+  if (!trimmed && accepted && Math.max(width, height) <= MAX_EDGE && source.size <= PASSTHROUGH_BYTES) {
     bitmap.close();
     return { blob: source, width, height, mimeType: source.type };
   }
@@ -57,7 +83,7 @@ export async function prepareImage(file: File): Promise<Prepared> {
   const context = canvas.getContext("2d");
   if (!context) throw new Error("This browser couldn't process the photo.");
   context.imageSmoothingQuality = "high";
-  context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  context.drawImage(bitmap, crop.left, crop.top, crop.width, crop.height, 0, 0, canvas.width, canvas.height);
   bitmap.close();
 
   // PNGs may be logos with transparency, so they become WebP rather than JPEG.

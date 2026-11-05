@@ -51,25 +51,22 @@ export function SiteHeader() {
       {/* Inner pages: a cream bar the header sits on, so the logo is always dark on cream and never over a photo. Hidden on the homepage. */}
       <div aria-hidden="true" className="header-spacer paper" />
       <header className="site-header absolute inset-x-0 top-0 z-30">
-        <div className="header-home relative mx-auto h-[150px] max-w-[1440px] md:h-[100px]">
+        {/* Homepage only: the line of text at the top left on large screens. */}
+        <div className="header-home relative mx-auto max-w-[1440px]">
           <T
             as="p"
             id="header.eyebrow"
             className="eyebrow absolute left-[23px] top-[14px] hidden w-[215px] text-[16px] leading-normal tracking-normal lg:block"
           />
-          <HeaderLogo priority className="absolute left-1/2 top-[52px] h-[100px] -translate-x-1/2 md:top-[6px] md:h-[92px]" />
         </div>
-        <HeaderLogo
-          priority
-          className="header-inner absolute left-1/2 top-3 h-[120px] -translate-x-1/2 md:h-[132px]"
-        />
+        <HeaderLogo priority className="absolute left-1/2 top-2 -translate-x-1/2" />
         <button
           type="button"
           onClick={() => setIsOpen(true)}
           aria-label="Open menu"
           aria-haspopup="dialog"
           aria-expanded={isOpen}
-          className="header-burger absolute right-1 top-12 flex h-12 w-14 items-center justify-center md:right-3 md:top-[54px]"
+          className="header-burger absolute right-1 top-[67px] flex h-12 w-14 items-center justify-center md:right-3 md:top-[84px] lg:top-[102px]"
         >
           <svg viewBox="0 0 52 20" className="w-[42px] md:w-[50px]" fill="none" stroke="currentColor" strokeWidth="1.800" aria-hidden="true">
             <path d="M1 2h50M1 10h50M1 18h50" />
@@ -109,7 +106,7 @@ export function SiteHeader() {
             </button>
           ) : null}
 
-          <FullLogo link={false} className="w-[220px] md:w-[250px]" />
+          <FullLogo link={false} className="w-[230px] md:w-[260px]" />
 
           {view === "pricing" ? (
             <nav aria-label="Pricing & Packages" key="pricing" className="mt-6 animate-[fade-in_0.4s_ease] md:mt-0">
