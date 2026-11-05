@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AboutGallery, type GalleryItem } from "@/components/about-gallery";
 import { T } from "@/components/editable-text";
 import { ApertureBloom, LeafSprig } from "@/components/line-art";
 import { Photo } from "@/components/photo";
@@ -11,15 +10,6 @@ export const metadata: Metadata = {
   title: "About",
   description: `Meet Stuti, the photographer behind ${site.name}.`,
 };
-
-/** Up to five photographs, mixing portrait and landscape. Empty spots are skipped for visitors. */
-const gallery: GalleryItem[] = [
-  { slot: "about-hero", shape: "landscape" },
-  { slot: "about-moment-1", shape: "portrait" },
-  { slot: "about-moment-2", shape: "landscape" },
-  { slot: "about-work", shape: "portrait" },
-  { slot: "about-moment-3", shape: "portrait" },
-];
 
 export default function AboutPage() {
   return (
@@ -58,9 +48,6 @@ export default function AboutPage() {
           <LeafSprig className="mx-auto mt-12 w-[110px] text-walnut/70" />
         </div>
       </section>
-
-      {/* Behind the scenes */}
-      <AboutGallery items={gallery} />
 
       {/* Closing invitation */}
       <section className="paper relative overflow-x-clip">
