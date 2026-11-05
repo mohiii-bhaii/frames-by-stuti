@@ -94,29 +94,44 @@ export function Sparkle({ className, "data-speed": speed }: ArtProps) {
   );
 }
 
-/** A fine-line butterfly with veined wings, drawn symmetrically around its body. */
-export function Butterfly({ className, "data-speed": speed }: ArtProps) {
-  const wing = (
+/**
+ * A fine-line dragonfly in flight: four veined wings that flutter and a body that
+ * drifts a little (see .dragonfly-* in globals.css, which stands still for visitors
+ * who prefer reduced motion). Drawn symmetrically around its body, then turned so
+ * it flies up and to the left.
+ */
+export function Dragonfly({ className, "data-speed": speed }: ArtProps) {
+  const wings = (
     <g>
-      {/* Upper wing and its veins */}
-      <path d="M58 46C50 26 30 8 12 10 3 12 4 30 14 42c9 9 28 11 44 6Z" />
-      <path d="M58 46C46 36 30 22 14 15M58 46C42 42 26 36 9 24M58 46C42 47 28 46 17 42" strokeWidth="0.9" />
-      <path d="M16 24c4 2 8 6 9 11M26 18c3 3 5 7 5 12" strokeWidth="0.9" />
-      {/* Lower wing and its veins */}
-      <path d="M58 50C44 52 28 56 22 68c-5 11 8 22 19 14 9-6 15-18 17-32Z" />
-      <path d="M58 50C46 58 34 68 27 76M58 50C50 62 45 72 44 80" strokeWidth="0.9" />
-      <circle cx="30" cy="70" r="3" strokeWidth="0.9" />
-      <circle cx="21" cy="30" r="2.2" strokeWidth="0.9" />
+      {/* Forewing */}
+      <g className="dragonfly-fore">
+        <path d="M57 36C44 24 22 18 6 24c-3 3 2 9 14 12 12 3 26 3 37 2Z" />
+        <path d="M57 36C42 31 26 27 10 25M57 37C42 35 28 34 14 31" strokeWidth="0.8" />
+        <path d="M20 22l1 11M30 24l1 11M40 28l1 8M13 26l1 8" strokeWidth="0.7" />
+        <path d="M9 24l7 1" strokeWidth="2.200" />
+      </g>
+      {/* Hindwing */}
+      <g className="dragonfly-hind">
+        <path d="M57 42C44 42 22 50 8 62c-3 4 3 8 15 5 13-3 26-12 34-22Z" />
+        <path d="M57 43C42 47 26 55 11 63M57 44C46 52 34 60 24 66" strokeWidth="0.8" />
+        <path d="M22 54l5 9M32 50l4 9M42 46l3 8" strokeWidth="0.7" />
+        <path d="M11 62l7-3" strokeWidth="2.200" />
+      </g>
     </g>
   );
   return (
-    <svg viewBox="0 0 120 100" className={className} data-speed={speed} aria-hidden="true" {...stroke} strokeWidth="1.8">
-      {wing}
-      <g transform="translate(120 0) scale(-1 1)">{wing}</g>
-      <path d="M60 36c-2 4-2 22 0 34 2-12 2-30 0-34Z" />
-      <path d="M59 36C57 26 52 19 46 14M61 36c2-10 7-17 13-22" strokeWidth="1.1" />
-      <circle cx="45.500" cy="13.500" r="1.400" />
-      <circle cx="74.500" cy="13.500" r="1.400" />
+    <svg viewBox="0 0 120 120" className={className} data-speed={speed} aria-hidden="true" {...stroke} strokeWidth="1.500">
+      <g className="dragonfly-drift" transform="rotate(-28 60 60)">
+        {wings}
+        <g transform="translate(120 0) scale(-1 1)">{wings}</g>
+        {/* Head, eyes, thorax and a long segmented tail */}
+        <circle cx="60" cy="25" r="4.500" />
+        <circle cx="56.500" cy="24" r="2" strokeWidth="1" />
+        <circle cx="63.500" cy="24" r="2" strokeWidth="1" />
+        <path d="M56 31C56 27 64 27 64 31L63 46H57Z" />
+        <path d="M57 46L58 108M63 46L62 108M58 108Q60 112 62 108" />
+        <path d="M57.500 56h5M57.700 66h4.600M57.800 76h4.400M57.900 86h4.200M57.900 96h4.200" strokeWidth="0.9" />
+      </g>
     </svg>
   );
 }
