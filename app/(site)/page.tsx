@@ -4,7 +4,7 @@ import { CurvedT, T } from "@/components/editable-text";
 import { HomeMarker } from "@/components/home-marker";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
 import { SessionLink } from "@/components/session-link";
-import { ApertureBloom, LeafSprig, Sparkle } from "@/components/line-art";
+import { ApertureBloom, BotanicalBranch, Butterfly, LeafSprig, Sparkle } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { sessionCards, site } from "@/content/site";
@@ -12,7 +12,7 @@ import { ScrollMotion } from "@/components/scroll-motion";
 
 function VerticalWords({ className = "" }: { className?: string }) {
   return (
-    <p className={`eyebrow whitespace-nowrap text-[13px] text-espresso md:text-[16px] ${className}`}>
+    <p className={`eyebrow whitespace-nowrap text-[clamp(13px,4.2vw,17px)] font-light text-espresso md:text-[16px] md:font-normal ${className}`}>
       <T id="home.words.1" />
       &nbsp;&nbsp;&nbsp;
       <T id="home.words.2" />
@@ -29,7 +29,7 @@ export default function HomePage() {
       <HomeMarker />
 
       {/* Hero */}
-      <section className="paper relative h-[196vw] max-h-[920px] min-h-[660px] md:h-[calc(100svh+123px)] md:max-h-none md:min-h-[843px] lg:h-[calc(100svh+159px)] lg:min-h-[879px]">
+      <section className="paper relative overflow-x-clip h-[calc(196vw-48px)] max-h-[920px] min-h-[640px] md:h-[calc(100svh+123px)] md:max-h-none md:min-h-[843px] lg:h-[calc(100svh+159px)] lg:min-h-[879px]">
         <h1 className="sr-only">
           {site.name}: {site.location} photographer
         </h1>
@@ -40,7 +40,7 @@ export default function HomePage() {
           before). The flower is placed on the outer box's top-right corner, so it
           stays on that corner at every screen size and whatever photo is showing.
         */}
-        <div className="absolute inset-x-[15%] bottom-[5%] top-[190px] md:inset-x-[12.150%] md:bottom-2 md:top-[224px] lg:top-[260px]">
+        <div className="absolute inset-x-[15%] bottom-[5%] top-[140px] md:inset-x-[12.150%] md:bottom-2 md:top-[224px] lg:top-[260px]">
           <div
             data-parallax="0.04"
             data-zoom
@@ -53,11 +53,15 @@ export default function HomePage() {
             />
           </div>
           {/* Centred 16px in from the box corner along both edges, which puts about half of the round flower inside the curved frame and half outside. Not interactive. */}
-          <ApertureBloom className="pointer-events-none absolute right-0 top-0 z-10 w-[64px] translate-x-[calc(50%-16px)] -translate-y-[calc(50%-16px)] text-walnut md:w-[74px]" />
+          <ApertureBloom className="pointer-events-none absolute right-0 top-0 z-10 hidden w-[74px] translate-x-[calc(50%-16px)] -translate-y-[calc(50%-16px)] text-walnut md:block" />
+          {/* Phone: a butterfly resting on the frame's top-right corner, about half outside and half inside. */}
+          <Butterfly className="pointer-events-none absolute right-0 top-0 z-10 w-[clamp(88px,29vw,116px)] translate-x-[36%] -translate-y-[38%] rotate-[8deg] text-espresso md:hidden" />
+          {/* Phone: a branch reaching in from outside the frame at the lower-left corner. */}
+          <BotanicalBranch className="pointer-events-none absolute bottom-[-3%] left-0 z-10 w-[222px] -translate-x-[30%] text-espresso md:hidden" />
         </div>
-        <VerticalWords className="absolute left-[7.500%] top-[62%] origin-center -translate-x-1/2 -translate-y-1/2 -rotate-90 md:left-[10.700%] md:top-[60%] lg:top-[62%]" />
-        <VerticalWords className="absolute right-[7.500%] top-[62%] origin-center translate-x-1/2 -translate-y-1/2 rotate-90 md:right-[10.700%] md:top-[60%] lg:top-[62%]" />
-        <LeafSprig data-speed="0.35" className="absolute -left-2 bottom-[2%] w-[120px] text-walnut md:bottom-[-6px] md:left-[1.500%] md:w-[270px]" />
+        <VerticalWords className="absolute left-[10.200%] top-[43%] origin-center -translate-x-1/2 -translate-y-1/2 -rotate-90 md:left-[10.700%] md:top-[60%] lg:top-[62%]" />
+        <VerticalWords className="absolute right-[10.200%] top-[66%] origin-center translate-x-1/2 -translate-y-1/2 rotate-90 md:right-[10.700%] md:top-[60%] lg:top-[62%]" />
+        <LeafSprig data-speed="0.35" className="absolute -left-2 bottom-[2%] hidden w-[120px] text-walnut md:bottom-[-6px] md:block md:left-[1.500%] md:w-[270px]" />
         <T
           as="p"
           id="header.eyebrow"

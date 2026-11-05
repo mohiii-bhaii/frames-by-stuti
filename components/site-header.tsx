@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { T } from "@/components/editable-text";
 import { pricingCategories, pricingHref } from "@/content/pricing";
-import { contactLink, menuNavigation } from "@/content/site";
+import { contactLink, menuNavigation, site } from "@/content/site";
 import { navKey } from "@/content/texts";
 import { FullLogo, HeaderLogo } from "@/components/logo";
 import { SocialLinks } from "@/components/social-links";
@@ -59,7 +59,16 @@ export function SiteHeader() {
             className="eyebrow absolute left-[23px] top-[14px] hidden w-[215px] text-[16px] leading-normal tracking-normal lg:block"
           />
         </div>
-        <HeaderLogo priority className="absolute left-1/2 top-2 -translate-x-1/2" />
+        <HeaderLogo priority className="header-logo absolute left-1/2 top-2 -translate-x-1/2" />
+        {/* Phone homepage only (see globals.css): the brand name in place of the camera logo. */}
+        <Link
+          href="/"
+          aria-label={`${site.name}, home`}
+          className="header-brand absolute inset-x-0 top-[54px] mx-auto w-fit flex-col items-center"
+        >
+          <span className="eyebrow text-[11px] font-light leading-none tracking-[0.34em] text-espresso">Frames by</span>
+          <span className="font-script -mt-[2px] text-[clamp(54px,16.4vw,64px)] leading-[0.95] text-espresso">Stuti</span>
+        </Link>
         <button
           type="button"
           onClick={() => setIsOpen(true)}

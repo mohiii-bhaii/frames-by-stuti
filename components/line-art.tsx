@@ -93,3 +93,88 @@ export function Sparkle({ className, "data-speed": speed }: ArtProps) {
     </svg>
   );
 }
+
+/** A fine-line butterfly with veined wings, drawn symmetrically around its body. */
+export function Butterfly({ className, "data-speed": speed }: ArtProps) {
+  const wing = (
+    <g>
+      {/* Upper wing and its veins */}
+      <path d="M58 46C50 26 30 8 12 10 3 12 4 30 14 42c9 9 28 11 44 6Z" />
+      <path d="M58 46C46 36 30 22 14 15M58 46C42 42 26 36 9 24M58 46C42 47 28 46 17 42" strokeWidth="0.9" />
+      <path d="M16 24c4 2 8 6 9 11M26 18c3 3 5 7 5 12" strokeWidth="0.9" />
+      {/* Lower wing and its veins */}
+      <path d="M58 50C44 52 28 56 22 68c-5 11 8 22 19 14 9-6 15-18 17-32Z" />
+      <path d="M58 50C46 58 34 68 27 76M58 50C50 62 45 72 44 80" strokeWidth="0.9" />
+      <circle cx="30" cy="70" r="3" strokeWidth="0.9" />
+      <circle cx="21" cy="30" r="2.2" strokeWidth="0.9" />
+    </g>
+  );
+  return (
+    <svg viewBox="0 0 120 100" className={className} data-speed={speed} aria-hidden="true" {...stroke} strokeWidth="1.8">
+      {wing}
+      <g transform="translate(120 0) scale(-1 1)">{wing}</g>
+      <path d="M60 36c-2 4-2 22 0 34 2-12 2-30 0-34Z" />
+      <path d="M59 36C57 26 52 19 46 14M61 36c2-10 7-17 13-22" strokeWidth="1.1" />
+      <circle cx="45.500" cy="13.500" r="1.400" />
+      <circle cx="74.500" cy="13.500" r="1.400" />
+    </svg>
+  );
+}
+
+/**
+ * A long, delicate branch of eucalyptus-style leaves and round berry clusters.
+ * It grows from the bottom-left of the box toward the top-right, so placed on a
+ * photo's lower-left corner it reaches in from outside the frame.
+ */
+export function BotanicalBranch({ className, "data-speed": speed }: ArtProps) {
+  // Leaves along the stem: where each starts, how it leans (0 = straight up) and how long it is.
+  const leaves = [
+    { x: 24, y: 268, r: -24, l: 56 },
+    { x: 30, y: 258, r: 70, l: 46 },
+    { x: 50, y: 232, r: -20, l: 62 },
+    { x: 58, y: 220, r: 76, l: 54 },
+    { x: 80, y: 190, r: -18, l: 66 },
+    { x: 90, y: 178, r: 80, l: 58 },
+    { x: 112, y: 148, r: -14, l: 60 },
+    { x: 120, y: 138, r: 84, l: 50 },
+    { x: 146, y: 104, r: -8, l: 48 },
+    { x: 154, y: 94, r: 70, l: 42 },
+    { x: 178, y: 60, r: 8, l: 40 },
+    { x: 192, y: 34, r: 24, l: 34 },
+  ];
+  const clusters = [
+    // [stem start x, y, then berry centres]
+    { from: [50, 232], berries: [[22, 196], [10, 178], [32, 178], [20, 158], [40, 160], [8, 140], [28, 138]] },
+    { from: [90, 178], berries: [[66, 138], [56, 118], [78, 120]] },
+  ] as const;
+  const leaf = (l: number) =>
+    `M0 0C${-l * 0.24} ${-l * 0.28} ${-l * 0.2} ${-l * 0.72} 0 ${-l}C${l * 0.2} ${-l * 0.72} ${l * 0.24} ${-l * 0.28} 0 0Z`;
+  return (
+    <svg viewBox="0 0 220 300" className={className} data-speed={speed} aria-hidden="true" {...stroke} strokeWidth="2.6">
+      <path d="M12 296C40 244 72 196 112 148S176 70 206 22" />
+      {leaves.map((item) => (
+        <g key={`${item.x}-${item.y}`} transform={`translate(${item.x} ${item.y}) rotate(${item.r})`}>
+          <path d={leaf(item.l)} />
+          <path d={`M0 0V${-item.l * 0.9}`} strokeWidth="1.4" />
+          <path
+            d={`M0 ${-item.l * 0.3}l${item.l * 0.12} ${-item.l * 0.12}M0 ${-item.l * 0.3}l${-item.l * 0.12} ${-item.l * 0.12}M0 ${-item.l * 0.55}l${item.l * 0.1} ${-item.l * 0.1}M0 ${-item.l * 0.55}l${-item.l * 0.1} ${-item.l * 0.1}`}
+            strokeWidth="0.9"
+          />
+        </g>
+      ))}
+      {clusters.map((cluster) => (
+        <g key={cluster.from.join("-")}>
+          {cluster.berries.map(([cx, cy]) => (
+            <g key={`${cx}-${cy}`}>
+              <path d={`M${cluster.from[0]} ${cluster.from[1]}Q${(cluster.from[0] + cx) / 2 - 6} ${(cluster.from[1] + cy) / 2} ${cx} ${cy + 6}`} strokeWidth="1" />
+              <circle cx={cx} cy={cy} r="7.500" />
+              <circle cx={cx - 1.500} cy={cy - 1} r="0.8" fill="currentColor" />
+              <circle cx={cx + 1.800} cy={cy + 0.500} r="0.8" fill="currentColor" />
+              <circle cx={cx} cy={cy + 2.500} r="0.8" fill="currentColor" />
+            </g>
+          ))}
+        </g>
+      ))}
+    </svg>
+  );
+}

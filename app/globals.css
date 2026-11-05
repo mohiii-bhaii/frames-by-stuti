@@ -13,6 +13,7 @@
 
   --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-bodoni), ui-serif, Georgia, serif;
+  --font-script: var(--font-allura), "Snell Roundhand", cursive;
 
   --breakpoint-md: 48rem;
   --breakpoint-lg: 64rem;
@@ -421,6 +422,30 @@ body:has([data-page-home]) .site-header {
 
 body:has([data-page-home]) .header-home {
   display: block;
+}
+
+/* Phone homepage only: a short, editorial header. A centred menu icon with the
+   brand name underneath replaces the large camera logo. Tablet, desktop and
+   every other page keep the logo header. */
+.header-brand {
+  display: none;
+}
+
+@media (max-width: 47.999rem) {
+  body:has([data-page-home]) .header-logo {
+    display: none;
+  }
+
+  body:has([data-page-home]) .header-brand {
+    display: flex;
+  }
+
+  body:has([data-page-home]) .header-burger {
+    left: 50%;
+    right: auto;
+    top: 10px;
+    transform: translateX(-50%);
+  }
 }
 
 /* A scrolling row without its scrollbar (touch, trackpad, arrows and dragging still work). */
