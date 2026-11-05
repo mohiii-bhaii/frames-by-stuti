@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { T } from "@/components/editable-text";
 import { pricingCategories, pricingHref } from "@/content/pricing";
-import { contactLink, menuNavigation, site } from "@/content/site";
+import { contactLink, menuNavigation } from "@/content/site";
 import { navKey } from "@/content/texts";
 import { FullLogo, HeaderLogo } from "@/components/logo";
 import { SocialLinks } from "@/components/social-links";
@@ -60,14 +60,6 @@ export function SiteHeader() {
           />
         </div>
         <HeaderLogo priority className="header-logo absolute left-1/2 top-2 -translate-x-1/2" />
-        {/* Phone homepage only (see globals.css): the brand name in place of the camera logo. */}
-        <Link
-          href="/"
-          aria-label={`${site.name}, home`}
-          className="header-brand absolute inset-x-0 top-[62px] mx-auto w-fit flex-col items-center"
-        >
-          <span className="font-display text-[clamp(30px,9.6vw,38px)] font-normal leading-none tracking-[-0.01em] text-espresso">frames by stuti</span>
-        </Link>
         <button
           type="button"
           onClick={() => setIsOpen(true)}
