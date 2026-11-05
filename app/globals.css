@@ -387,7 +387,22 @@ body {
    and the header follows it here, so the choice never depends on the URL the
    server believes it is rendering. */
 .site-header {
-  color: var(--color-cream);
+  color: var(--color-espresso);
+}
+
+/* The cream bar under the header on every page but the homepage. */
+.header-spacer {
+  height: 96px;
+}
+
+@media (min-width: 48rem) {
+  .header-spacer {
+    height: 112px;
+  }
+}
+
+body:has([data-page-home]) .header-spacer {
+  display: none;
 }
 
 .header-home {
@@ -407,6 +422,7 @@ body:has([data-page-home]) .header-inner {
 }
 
 body:has([data-page-home]) .header-burger {
+  top: 0.25rem;
   left: 50%;
   right: auto;
   translate: -50% 0;
@@ -414,6 +430,7 @@ body:has([data-page-home]) .header-burger {
 
 @media (min-width: 48rem) {
   body:has([data-page-home]) .header-burger {
+    top: 0.25rem;
     left: auto;
     right: 0.75rem;
     translate: none;

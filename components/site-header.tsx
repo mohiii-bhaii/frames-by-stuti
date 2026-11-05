@@ -48,6 +48,8 @@ export function SiteHeader() {
         [data-page-home] marker (see globals.css). That keeps the server's HTML
         and the browser's identical, with no flash and no mismatch.
       */}
+      {/* Inner pages: a cream bar the header sits on, so the logo is always dark on cream and never over a photo. Hidden on the homepage. */}
+      <div aria-hidden="true" className="header-spacer paper" />
       <header className="site-header absolute inset-x-0 top-0 z-30">
         <div className="header-home relative mx-auto h-[150px] max-w-[1440px] md:h-[100px]">
           <T
@@ -58,8 +60,8 @@ export function SiteHeader() {
           <Wordmark priority className="absolute left-1/2 top-[52px] h-[100px] -translate-x-1/2 md:top-[6px] md:h-[92px]" />
         </div>
         <Wordmark
-          tone="light"
-          className="header-inner absolute left-4 top-3 h-[46px] md:left-[23px] md:top-4 md:h-[54px]"
+          priority
+          className="header-inner absolute left-1/2 top-3 h-[72px] -translate-x-1/2 md:top-[14px] md:h-[84px]"
         />
         <button
           type="button"
@@ -67,7 +69,7 @@ export function SiteHeader() {
           aria-label="Open menu"
           aria-haspopup="dialog"
           aria-expanded={isOpen}
-          className="header-burger absolute right-1 top-1 flex h-12 w-14 items-center justify-center md:right-3 md:top-1"
+          className="header-burger absolute right-1 top-6 flex h-12 w-14 items-center justify-center md:right-3 md:top-8"
         >
           <svg viewBox="0 0 52 20" className="w-[42px] md:w-[50px]" fill="none" stroke="currentColor" strokeWidth="1.800" aria-hidden="true">
             <path d="M1 2h50M1 10h50M1 18h50" />
@@ -107,7 +109,7 @@ export function SiteHeader() {
             </button>
           ) : null}
 
-          <FullLogo link={false} className="w-[190px] md:w-[220px]" />
+          <FullLogo link={false} className="w-[220px] md:w-[250px]" />
 
           {view === "pricing" ? (
             <nav aria-label="Pricing & Packages" key="pricing" className="mt-6 animate-[fade-in_0.4s_ease] md:mt-0">

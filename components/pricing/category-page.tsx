@@ -18,7 +18,7 @@ export function PricingCategoryPage({ slug }: { slug: string }) {
   return (
     <>
       <section className="paper relative overflow-x-clip">
-        <div className="mx-auto max-w-[760px] px-6 pb-12 pt-[150px] text-center lg:pb-16 lg:pt-[200px]">
+        <div className="mx-auto max-w-[760px] px-6 pb-12 pt-6 text-center lg:pb-16 lg:pt-10">
           <Link
             href="/pricing"
             className="eyebrow inline-flex min-h-11 items-center gap-2 text-[13px] text-walnut transition-colors duration-500 hover:text-rust"

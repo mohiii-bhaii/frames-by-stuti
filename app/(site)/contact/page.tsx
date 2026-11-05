@@ -15,9 +15,6 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      {/* The existing header sits on this band, so the photograph starts directly below it. */}
-      <div aria-hidden="true" className="h-[70px] bg-walnut md:h-[88px]" />
-
       {/* Hero: one large photograph with the heading centred over it */}
       <section className="relative flex h-[150vw] max-h-[960px] min-h-[480px] items-center justify-center overflow-hidden bg-walnut md:h-[58vw]">
         <Photo slot="contact-hero" className="absolute inset-0" priority position="50% 45%" />

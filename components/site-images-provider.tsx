@@ -45,3 +45,20 @@ export function usePublishedSlides(slots: ImageSlot[]): ImageSlot[] {
     return real.length > 0 ? real : slots.slice(0, 1);
   }, [published, drafts, slots]);
 }
+
+/**
+ * Only the slots that have a real photograph published (drafts count while the
+ * owner previews). Possibly none. For a gallery that simply skips empty spots.
+ */
+export function useRealSlots(slots: ImageSlot[]): ImageSlot[] {
+  const published = use(PublishedImages);
+  const drafts = useEditorStore((current) => (current.active ? current.display : null));
+  return useMemo(
+    () =>
+      slots.filter((slot) => {
+        const src = (drafts?.[slot] ?? published[slot])?.src;
+        return Boolean(src) && !src!.startsWith("/images/");
+      }),
+    [published, drafts, slots],
+  );
+}
