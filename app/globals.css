@@ -456,3 +456,34 @@ body:has([data-page-home]) .header-home {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* The homepage dragonfly: wings flutter, the body hovers. Still for reduced motion. */
+@keyframes dragonfly-flutter {
+  from { transform: rotate(-5deg); }
+  to { transform: rotate(5deg); }
+}
+
+@keyframes dragonfly-hover {
+  0%, 100% { transform: translate(0, 0) rotate(-28deg); }
+  50% { transform: translate(1.500px, -3px) rotate(-25deg); }
+}
+
+.dragonfly-fore, .dragonfly-hind {
+  transform-origin: 57px 38px;
+  animation: dragonfly-flutter 0.16s ease-in-out infinite alternate;
+}
+
+.dragonfly-hind {
+  animation-delay: -0.08s;
+}
+
+.dragonfly-drift {
+  transform-origin: 60px 60px;
+  animation: dragonfly-hover 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dragonfly-fore, .dragonfly-hind, .dragonfly-drift {
+    animation: none;
+  }
+}
