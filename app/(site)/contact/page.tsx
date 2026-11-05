@@ -47,8 +47,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Closing photo */}
-      <Photo slot="contact-banner" parallax={0.1} className="h-[64vw] max-h-[721px] w-full md:h-[50vw]" />
       <ScrollMotion />
     </>
   );

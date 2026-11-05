@@ -75,7 +75,6 @@ export const imageSlots = {
 
   // Contact
   "contact-hero": { ...LANDSCAPE, scene: "window", alt: "" },
-  "contact-banner": { ...LANDSCAPE, scene: "field", alt: "Placeholder: wide outdoor photograph" },
 
   // Portfolio
   "portfolio-hero": { ...LANDSCAPE, scene: "soft", alt: "Placeholder: portfolio cover photograph" },
