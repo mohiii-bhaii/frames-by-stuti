@@ -457,10 +457,10 @@ body:has([data-page-home]) .header-home {
   display: none;
 }
 
-/* The homepage dragonfly: wings flutter, the body hovers. Still for reduced motion. */
+/* The homepage dragonfly: wings flutter very gently, the body hovers. Still for reduced motion. */
 @keyframes dragonfly-flutter {
-  from { transform: rotate(-5deg); }
-  to { transform: rotate(5deg); }
+  from { transform: rotate(-2.5deg) scaleY(1); }
+  to { transform: rotate(2.5deg) scaleY(0.94); }
 }
 
 @keyframes dragonfly-hover {
@@ -470,11 +470,11 @@ body:has([data-page-home]) .header-home {
 
 .dragonfly-fore, .dragonfly-hind {
   transform-origin: 57px 38px;
-  animation: dragonfly-flutter 0.16s ease-in-out infinite alternate;
+  animation: dragonfly-flutter 1.8s ease-in-out infinite alternate;
 }
 
 .dragonfly-hind {
-  animation-delay: -0.08s;
+  animation-delay: -0.9s;
 }
 
 .dragonfly-drift {
