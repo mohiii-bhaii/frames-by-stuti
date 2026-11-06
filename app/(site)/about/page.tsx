@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { T } from "@/components/editable-text";
+import { ParagraphsT, T } from "@/components/editable-text";
 import { ApertureBloom } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { ScrollMotion } from "@/components/scroll-motion";
@@ -10,6 +10,19 @@ export const metadata: Metadata = {
   title: "About",
   description: `Meet Stuti, the photographer behind ${site.name}.`,
 };
+
+/** A fine line with a small flower between the parts of the story. */
+function Divider() {
+  return (
+    <div aria-hidden="true" className="mx-auto flex items-center justify-center gap-4 text-terracotta/70">
+      <span className="h-px w-14 bg-terracotta/35" />
+      <ApertureBloom className="h-6 w-6" />
+      <span className="h-px w-14 bg-terracotta/35" />
+    </div>
+  );
+}
+
+const bodyClass = "space-y-5 text-left text-[16px] leading-[1.9] text-walnut lg:text-[17px]";
 
 export default function AboutPage() {
   return (
@@ -34,10 +47,25 @@ export default function AboutPage() {
             <h1 data-reveal="title" className="mt-4">
               <T id="about.hello" className="display block text-[44px] leading-[1.06] text-espresso md:text-[60px] lg:text-[76px]" />
             </h1>
-            <T as="p" id="about.heroStory" data-reveal="up" className="mt-7 text-[16px] leading-[1.8] text-walnut lg:text-[18px]" />
+            <div className="mt-9">
+              <Divider />
+              <T as="h2" id="about.part1.heading" data-reveal="title" className="display mt-7 text-[30px] leading-[1.1] text-espresso lg:text-[40px]" />
+              <ParagraphsT id="about.part1.text" data-reveal="up" className={`mt-6 ${bodyClass}`} paragraphClassName="" />
+            </div>
           </div>
         </div>
       </section>
+
+      {/* The story continues in three more parts, each set apart by a fine divider. */}
+      {[2, 3, 4].map((part) => (
+        <section key={part} className="paper relative overflow-x-clip">
+          <div className="mx-auto max-w-[680px] px-6 pb-14 pt-4 lg:pb-[88px]">
+            <Divider />
+            <T as="h2" id={`about.part${part}.heading`} data-reveal="title" className="display mt-8 text-center text-[30px] leading-[1.1] text-espresso lg:text-[42px]" />
+            <ParagraphsT id={`about.part${part}.text`} data-reveal="up" className={`mt-7 ${bodyClass}`} />
+          </div>
+        </section>
+      ))}
 
       {/* Closing invitation */}
       <section className="paper relative overflow-x-clip">

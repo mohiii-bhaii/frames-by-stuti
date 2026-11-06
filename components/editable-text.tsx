@@ -76,6 +76,29 @@ export function PathT({ id, ...props }: { id: string } & Omit<React.ComponentPro
   return <PathText text={text} {...props} {...edit} />;
 }
 
+/**
+ * One editable text shown as separate paragraphs: a blank line starts a new paragraph, a single line break
+ * stays a line break. Clicking anywhere in it opens the whole text in the editor.
+ */
+export function ParagraphsT({
+  id,
+  paragraphClassName,
+  ...props
+}: { id: string; paragraphClassName?: string } & Omit<HTMLAttributes<HTMLElement>, "children">) {
+  const text = useText(id);
+  const edit = useTextEdit(id);
+  const paragraphs = text.split(/\n\s*\n/).map((part) => part.trim()).filter(Boolean);
+  return (
+    <div {...props} {...edit}>
+      {paragraphs.map((paragraph, index) => (
+        <p key={index} className={paragraphClassName}>
+          <Lines text={paragraph} />
+        </p>
+      ))}
+    </div>
+  );
+}
+
 /** An editable heading shown as a small first line over a large last word. */
 export function SplitHeadingT({ id, ...props }: { id: string } & Omit<React.ComponentProps<typeof SplitHeading>, "text">) {
   const text = useText(id);
