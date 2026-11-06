@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { T } from "@/components/editable-text";
@@ -6,17 +8,16 @@ import { ApertureBloom } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { ScrollMotion } from "@/components/scroll-motion";
 import { inquiryHref, pricingCategories, pricingHref } from "@/content/pricing";
-import { site } from "@/content/site";
 import type { ImageSlot } from "@/lib/images";
 
-export const metadata: Metadata = {
-  title: "Pricing & Packages",
-  description: `Photography packages and pricing from ${site.name}: maternity, newborn, milestones, lifestyle and family, events and bundles.`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata("pricing");
+}
 
 export default function PricingPage() {
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: "Pricing & Packages", path: "/pricing" }])} />
       <section className="relative flex h-[110vw] max-h-[820px] min-h-[460px] items-center justify-center overflow-hidden bg-espresso md:h-[52vw]">
         <Photo slot="pricing-landing-hero" parallax={0.08} zoom className="absolute inset-0" priority />
         <div className="absolute inset-0 bg-espresso/15" />

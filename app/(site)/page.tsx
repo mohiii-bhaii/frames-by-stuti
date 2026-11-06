@@ -1,9 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { PathT, SplitHeadingT, T, WaveT } from "@/components/editable-text";
 import { HomeMarker } from "@/components/home-marker";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
+import { JsonLd } from "@/components/json-ld";
 import { WindowPhoto } from "@/components/window-photo";
+import { localBusinessJsonLd, pageMetadata } from "@/lib/seo";
 import { SessionLink } from "@/components/session-link";
 import { ApertureBloom, BotanicalBranch, Dragonfly, LeafSprig, Sparkle } from "@/components/line-art";
 import { Photo } from "@/components/photo";
@@ -31,16 +34,22 @@ const SESSION_CURVE = "M104 235C388 -74 681 440 932 186";
 /** The same curve, run on a little past both ends along its own direction, as spare room for the letters. */
 const SESSION_CURVE_LONG = "M44 300L104 235C388 -74 681 440 932 186L992 125";
 
-export default function HomePage() {
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata("home");
+}
+
+export default async function HomePage() {
   return (
     <>
+      <JsonLd data={await localBusinessJsonLd()} />
       {/* Tells the header it is on the homepage (see globals.css). */}
       <HomeMarker />
 
       {/* Hero */}
       <section className="paper relative overflow-x-clip h-[calc(196vw+4px)] max-h-[920px] min-h-[640px] md:h-[calc(100svh+123px)] md:max-h-none md:min-h-[843px] lg:h-[calc(100svh+159px)] lg:min-h-[879px]">
+        {/* The page's one heading, for search engines and screen readers. The place comes from the editable header text ("Ottawa Family Photographer"). */}
         <h1 className="sr-only">
-          {site.name}: {site.location} photographer
+          {site.name}: <T id="header.eyebrow" plain />
         </h1>
         {/*
           The outer box has the frame's position and size and does no clipping, so

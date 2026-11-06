@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { PricingCategoryPage } from "@/components/pricing/category-page";
 
-export const metadata: Metadata = {
-  title: "Milestones pricing",
-  description: "Milestones photography packages and pricing from Frames by Stuti.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata("milestones");
+}
 
 export default function Page() {
   return <PricingCategoryPage slug="milestones" />;

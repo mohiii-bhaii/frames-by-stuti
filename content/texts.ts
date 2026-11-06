@@ -1,5 +1,6 @@
 import { about, categories, sessionCards, contactLink, faqs, navigation, packageDetails, site, TESTIMONIAL_SLOTS } from "@/content/site";
 import { portfolioCategories } from "@/content/portfolio";
+import { seoKey, seoPagePath, seoPages } from "@/content/seo";
 import { pricingCategories, pricingHref, pricingTexts, pricingTextLabel } from "@/content/pricing";
 import { locationPreferences, referralOptions, sessionOptions, weekdays } from "@/lib/inquiry";
 
@@ -28,6 +29,10 @@ areaKeys.forEach((key, index) => {
 });
 for (const category of sessionCards) texts[`category.${category.id}`] = category.label;
 Object.assign(texts, pricingTexts);
+for (const item of seoPages) {
+  texts[seoKey(item.page, "title")] = item.title;
+  texts[seoKey(item.page, "description")] = item.description;
+}
 for (const category of portfolioCategories) texts[`portfolio.${category.id}.title`] = category.title;
 texts["portfolio.empty"] = "New photographs are coming soon.";
 
@@ -234,7 +239,15 @@ export const optionalTextKeys = new Set(["site.instagramUrl", "site.facebookUrl"
 export const urlTextKeys = new Set(["site.instagramUrl", "site.facebookUrl"]);
 
 /** Names that read better in the editor than the key does. */
+const seoLabels = Object.fromEntries(
+  seoPages.flatMap((item) => [
+    [seoKey(item.page, "title"), `Google · ${item.label} · Page title (shown in search results)`],
+    [seoKey(item.page, "description"), `Google · ${item.label} · Page description (shown in search results and link previews)`],
+  ]),
+);
+
 const labelOverrides: Record<string, string> = {
+  ...seoLabels,
   "site.instagramHandle": "Instagram username (shown in the footer)",
   "site.instagramUrl": "Instagram profile link (web address)",
   "site.facebookUrl": "Facebook page link (web address)",
@@ -299,6 +312,8 @@ export function textAppearsOn(key: string, pathname: string) {
     return pathname === pricingHref(category?.slug);
   }
   if (key.startsWith("nav.pricing.")) return true;
+  // Search-engine text is listed on the page it describes.
+  if (group === "seo") return pathname === seoPagePath(second);
   const routes = groupRoutes[key.split(".")[0]];
   return !routes || routes.includes(pathname);
 }
@@ -314,6 +329,7 @@ const groupNames: Record<string, string> = {
   testimonial: "Testimonials",
   category: "Session types",
   nav: "Menu",
+  seo: "Google search",
   footer: "Footer",
   form: "Contact form",
   site: "Contact details",

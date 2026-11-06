@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Allura, Bodoni_Moda, Fraunces, Montserrat } from "next/font/google";
-import { site } from "@/content/site";
+import { site, siteUrl } from "@/content/site";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -29,11 +29,15 @@ const allura = Allura({
 });
 
 export const metadata: Metadata = {
+  // Makes every relative link in the metadata (canonical, social images) absolute, on the canonical domain.
+  metadataBase: new URL(siteUrl),
   title: {
-    default: `${site.name} | Photography`,
+    default: `${site.name} | Ottawa Photographer`,
     template: `%s | ${site.name}`,
   },
   description: site.description,
+  openGraph: { type: "website", siteName: site.name, locale: "en_CA" },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

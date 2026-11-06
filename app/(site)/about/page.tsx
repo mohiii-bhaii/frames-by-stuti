@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { ParagraphsT, T } from "@/components/editable-text";
 import { ApertureBloom } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { ScrollMotion } from "@/components/scroll-motion";
-import { site } from "@/content/site";
 
-export const metadata: Metadata = {
-  title: "About",
-  description: `Meet Stuti, the photographer behind ${site.name}.`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata("about");
+}
 
 /** A fine line with a small flower between the parts of the story. */
 function Divider() {
@@ -27,6 +27,7 @@ const bodyClass = "space-y-5 text-left text-[16px] leading-[1.9] text-walnut lg:
 export default function AboutPage() {
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: "About", path: "/about" }])} />
       {/* Meet Stuti */}
       <section className="paper relative overflow-x-clip">
         <ApertureBloom data-speed="-0.2" className="absolute -left-[14%] top-[6%] hidden w-[34%] text-walnut/10 md:block" />

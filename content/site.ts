@@ -4,6 +4,14 @@
  * Anything in [square brackets] or priced $000 is a placeholder to replace
  * before launch. Social links are hidden from navigation until a URL is added.
  */
+/**
+ * The one canonical address of the public website: sitemap, canonical links, social previews and
+ * structured data all use it. framesbystuti.com redirects here (a 308 set in Vercel), so this is
+ * the address Google should index. To make the bare domain canonical instead, swap the redirect
+ * in Vercel (Settings > Domains) and change this one line.
+ */
+export const siteUrl = "https://www.framesbystuti.com";
+
 export const site = {
   name: "Frames by Stuti",
   tagline: "Photography for the moments you'll want to keep",

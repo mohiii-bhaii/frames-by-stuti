@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/json-ld";
+import { breadcrumbJsonLd, localBusinessJsonLd, pageMetadata } from "@/lib/seo";
 import { ContactForm } from "@/components/contact-form";
 import { ContactReach } from "@/components/contact-reach";
 import { T } from "@/components/editable-text";
 import { ApertureBloom } from "@/components/line-art";
 import { Photo } from "@/components/photo";
-import { site } from "@/content/site";
 import { ScrollMotion } from "@/components/scroll-motion";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: `Send ${site.name} an inquiry about booking a session.`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return pageMetadata("contact");
+}
 
-export default function ContactPage() {
+export default async function ContactPage() {
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: "Contact", path: "/contact" }])} />
+      <JsonLd data={await localBusinessJsonLd()} />
       {/* Hero: one large photograph with the heading centred over it */}
       <section className="relative flex h-[150vw] max-h-[960px] min-h-[480px] items-center justify-center overflow-hidden bg-walnut md:h-[58vw]">
         <Photo slot="contact-hero" className="absolute inset-0" priority position="50% 45%" />

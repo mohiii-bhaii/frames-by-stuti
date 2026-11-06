@@ -5,6 +5,7 @@ import type { CSSProperties } from "react";
 import { EditHandle } from "@/components/edit-handle";
 import { useSlotImage } from "@/components/site-images-provider";
 import { cropStyle, type SlotId } from "@/lib/images";
+import { altFor } from "@/lib/seo-alt";
 
 export type EditableImageProps = {
   slot: SlotId;
@@ -61,7 +62,7 @@ export function EditableImage({
       {image.src ? (
         <Image quality={85}
           src={image.src}
-          alt={decorative ? "" : image.alt}
+          alt={decorative ? "" : altFor(slot, image.alt)}
           fill
           sizes={sizes}
           priority={priority}

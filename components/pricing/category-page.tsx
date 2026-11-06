@@ -4,7 +4,9 @@ import { ApertureBloom } from "@/components/line-art";
 import { CategoryStrip } from "@/components/pricing/category-strip";
 import { PricingTiers } from "@/components/pricing/pricing-tiers";
 import { ScrollMotion } from "@/components/scroll-motion";
-import { inquiryHref, pricingCategories } from "@/content/pricing";
+import { JsonLd } from "@/components/json-ld";
+import { inquiryHref, pricingCategories, pricingHref } from "@/content/pricing";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 /**
  * One category's own pricing page, laid out like the reference: a plain
@@ -17,6 +19,12 @@ export function PricingCategoryPage({ slug }: { slug: string }) {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Pricing & Packages", path: "/pricing" },
+          { name: category.name, path: pricingHref(category.slug) },
+        ])}
+      />
       <section className="paper relative overflow-x-clip">
         <div className="mx-auto max-w-[760px] px-6 pb-12 pt-6 text-center lg:pb-16 lg:pt-10">
           <Link
