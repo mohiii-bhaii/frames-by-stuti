@@ -38,12 +38,13 @@ export async function pageMetadata(page: SeoPage): Promise<Metadata> {
   return {
     title: isHome ? { absolute: shown } : title,
     description,
-    alternates: { canonical: item.path },
+    // The home page is "/" on the domain; Google treats the address with and without the slash as one.
+    alternates: { canonical: item.path === "/" ? `${siteUrl}/` : item.path },
     openGraph: {
       type: "website",
       siteName: site.name,
       locale: "en_CA",
-      url: item.path,
+      url: item.path === "/" ? `${siteUrl}/` : item.path,
       title: shown,
       description,
       images: image ? [{ url: image.url, width: image.width, height: image.height, alt: image.alt || `${site.name}, Ottawa photographer` }] : undefined,
@@ -90,7 +91,7 @@ export async function localBusinessJsonLd() {
     "@type": "LocalBusiness",
     "@id": `${siteUrl}/#business`,
     name: site.name,
-    url: siteUrl,
+    url: `${siteUrl}/`,
     description: textOr(texts, seoKey("home", "description"), seoPages[0].description),
     ...(image ? { image: image.url } : {}),
     ...(email ? { email } : {}),
@@ -112,7 +113,7 @@ export function breadcrumbJsonLd(steps: { name: string; path: string }[]) {
       "@type": "ListItem",
       position: index + 1,
       name: step.name,
-      item: `${siteUrl}${step.path === "/" ? "" : step.path}`,
+      item: `${siteUrl}${step.path}`,
     })),
   };
 }
