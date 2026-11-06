@@ -18,8 +18,8 @@ type Tone = "dark" | "light";
  * Colour is decided in the same way: every dark logo is the soft espresso-brown artwork (logoBrown).
  */
 export const logoSizes = {
-  /** The top of every page. (The phone homepage's compact hero sets its own smaller width in globals.css.) */
-  header: "w-[190px] md:w-[230px] lg:w-[270px]",
+  /** The top of every page. On phones the logo is 137px under a centred menu icon, the same on every page. */
+  header: "w-[137px] md:w-[230px] lg:w-[270px]",
   /** Inside the full-screen menu. */
   menu: "w-[200px] md:w-[230px]",
   /** The footer. */
@@ -30,7 +30,7 @@ export const logoSizes = {
 export type LogoSize = keyof typeof logoSizes;
 
 /**
- * The logo at the top of every page. Sized by its width (190px on phones, 230px
+ * The logo at the top of every page. Sized by its width (137px on phones, 230px
  * on tablets, 270px on desktops) with the height following from the artwork's
  * own proportions, so it is never stretched or cropped. Admins can replace it
  * in the editor; until then the bundled logo is shown.
@@ -43,7 +43,7 @@ export function HeaderLogo({ tone = "dark", className = "", priority }: { tone?:
           src={tone === "dark" ? logoBrown : logoLight}
           alt=""
           priority={priority}
-          sizes="(min-width: 64rem) 270px, (min-width: 48rem) 230px, 190px"
+          sizes="(min-width: 64rem) 270px, (min-width: 48rem) 230px, 137px"
           className="h-auto w-full"
         />
       </EditableLogo>

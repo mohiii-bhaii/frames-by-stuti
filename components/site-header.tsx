@@ -59,14 +59,14 @@ export function SiteHeader() {
             className="eyebrow absolute left-[23px] top-[14px] hidden w-[215px] text-[16px] leading-normal tracking-normal lg:block"
           />
         </div>
-        <HeaderLogo priority className="header-logo absolute left-1/2 top-2 -translate-x-1/2" />
+        <HeaderLogo priority className="absolute left-1/2 top-[52px] -translate-x-1/2 md:top-2" />
         <button
           type="button"
           onClick={() => setIsOpen(true)}
           aria-label="Open menu"
           aria-haspopup="dialog"
           aria-expanded={isOpen}
-          className="header-burger absolute right-1 top-[67px] flex h-12 w-14 items-center justify-center md:right-3 md:top-[84px] lg:top-[102px]"
+          className="header-burger absolute left-1/2 top-[6px] flex h-12 w-14 -translate-x-1/2 items-center justify-center md:left-auto md:right-3 md:top-[84px] md:translate-x-0 lg:top-[102px]"
         >
           <svg viewBox="0 0 52 20" className="w-[42px] md:w-[50px]" fill="none" stroke="currentColor" strokeWidth="1.800" aria-hidden="true">
             <path d="M1 2h50M1 10h50M1 18h50" />

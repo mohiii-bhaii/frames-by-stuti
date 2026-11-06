@@ -445,9 +445,9 @@ body {
   color: var(--color-espresso);
 }
 
-/* The cream bar under the header on every page but the homepage. Tall enough for the logo (190px, 230px and 270px wide) with a little air above and below. */
+/* The cream bar under the header on every page but the homepage (whose hero starts at the same place). On phones the header is a centred menu icon with the 137px logo under it (menu icon 6px from the top, logo from 52px to about 171px), so the bar is 190px; wider screens have the logo beside the top edge. */
 .header-spacer {
-  height: 182px;
+  height: 190px;
 }
 
 @media (min-width: 48rem) {
@@ -476,23 +476,6 @@ body:has([data-page-home]) .site-header {
 
 body:has([data-page-home]) .header-home {
   display: block;
-}
-
-/* Phone homepage only: a compact header. The menu icon is centred at the top and the
-   logo sits under it at about 72% of its usual phone size. Tablet, desktop and every
-   other page keep the standard header. */
-@media (max-width: 47.999rem) {
-  body:has([data-page-home]) .header-logo {
-    top: 52px;
-    width: 137px;
-  }
-
-  body:has([data-page-home]) .header-burger {
-    left: 50%;
-    right: auto;
-    top: 6px;
-    transform: translateX(-50%);
-  }
 }
 
 /* A scrolling row without its scrollbar (touch, trackpad, arrows and dragging still work). */
