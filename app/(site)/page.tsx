@@ -27,7 +27,7 @@ function VerticalWords({ className = "" }: { className?: string }) {
  * The curve of "CHOOSE YOUR SESSION": it starts low on the left, climbs to a crest over "CHOOSE",
  * dips through "YOUR" into a trough under "SESSION" and rises again at the end, like a ribbon.
  */
-const SESSION_CURVE = "M40 235C355 -74 681 440 960 186";
+const SESSION_CURVE = "M104 235C388 -74 681 440 932 186";
 
 export default function HomePage() {
   return (
@@ -209,6 +209,7 @@ export default function HomePage() {
               size={110}
               letterSpacing="0.02em"
               opticalSize={40}
+              edgePadding={20}
               className="w-full"
             />
           </h2>
