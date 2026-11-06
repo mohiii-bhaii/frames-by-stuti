@@ -171,14 +171,19 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* A cinematic photograph that stays still while the page scrolls over it, with the curved heading near its foot. */}
-      <section className="window-section h-[82svh] max-h-[780px] min-h-[460px] bg-espresso md:h-[78vh] md:max-h-[880px] md:min-h-[520px]">
+      {/* A cinematic photograph that stays still while the page scrolls over it, with the curved heading across its foot.
+          Explicit layers, bottom to top: the fixed photo (0), the shade (10), the heading (20). The shade and heading are
+          also given their own compositing layer (translateZ) so Safari can never paint the fixed photo over them. */}
+      <section className="window-section isolate h-[82svh] max-h-[780px] min-h-[460px] bg-espresso md:h-[78vh] md:max-h-[880px] md:min-h-[520px]">
         <WindowPhoto slot="home-banner-2" />
-        {/* A soft warm shade toward the foot of the photo keeps the heading readable. The rest of the photo stays natural. */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-b from-transparent to-espresso/60" />
-        <div data-reveal="title" className="absolute inset-x-[3%] bottom-[10%] mx-auto max-w-[1137px] text-[#f1eadf] [filter:drop-shadow(0_1px_6px_rgb(53_48_38/0.4))]">
+        {/* A dark warm shade grows toward the foot of the photo so the heading reads clearly. The upper photo stays natural. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[62%] bg-gradient-to-b from-transparent via-espresso/30 to-espresso/85 [transform:translateZ(0)]"
+        />
+        <div className="absolute inset-x-[2%] bottom-[11%] z-20 mx-auto max-w-[1137px] text-terracotta [transform:translateZ(0)]">
           <h2>
-            <CurvedT id="home.sessions.heading" uppercase italic={false} rise={0.11} size={76} className="w-full" />
+            <CurvedT id="home.sessions.heading" uppercase italic={false} rise={0.13} size={80} className="w-full" />
           </h2>
         </div>
       </section>
