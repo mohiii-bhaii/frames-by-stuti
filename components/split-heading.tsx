@@ -39,12 +39,15 @@ export function SplitHeading({ text, className = "", ...rest }: SplitHeadingProp
       const small = leadRef.current;
       const large = mainRef.current;
       if (!small || !large || lead.length < 2) return;
+      // Hidden at this screen size (display: none) there is nothing to measure. Measuring zero widths
+      // would push the spacing up on every pass and never settle.
+      if (small.getClientRects().length === 0 || large.getClientRects().length === 0) return;
       const font = parseFloat(getComputedStyle(small).fontSize);
       if (!font) return;
       // Width with no extra spacing: the width now, less the spacing after every letter (the last one included).
       const natural = small.getBoundingClientRect().width - lead.length * spacing * font;
       const next = (large.getBoundingClientRect().width - natural) / ((lead.length - 1) * font);
-      if (Number.isFinite(next) && next > 0 && Math.abs(next - spacing) > 0.004) setSpacing(next);
+      if (Number.isFinite(next) && next > 0 && next < 4 && Math.abs(next - spacing) > 0.004) setSpacing(next);
     };
     measure();
     void document.fonts?.ready.then(measure);
