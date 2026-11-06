@@ -82,6 +82,22 @@ export const seoPages = [
       "Combine sessions into one booking with a Frames by Stuti photography bundle in Ottawa. Send an inquiry for bundle details.",
   },
   {
+    page: "faq",
+    path: "/faq",
+    label: "FAQ",
+    title: "Photography Session FAQs | Ottawa",
+    description:
+      "Answers to common questions about booking newborn, maternity, milestone and family photography sessions with Frames by Stuti in Ottawa.",
+  },
+  {
+    page: "blog",
+    path: "/blog",
+    label: "The Journal",
+    title: "The Journal: Stories & Photography Tips from Ottawa",
+    description:
+      "Little stories, helpful guides and inspiration for preserving the moments that matter most, from Frames by Stuti, an Ottawa photographer.",
+  },
+  {
     page: "contact",
     path: "/contact",
     label: "Contact",

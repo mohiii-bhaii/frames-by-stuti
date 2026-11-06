@@ -141,3 +141,11 @@ No secret or service-role key is needed. The publishable key is safe in the brow
 - **Titles and descriptions:** every public page has an editable "Google search" title and description in the visual editor (open the page, Texts, search "Google"). Publishing updates them. The defaults live in `content/seo.ts`; add a page there and it joins the sitemap automatically.
 - **Structured data:** LocalBusiness (Home and Contact, from the contact details and areas served in the editor; no street address, reviews, hours or prices) and BreadcrumbList on inner pages.
 - **Photo descriptions (alt text):** typed in the editor per photo. A photo with none gets a descriptive default (`lib/seo-alt.ts`).
+
+## FAQ and The Journal
+
+- **Where to manage them:** the owner's dashboard (`/admin`) has "Write and manage articles" (`/admin/journal`) and "Manage the FAQ" (`/admin/faq`). Both use the same login, photo library and Draft / Publish idea as the visual editor: saving keeps changes private, Publish makes them live, Unpublish takes them down.
+- **Public pages:** `/faq`, `/blog` (shown in the menu as "Journal") and `/blog/<slug>`. The home page shows the FAQ questions marked "Show on the home page" and the three newest articles; each section is hidden until something is published.
+- **Data:** `faq_items` and `journal_posts` (migration `20261108000000_faq_and_journal.sql`). Visitors never read the tables; they call `get_published_faqs`, `get_published_posts` and `get_published_post`, which return published content only.
+- **Article text:** stored as plain text with simple marks (`## Heading`, `**bold**`, `[link](/contact)`, `![photo](...)`) and drawn by `lib/markdown.tsx`, which never treats it as HTML, so scripts and markup cannot be injected. Photos must come from the photo library.
+- **Search engines:** the sitemap lists published articles (and the FAQ and Journal pages once they have content); articles carry BlogPosting data, the FAQ page carries FAQPage data, and each article has its own title, description and canonical link.
