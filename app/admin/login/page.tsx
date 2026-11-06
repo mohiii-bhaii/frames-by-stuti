@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: "Log in" };
 export default function LoginPage() {
   return (
     <main className="mx-auto flex min-h-svh max-w-sm flex-col justify-center px-5 py-12">
-      <FullLogo className="w-[150px]" />
+      <FullLogo size="admin" />
       <h1 className="mt-2 text-xl font-semibold">Log in to edit your website</h1>
       {isSupabaseConfigured ? (
         <LoginForm />

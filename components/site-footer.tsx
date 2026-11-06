@@ -36,7 +36,7 @@ export function SiteFooter() {
           </div>
 
           <div className="order-1 flex flex-col items-center md:order-none">
-            <FullLogo tone="dark" editable className="w-[min(240px,64vw)] lg:w-[280px]" />
+            <FullLogo tone="dark" size="footer" editable />
             <T
               as="p"
               id="footer.blurb"

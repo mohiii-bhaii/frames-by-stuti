@@ -106,7 +106,7 @@ export function SiteHeader() {
             </button>
           ) : null}
 
-          <FullLogo link={false} className="w-[230px] md:w-[260px]" />
+          <FullLogo link={false} size="menu" />
 
           {view === "pricing" ? (
             <nav aria-label="Pricing & Packages" key="pricing" className="mt-6 animate-[fade-in_0.4s_ease] md:mt-0">

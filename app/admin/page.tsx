@@ -14,7 +14,7 @@ const pages = [...navigation, contactLink];
 export default function AdminPage() {
   return (
     <main className="mx-auto max-w-2xl px-5 py-10">
-      <FullLogo className="w-[150px]" />
+      <FullLogo size="admin" />
       <Suspense fallback={<p className="mt-6 text-neutral-600">Loading…</p>}>
         <Dashboard />
       </Suspense>
