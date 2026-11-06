@@ -6,11 +6,12 @@
  */
 /**
  * The one canonical address of the public website: sitemap, canonical links, social previews and
- * structured data all use it. framesbystuti.com redirects here (a 308 set in Vercel), so this is
- * the address Google should index. To make the bare domain canonical instead, swap the redirect
- * in Vercel (Settings > Domains) and change this one line.
+ * structured data all use it, so this is the address Google should index.
+ *
+ * In Vercel (Settings > Domains) framesbystuti.com must serve the site and www.framesbystuti.com must
+ * redirect permanently to it. Do not add a second redirect in the code: the two would loop.
  */
-export const siteUrl = "https://www.framesbystuti.com";
+export const siteUrl = "https://framesbystuti.com";
 
 export const site = {
   name: "Frames by Stuti",

@@ -9,7 +9,7 @@ import { siteUrl } from "@/content/site";
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   return seoPages.map((page) => ({
-    url: page.path === "/" ? siteUrl : `${siteUrl}${page.path}`,
+    url: `${siteUrl}${page.path}`,
     changeFrequency: page.page === "home" ? "weekly" : "monthly",
     priority: page.page === "home" ? 1 : page.path.startsWith("/pricing/") ? 0.7 : 0.8,
   }));

@@ -137,7 +137,7 @@ No secret or service-role key is needed. The publishable key is safe in the brow
 
 ## Search engines (SEO)
 
-- **Canonical address:** `siteUrl` in `content/site.ts` (currently `https://www.framesbystuti.com`, because the bare domain redirects to it in Vercel). The sitemap (`/sitemap.xml`), canonical links, social previews and structured data all use it. The `*.vercel.app` addresses send `noindex` so they never compete with it.
+- **Canonical address:** `siteUrl` in `content/site.ts` (`https://framesbystuti.com`). The sitemap (`/sitemap.xml`), canonical links, social previews and structured data all use it. In Vercel (Settings > Domains) the bare domain serves the site and `www.framesbystuti.com` redirects permanently to it; keep that redirect in Vercel only, never also in the code (the two would loop). The `*.vercel.app` addresses send `noindex` so they never compete with it.
 - **Titles and descriptions:** every public page has an editable "Google search" title and description in the visual editor (open the page, Texts, search "Google"). Publishing updates them. The defaults live in `content/seo.ts`; add a page there and it joins the sitemap automatically.
 - **Structured data:** LocalBusiness (Home and Contact, from the contact details and areas served in the editor; no street address, reviews, hours or prices) and BreadcrumbList on inner pages.
 - **Photo descriptions (alt text):** typed in the editor per photo. A photo with none gets a descriptive default (`lib/seo-alt.ts`).
