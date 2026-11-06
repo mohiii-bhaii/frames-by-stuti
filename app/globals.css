@@ -504,6 +504,37 @@ body:has([data-page-home]) .header-home {
   display: none;
 }
 
+/* A section that works as a window onto a photograph that stays still while the page scrolls.
+   clip-path clips the screen-sized, fixed photo inside to the section (and, unlike a transform,
+   does not move the fixed photo's reference frame), which works on iOS Safari. */
+.window-section {
+  position: relative;
+  clip-path: inset(0);
+}
+
+.window-photo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100lvh;
+}
+
+.window-photo[data-editing] {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window-photo {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+}
+
 /* The homepage dragonfly: wings flutter very gently, the body hovers. Still for reduced motion. */
 @keyframes dragonfly-flutter {
   from { transform: rotate(-2.5deg) scaleY(1); }

@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { CurvedT, SplitHeadingT, T, WaveT } from "@/components/editable-text";
 import { HomeMarker } from "@/components/home-marker";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
+import { WindowPhoto } from "@/components/window-photo";
 import { SessionLink } from "@/components/session-link";
 import { ApertureBloom, BotanicalBranch, Dragonfly, LeafSprig, Sparkle } from "@/components/line-art";
 import { Photo } from "@/components/photo";
@@ -180,12 +181,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Photo into curved session heading */}
-      <section className="relative bg-clay">
-        <Photo slot="home-banner-2" parallax={0.1} zoom className="h-[105vw] max-h-[768px] w-full md:h-[53vw]" />
-        {/* The photograph melts into the soft clay of the session cards below. */}
-        <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-b from-transparent to-clay" />
-        <div data-reveal="title" className="absolute inset-x-[3%] bottom-[-3%] mx-auto max-w-[1137px] text-rust">
+      {/* A cinematic photograph that stays still while the page scrolls over it, with the curved heading near its foot. */}
+      <section className="window-section h-[82svh] max-h-[780px] min-h-[460px] bg-espresso md:h-[78vh] md:max-h-[880px] md:min-h-[520px]">
+        <WindowPhoto slot="home-banner-2" />
+        {/* A soft warm shade toward the foot of the photo keeps the heading readable. The rest of the photo stays natural. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-b from-transparent to-espresso/60" />
+        <div data-reveal="title" className="absolute inset-x-[3%] bottom-[10%] mx-auto max-w-[1137px] text-[#f1eadf] [filter:drop-shadow(0_1px_6px_rgb(53_48_38/0.4))]">
           <h2>
             <CurvedT id="home.sessions.heading" uppercase italic={false} rise={0.11} size={76} className="w-full" />
           </h2>
@@ -193,7 +194,7 @@ export default function HomePage() {
       </section>
 
       {/* Session cards */}
-      <section className="relative overflow-hidden bg-clay">
+      <section className="relative z-10 -mt-7 overflow-hidden rounded-t-[28px] bg-clay">
         {/* A soft photographic texture under a light clay wash, so the cards stay the focus. */}
         <Photo slot="session-backdrop" decorative parallax={0.12} className="absolute inset-0 opacity-25 mix-blend-multiply" />
         <div
