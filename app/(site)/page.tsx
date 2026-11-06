@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/json-ld";
 import { WindowPhoto } from "@/components/window-photo";
 import { localBusinessJsonLd, pageMetadata } from "@/lib/seo";
 import { SessionLink } from "@/components/session-link";
-import { ApertureBloom, BotanicalBranch, Dragonfly, LeafSprig, Sparkle } from "@/components/line-art";
+import { ApertureBloom, BotanicalBranch, Dragonfly, Sparkle } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { TestimonialsSection } from "@/components/testimonials-section";
 import { sessionCards, site } from "@/content/site";
@@ -73,16 +73,13 @@ export default async function HomePage() {
               sizes="(min-width: 48rem) 76vw, 70vw"
             />
           </div>
-          {/* Centred 16px in from the box corner along both edges, which puts about half of the round flower inside the curved frame and half outside. Not interactive. */}
-          <ApertureBloom className="pointer-events-none absolute right-0 top-0 z-10 hidden w-[74px] translate-x-[calc(50%-16px)] -translate-y-[calc(50%-16px)] text-walnut md:block" />
-          {/* Phone: a dragonfly hovering over the frame's top-right corner, about half outside and half inside. */}
-          <Dragonfly className="pointer-events-none overflow-visible absolute right-0 top-0 z-10 w-[clamp(84px,27vw,108px)] translate-x-[34%] -translate-y-[40%] text-pencil opacity-80 md:hidden" />
-          {/* Phone: a branch reaching in from outside the frame at the lower-left corner. */}
-          <BotanicalBranch className="pointer-events-none absolute bottom-[-3%] left-0 z-10 w-[178px] -translate-x-[40%] origin-bottom-left -rotate-[14deg] text-pencil opacity-80 md:hidden" />
+                              {/* A dragonfly hovering over the frame's top-right corner, about half outside and half inside. */}
+          <Dragonfly className="pointer-events-none overflow-visible absolute right-0 top-0 z-10 w-[clamp(84px,27vw,108px)] translate-x-[34%] -translate-y-[40%] text-pencil opacity-80 md:w-[128px] md:translate-x-[30%] md:-translate-y-[44%] lg:w-[150px]" />
+          {/* A branch reaching in from outside the frame at the lower-left corner. */}
+          <BotanicalBranch className="pointer-events-none absolute bottom-[-3%] left-0 z-10 w-[178px] -translate-x-[40%] origin-bottom-left -rotate-[14deg] text-pencil opacity-80 md:w-[190px] md:-translate-x-[58%] lg:w-[230px] lg:-translate-x-[52%]" />
         </div>
         <VerticalWords className="absolute left-[10.200%] top-[47%] origin-center -translate-x-1/2 -translate-y-1/2 -rotate-90 md:left-[10.700%] md:top-[60%] lg:top-[62%]" />
         <VerticalWords className="absolute right-[10.200%] top-[68%] origin-center translate-x-1/2 -translate-y-1/2 rotate-90 md:right-[10.700%] md:top-[60%] lg:top-[62%]" />
-        <LeafSprig data-speed="0.35" className="absolute -left-2 bottom-[2%] hidden w-[120px] text-walnut md:bottom-[-6px] md:block md:left-[1.500%] md:w-[270px]" />
         <T
           as="p"
           id="header.eyebrow"
