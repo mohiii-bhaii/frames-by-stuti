@@ -7,6 +7,7 @@ import { T } from "@/components/editable-text";
 import { useIsEditing, useRealSlots, useSlotImage } from "@/components/site-images-provider";
 import type { PortfolioCategory } from "@/content/portfolio";
 import { getImage, type ImageSlot } from "@/lib/images";
+import { altFor } from "@/lib/seo-alt";
 
 /** After a visitor touches a row, it stays still this long before moving again. */
 const RESUME_AFTER_MS = 3000;
@@ -68,7 +69,7 @@ function LightboxPhoto({ slot }: { slot: ImageSlot }) {
   const image = useSlotImage(slot);
   if (!image.src) return null;
   return (
-    <Image quality={85} key={image.src} src={image.src} alt={image.alt} fill sizes="100vw" className="animate-[fade-in_0.3s_ease] object-contain p-2 md:px-20" />
+    <Image quality={85} key={image.src} src={image.src} alt={altFor(slot, image.alt)} fill sizes="100vw" className="animate-[fade-in_0.3s_ease] object-contain p-2 md:px-20" />
   );
 }
 

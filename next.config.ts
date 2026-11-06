@@ -9,6 +9,17 @@ const nextConfig: NextConfig = {
     qualities: [75, 85],
     remotePatterns: supabaseUrl ? [new URL("/storage/v1/object/public/site-photos/**", supabaseUrl)] : [],
   },
+  // The vercel.app addresses (including every preview link) show the same site as the real domain.
+  // They are marked noindex so they never compete with it in Google.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "(?<host>.*\\.vercel\\.app)" }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
+  },
   // The old Services page now lives at /pricing. Temporary on purpose, until the new pages are confirmed.
   async redirects() {
     return [

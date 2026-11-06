@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { EditHandle, useRegisterSlot } from "@/components/edit-handle";
 import { useIsEditing, usePublishedSlides, useSlotImage } from "@/components/site-images-provider";
 import { cropStyle, type ImageSlot } from "@/lib/images";
+import { altFor } from "@/lib/seo-alt";
 
 type PhotoSlideshowProps = {
   /** Every slot the slideshow can show, in order. Slots with no photo yet are skipped for visitors. */
@@ -47,7 +48,7 @@ function Slide({
   return (
     <Image quality={85}
       src={image.src}
-      alt={state === "active" ? image.alt : ""}
+      alt={state === "active" ? altFor(slot, image.alt) : ""}
       fill
       sizes={sizes}
       priority={first}
