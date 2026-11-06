@@ -4,6 +4,8 @@ import { EditableLogo } from "@/components/editable-logo";
 import { site } from "@/content/site";
 import logoDark from "@/public/brand/logo.png";
 import logoLight from "@/public/brand/logo-light.png";
+// The same artwork in a softer, rich espresso-brown (#5E452F) for the header. Built from logo.png: only the ink colour differs, the shape and edges are untouched.
+import logoBrown from "@/public/brand/logo-brown.png";
 
 // Built from scripts/brand/frames-by-stuti-logo.png by `npm run logo`. The files
 // are trimmed to the artwork and transparent, so they sit on cream, walnut or a
@@ -22,7 +24,7 @@ export function HeaderLogo({ tone = "dark", className = "", priority }: { tone?:
     <Link href="/" aria-label={`${site.name}, home`} className={`relative block w-[190px] md:w-[230px] lg:w-[270px] ${className}`}>
       <EditableLogo slot="logo-header" className="h-auto w-full">
         <Image
-          src={tone === "dark" ? logoDark : logoLight}
+          src={tone === "dark" ? logoBrown : logoLight}
           alt=""
           priority={priority}
           sizes="(min-width: 64rem) 270px, (min-width: 48rem) 230px, 190px"
