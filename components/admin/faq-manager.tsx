@@ -12,7 +12,7 @@ import {
   unpublishFaq,
 } from "@/app/admin/content-actions";
 import { FaqAccordion } from "@/components/faq/faq-accordion";
-import { faqCategories, HOME_FAQ_LIMIT, type FaqCategory } from "@/content/journal";
+import { faqCategories, type FaqCategory } from "@/content/journal";
 import type { ContentResult, FaqFields, FaqRecord } from "@/lib/content-types";
 
 const STATUS = {
@@ -99,10 +99,6 @@ function Item({
             ))}
           </select>
         </label>
-        <label className="flex min-h-11 items-center gap-2 text-sm font-medium">
-          <input type="checkbox" checked={fields.showOnHome} onChange={(event) => setFields({ ...fields, showOnHome: event.target.checked })} className="h-5 w-5" />
-          Show on the home page
-        </label>
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
@@ -152,12 +148,11 @@ function Item({
   );
 }
 
-/** The owner's FAQ screen: add, edit, reorder, choose home-page questions, save drafts, publish. */
+/** The owner's FAQ screen: add, edit, reorder, save drafts, publish. */
 export function FaqManager({ initial }: { initial: FaqRecord[] }) {
   const [records, setRecords] = useState(initial);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<{ text: string; error?: boolean } | null>(null);
-  const onHome = records.filter((item) => (item.draft ?? item.live).showOnHome && item.status === "published").length;
 
   async function run<T>(task: () => Promise<ContentResult<T>>, done: (data: T) => void, success: string) {
     setBusy(true);
@@ -172,8 +167,7 @@ export function FaqManager({ initial }: { initial: FaqRecord[] }) {
   return (
     <div>
       <p className="text-sm text-neutral-700">
-        Questions you save stay private until you press <strong>Publish</strong>. The home page shows the first {HOME_FAQ_LIMIT} live questions marked &ldquo;Show on the home page&rdquo; (currently {onHome});
-        the FAQ page shows every live question.
+        Questions you save stay private until you press <strong>Publish</strong>. Every live question appears, in this order, in the FAQ section at the foot of the Home page and the Contact page, and on the FAQ page. To hide a question, unpublish it.
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <button type="button" disabled={busy} onClick={() => run(() => createFaq(), (record) => setRecords((current) => [...current, record]), "New question added at the end.")} className="min-h-11 rounded-lg bg-[#2f6fed] px-4 text-sm font-medium text-white disabled:opacity-50">

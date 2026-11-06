@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
 import { PathT, SplitHeadingT, T, WaveT } from "@/components/editable-text";
 import { HomeMarker } from "@/components/home-marker";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
-import { HomeFaqSection } from "@/components/faq/home-faq-section";
+import { FaqSection } from "@/components/faq/faq-section";
 import { HomeFinalInvitation } from "@/components/home-final-invitation";
 import { JournalPreview } from "@/components/journal/journal-preview";
 import { JsonLd } from "@/components/json-ld";
@@ -309,9 +309,9 @@ export default async function HomePage() {
       />
 
       {/* Questions people ask, then the newest Journal articles, then a last invitation. Each is hidden until it has published content. */}
-      <HomeFaqSection />
       <JournalPreview />
       <HomeFinalInvitation />
+      <FaqSection />
 
       <ScrollMotion />
     </>

@@ -4,7 +4,7 @@ import { seoKey, seoPages, type SeoPage } from "@/content/seo";
 import { site, siteUrl } from "@/content/site";
 import { instagramProfileUrl } from "@/lib/links";
 import { getPublishedImages } from "@/lib/site-images";
-import type { PublishedFaq, PublishedPost } from "@/lib/journal";
+import type { PublishedPost } from "@/lib/journal";
 import { getPublishedTexts, type TextMap } from "@/lib/site-texts";
 
 const textOr = (texts: TextMap, key: string, fallback: string) => (texts[key]?.trim() ? texts[key].trim() : fallback);
@@ -165,15 +165,3 @@ export function articleJsonLd(post: PublishedPost) {
   };
 }
 
-/** FAQPage structured data: the same questions and answers that are written on the page. */
-export function faqJsonLd(faqs: PublishedFaq[]) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: { "@type": "Answer", text: item.answer },
-    })),
-  };
-}

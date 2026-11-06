@@ -77,10 +77,8 @@ Object.assign(texts, {
   "home.sessions.heading": "Choose your session",
 
   // FAQ and The Journal
-  "home.faq.eyebrow": "A little more information",
-  "home.faq.heading": "A few things you might be wondering",
-  "home.faq.subtitle": "Everything you need to know before we create something beautiful together.",
-  "home.faq.link": "View all FAQs",
+  "faq.section.eyebrow": "Frequently asked questions",
+  "faq.section.heading": "A little more to know",
   "home.journal.eyebrow": "Stories, tips & little moments",
   "home.journal.heading": "From the Journal",
   "home.journal.subtitle": "A little inspiration, a few helpful tips, and stories worth sharing.",

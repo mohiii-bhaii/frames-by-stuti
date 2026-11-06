@@ -4,6 +4,7 @@ import { breadcrumbJsonLd, localBusinessJsonLd, pageMetadata } from "@/lib/seo";
 import { ContactForm } from "@/components/contact-form";
 import { ContactReach } from "@/components/contact-reach";
 import { T } from "@/components/editable-text";
+import { FaqSection } from "@/components/faq/faq-section";
 import { ApertureBloom } from "@/components/line-art";
 import { Photo } from "@/components/photo";
 import { ScrollMotion } from "@/components/scroll-motion";
@@ -48,6 +49,8 @@ export default async function ContactPage() {
           </div>
         </div>
       </section>
+
+      <FaqSection />
 
       <ScrollMotion />
     </>

@@ -7,7 +7,7 @@ import { ApertureBloom } from "@/components/line-art";
 import { ScrollMotion } from "@/components/scroll-motion";
 import { faqCategories } from "@/content/journal";
 import { getPublishedFaqs } from "@/lib/journal";
-import { breadcrumbJsonLd, faqJsonLd, pageMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const metadata = await pageMetadata("faq");
@@ -27,7 +27,6 @@ export default async function FaqPage() {
   return (
     <>
       <JsonLd data={breadcrumbJsonLd([{ name: "FAQ", path: "/faq" }])} />
-      {faqs.length > 0 ? <JsonLd data={faqJsonLd(faqs)} /> : null}
       <section className="paper relative overflow-x-clip">
         <div className="mx-auto max-w-[1200px] px-6 pb-16 pt-6 lg:pb-24 lg:pt-10">
           <div className="mx-auto max-w-[700px] text-center">
