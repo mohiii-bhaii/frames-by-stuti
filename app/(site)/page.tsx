@@ -227,10 +227,10 @@ export default function HomePage() {
           aria-hidden="true"
           className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_0%,rgb(235_230_219/0.55),rgb(202_128_96/0.09))]"
         />
-        {/* Delicate, closely spaced watercolor pinstripes in muted terracotta (#B87958), barely there (about 5%). */}
+        {/* Delicate, closely spaced watercolor pinstripes in muted terracotta (#B87958), subtly visible (about 11%). */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[url('/brand/watercolor-stripes.svg')] bg-[length:216px_480px] bg-repeat opacity-[0.055]"
+          className="pointer-events-none absolute inset-0 bg-[url('/brand/watercolor-stripes.svg')] bg-[length:216px_480px] bg-repeat opacity-[0.11]"
         />
         {/* ...and fades into the cream testimonials below. */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[90px] bg-gradient-to-b from-transparent to-cream" />
