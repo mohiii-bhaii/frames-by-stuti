@@ -192,12 +192,14 @@ export default function HomePage() {
           also given their own compositing layer (translateZ) so Safari can never paint the fixed photo over them. */}
       <section className="window-section isolate h-[82svh] max-h-[780px] min-h-[460px] bg-espresso md:h-[78vh] md:max-h-[880px] md:min-h-[520px]">
         <WindowPhoto slot="home-banner-2" />
-        {/* A dark warm shade grows toward the foot of the photo so the heading reads clearly. The upper photo stays natural. */}
+        {/* The photo is light, so it is dimmed a little overall and shaded deeply toward its foot, where the heading sits
+            (near black at the very bottom, like the reference). The top of the photo stays bright and natural. */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10 bg-espresso/15 [transform:translateZ(0)]" />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[62%] bg-gradient-to-b from-transparent via-espresso/30 to-espresso/85 [transform:translateZ(0)]"
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[74%] bg-gradient-to-b from-transparent via-[#241d16]/55 to-[#16110d]/95 [transform:translateZ(0)]"
         />
-        <div className="absolute inset-x-[1%] bottom-[9%] z-20 mx-auto max-w-[1137px] text-terracotta [transform:translateZ(0)]">
+        <div className="absolute inset-x-[1%] bottom-[9%] z-20 mx-auto max-w-[1137px] text-[#d9936f] [transform:translateZ(0)]">
           <h2>
             <PathT
               id="home.sessions.heading"
