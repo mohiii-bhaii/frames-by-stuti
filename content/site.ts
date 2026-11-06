@@ -30,7 +30,7 @@ export const site = {
 export const navigation = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About", inMenu: false },
-  { href: "/portfolio", label: "Portfolio" },
+  { href: "/galleries", label: "Galleries" },
   { href: "/pricing", label: "Pricing & Packages" },
 ] as readonly { href: string; label: string; inMenu?: boolean }[];
 
@@ -51,7 +51,7 @@ export type CategoryId = (typeof categories)[number]["id"];
 /**
  * The cards in the home page's "Choose your session" section. These are the
  * categories above plus Events, which has a card (and an editable title and
- * photo) but no Services packages or Portfolio filter yet.
+ * photo) but no Services packages or Galleries filter yet.
  */
 export const sessionCards = [
   ...categories,

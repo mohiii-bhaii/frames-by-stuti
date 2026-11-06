@@ -121,7 +121,7 @@ No secret or service-role key is needed. The publishable key is safe in the brow
 
 | Path | Purpose |
 | --- | --- |
-| `app/(site)/` | Pages: home, about, portfolio, services, contact |
+| `app/(site)/` | Pages: home, about, galleries (formerly portfolio; it redirects), services, contact |
 | `app/admin/` | Login, dashboard, media library and the editor's Server Actions |
 | `components/editor/` | The visual editor: toolbar, photo panel, crop tool, media library, uploads |
 | `components/editable-image.tsx` | Every photo on the site, with its Replace button for admins |

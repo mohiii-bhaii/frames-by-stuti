@@ -9,7 +9,7 @@ import { createSessionClient } from "@/lib/supabase/server";
 
 export type LoginState = { error?: string; email?: string };
 
-const sitePaths = new Set(["/", "/about", "/portfolio", "/services", "/contact", ...pricingPaths]);
+const sitePaths = new Set(["/", "/about", "/galleries", "/services", "/contact", ...pricingPaths]);
 
 export async function signIn(_previous: LoginState, formData: FormData): Promise<LoginState> {
   const email = String(formData.get("email") ?? "").trim().toLowerCase();

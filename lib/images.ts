@@ -76,8 +76,8 @@ export const imageSlots = {
   // Contact
   "contact-hero": { ...LANDSCAPE, scene: "window", alt: "" },
 
-  // Portfolio
-  "portfolio-hero": { ...LANDSCAPE, scene: "soft", alt: "Placeholder: portfolio cover photograph" },
+  // Galleries
+  "portfolio-hero": { ...LANDSCAPE, scene: "soft", alt: "Placeholder: galleries cover photograph" },
   "gallery-01": { ...PORTRAIT, scene: "studio", alt: "Placeholder: portrait session photograph" },
   "gallery-02": { ...LANDSCAPE, scene: "field", alt: "Placeholder: couples session photograph" },
   "gallery-03": { ...SQUARE, scene: "window", alt: "Placeholder: family session photograph" },
@@ -245,6 +245,7 @@ export function parsePosition(position?: string) {
 
 /** Friendly names for the editor, for example "home-banner-1" becomes "Home banner 1". */
 export function slotLabel(slot: SlotId) {
-  const text = slot.replace(/-/g, " ");
+  // The Portfolio page is now called Galleries; the stored slot names keep their original ids.
+  const text = slot.replace(/^portfolio-/, "galleries-").replace(/-/g, " ");
   return text.charAt(0).toUpperCase() + text.slice(1);
 }

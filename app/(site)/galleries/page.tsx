@@ -5,15 +5,15 @@ import { portfolioCategories } from "@/content/portfolio";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Portfolio",
+  title: "Galleries",
   description: `Maternity, newborn, milestone, lifestyle and family, and event photography by ${site.name}.`,
 };
 
-export default function PortfolioPage() {
+export default function GalleriesPage() {
   return (
     <>
       <section className="paper relative overflow-x-clip">
-        <h1 className="sr-only">Portfolio</h1>
+        <h1 className="sr-only">Galleries</h1>
         <div className="pb-16 pt-6 md:pb-24 md:pt-10">
           <PortfolioGalleries categories={portfolioCategories} />
         </div>
