@@ -71,7 +71,7 @@ export default function HomePage() {
 
       {/* Tagline */}
       <section className="paper flex flex-col items-center px-4 pb-10 pt-8 text-center md:pb-12 md:pt-12 lg:px-0 lg:pb-14 lg:pt-14">
-        <div data-reveal="title" className="w-full max-w-[640px]">
+        <div data-reveal="title" className="w-full max-w-[760px]">
           <WaveT id="home.tagline" className="w-full text-[#654737]" />
         </div>
         <div data-reveal="up" style={{ "--reveal-delay": "0.25s" } as CSSProperties} className="mt-1 md:mt-2">
