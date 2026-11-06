@@ -23,7 +23,5 @@ export type FaqCategory = (typeof faqCategories)[number]["id"];
 export const journalCategoryLabel = (id: string) => journalCategories.find((item) => item.id === id)?.label ?? "Journal";
 export const faqCategoryLabel = (id: string) => faqCategories.find((item) => item.id === id)?.label ?? "General";
 
-/** The most FAQ questions the home page shows. */
-export const HOME_FAQ_LIMIT = 6;
 /** How many articles the Journal lists before "Load more". */
 export const JOURNAL_PAGE_SIZE = 9;
