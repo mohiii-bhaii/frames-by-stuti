@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { CurvedT, T, WaveT } from "@/components/editable-text";
+import { CurvedT, SplitHeadingT, T, WaveT } from "@/components/editable-text";
 import { HomeMarker } from "@/components/home-marker";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
 import { SessionLink } from "@/components/session-link";
@@ -84,14 +84,13 @@ export default function HomePage() {
       {/* Meet your photographer */}
       <section className="paper overflow-x-clip">
         <div className="relative mx-auto max-w-[1200px] px-6 pb-16 pt-14 lg:px-[70px] lg:pb-[96px] lg:pt-[88px]">
-          <T
-            as="h2"
+          <SplitHeadingT
             id="home.about.heading"
             data-reveal="title"
-            className="display mx-auto max-w-[900px] text-center text-[38px] uppercase leading-[1.04] text-espresso md:text-[64px] lg:text-[88px]"
+            className="display mx-auto max-w-[900px] text-[clamp(28px,9.4vw,46px)] uppercase leading-[1.05] text-espresso md:text-[72px] lg:text-[96px]"
           />
 
-          <div className="mt-10 grid items-center gap-y-10 md:mt-14 lg:mt-[72px] lg:grid-cols-[minmax(0,540px)_minmax(0,1fr)] lg:gap-x-[80px]">
+          <div className="mt-12 grid items-center gap-y-10 md:mt-12 lg:mt-[64px] lg:grid-cols-[minmax(0,540px)_minmax(0,1fr)] lg:gap-x-[80px]">
             <div className="relative mx-auto w-full max-w-[420px] md:max-w-[480px] lg:mx-0 lg:max-w-none">
               <ApertureBloom data-speed="-0.2" className="absolute -right-[30%] top-[6%] hidden w-[70%] text-walnut/15 md:block" />
               <div data-reveal="left" className="rounded-[89px] border border-terracotta p-[3px] lg:p-0">
@@ -103,7 +102,7 @@ export default function HomePage() {
                 />
               </div>
               <Sparkle data-speed="0.3" className="absolute -top-4 right-[6%] w-8" />
-              <Sparkle data-speed="0.45" className="absolute -top-8 right-[18%] w-5" />
+              <Sparkle data-speed="0.45" className="absolute -top-5 right-[18%] w-5 md:-top-8" />
             </div>
 
             <div className="text-center lg:text-left">
