@@ -69,11 +69,78 @@ export const about = {
   greeting: "Hello there!",
   intro: "I'm Stuti",
   homeIntro: [
-    "[Biography placeholder.] This is where I introduce myself: who I am, where I'm based and how I found my way to photography.",
-    "Tell visitors what a session with you is really like and what you hope they feel when they see their photographs. Keep it warm, personal and in your own words.",
+    "The girl behind the camera, the heart behind Frames by Stuti, and someone who definitely knows how to make an entrance into a room!",
+    "I’m a little stubborn, a bit of a perfectionist, and the girl who says ‘Just one more picture!’ about ten times. 😂",
+    "I love capturing beautiful moments, but even more than that, I love the people and stories behind them. Come as you are, and I promise we’ll have a lovely time together!",
   ],
-  heroStory:
-    "[Biography placeholder.] Share how your photography journey began, the moment you knew it was what you wanted to do, and what still excites you about it. Two or three honest sentences are plenty.",
+  /** The About page story, in four parts. Each part has its own heading and text, both editable. */
+  story: [
+    {
+      heading: "A Little More About Me",
+      text: `If there’s one thing you should know about me, it’s that I bring my whole heart and a whole lot of energy into everything I do. I’m a little stubborn, a bit of a perfectionist, and when it comes to photography, I simply won’t stop until I get that perfect shot. Yes, I’m that girl who says, “Just one more picture!” about ten times. 😂
+
+When I’m not behind the camera, you’ll probably find me travelling, exploring new places, or spending time with my two favourite people — my husband, Rajat, and our little bundle of energy, Kashvi!
+
+And oh, Kashvi! My 10-month-old daughter who keeps me on my toes every single day. She’s the little girl who changed everything for me, in the most beautiful way possible.`,
+    },
+    {
+      heading: "How It All Began",
+      text: `Here’s a little backstory…
+
+I’ve always been in love with photography. Even before Frames by Stuti existed, I was the person clicking pictures of places, people, and pretty much anything that had a story to tell.
+
+But when Kashvi came into my life, something shifted.
+
+Watching her grow, change, and discover the world made me realise just how quickly the little moments become memories. And somewhere between motherhood and all those precious firsts, she sparked something in me.
+
+She gave me the courage to turn something I’d always loved into something I could do with my whole heart.
+
+And that’s how Frames by Stuti became more than just a passion. It became my profession, my creative little world, and a way to preserve the moments that matter most.`,
+    },
+    {
+      heading: "More Than Just Photographs",
+      text: `Now, here’s the thing about me…
+
+I don’t want you to feel like you’re walking into a photography session with a stranger.
+
+I want you to feel like you’re meeting a friend!
+
+Whether you’re a new parent running on very little sleep, a mama-to-be feeling a little camera shy, or a family wondering how on earth everyone is going to look at the camera at the same time — trust me, we’ll figure it out together! 😄
+
+For me, the connection starts long before I pick up my camera. From our very first conversation, I want you to feel comfortable, heard, and excited about your session.
+
+No pressure to pose perfectly. No need to pretend to be someone you’re not.
+
+Just come as you are, and let me take care of the rest.
+
+Because the best photographs? They’re the ones where you’re simply being you.
+
+And one tiny warning…
+
+Remember how I mentioned I’m a perfectionist?
+
+Well, I meant it! 😂
+
+If I know we can make a photograph even more beautiful, you can bet I’m going to try. I’ll fix that little detail, adjust the angle, and probably ask for just one more shot.
+
+Not because everything needs to be perfect, but because I genuinely care about giving you photographs you’ll fall in love with.`,
+    },
+    {
+      heading: "Until We Meet!",
+      text: `And while I absolutely love capturing beautiful images, what makes this journey even more special is the people I meet along the way.
+
+The families who come back, the babies I get to watch grow, and the connections that turn into lasting relationships — that’s what makes my heart happiest.
+
+I don’t want to be just your photographer for one day. I’d love to be the person you come back to as your story unfolds, one beautiful chapter at a time.
+
+So, whenever you’re ready to make some memories, come say hello!
+
+I can’t wait to meet you, hear your story, and create something beautiful together.
+
+Xoxo,
+Stuti 🤎`,
+    },
+  ],
   personalStory:
     "[Biography placeholder.] Add the life behind the lens here: the people, places and everyday things that shape the way you see. A little personal detail helps future clients feel they already know you.",
   whyHeading: "helping you hold on to the moments that pass too quickly",

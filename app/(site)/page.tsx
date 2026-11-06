@@ -125,9 +125,10 @@ export default function HomePage() {
                   className="script text-[36px] text-terracotta lg:text-[46px]"
                 />
               </div>
-              <div data-reveal="up" className="mt-6 space-y-4 text-[15px] text-walnut lg:text-[16px]">
-                <T as="p" id="home.about.p1" />
-                <T as="p" id="home.about.p2" />
+              <div data-reveal="up" className="mt-7 space-y-5 text-[15.5px] leading-[1.9] text-walnut lg:text-[16px]">
+                <T as="p" id="home.about.t1" />
+                <T as="p" id="home.about.t2" />
+                <T as="p" id="home.about.t3" />
               </div>
               <div data-reveal="up" style={{ "--reveal-delay": "0.2s" } as CSSProperties} className="mt-8 flex justify-center lg:justify-start">
                 <Link href="/about" className="btn">

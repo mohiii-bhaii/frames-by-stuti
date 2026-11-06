@@ -53,8 +53,9 @@ Object.assign(texts, {
   "home.tagline.button": "Save my memories",
   "home.about.greeting": about.greeting,
   "home.about.intro": about.intro,
-  "home.about.p1": about.homeIntro[0],
-  "home.about.p2": about.homeIntro[1],
+  "home.about.t1": about.homeIntro[0],
+  "home.about.t2": about.homeIntro[1],
+  "home.about.t3": about.homeIntro[2],
   "home.about.heading": "Meet your photographer",
   "home.about.button": "More about Stuti",
   "home.banner": "for the ordinary days you'll miss the most",
@@ -69,7 +70,14 @@ Object.assign(texts, {
   // About
   "about.eyebrow": "Behind the lens",
   "about.hello": "Hello there, I'm Stuti",
-  "about.heroStory": about.heroStory,
+  "about.part1.heading": about.story[0].heading,
+  "about.part1.text": about.story[0].text,
+  "about.part2.heading": about.story[1].heading,
+  "about.part2.text": about.story[1].text,
+  "about.part3.heading": about.story[2].heading,
+  "about.part3.text": about.story[2].text,
+  "about.part4.heading": about.story[3].heading,
+  "about.part4.text": about.story[3].text,
   "about.cta.heading": "Let's make some memories together.",
   "about.cta.text": "I'd love to hear your story and capture the moments that mean the most to you.",
   "about.cta.button": "Get in touch",
@@ -235,7 +243,17 @@ const labelOverrides: Record<string, string> = {
   ),
   "about.eyebrow": "About · Small line above the heading",
   "about.hello": "About · Main heading",
-  "about.heroStory": "About · Introduction beside the portrait",
+  "home.about.t1": "Home · Introduction, paragraph 1",
+  "home.about.t2": "Home · Introduction, paragraph 2",
+  "home.about.t3": "Home · Introduction, paragraph 3",
+  "about.part1.heading": "About · Part 1, heading",
+  "about.part1.text": "About · Part 1, text",
+  "about.part2.heading": "About · Part 2, heading",
+  "about.part2.text": "About · Part 2, text",
+  "about.part3.heading": "About · Part 3, heading",
+  "about.part3.text": "About · Part 3, text",
+  "about.part4.heading": "About · Part 4, heading",
+  "about.part4.text": "About · Part 4, text",
   "about.cta.heading": "About · Closing invitation, heading",
   "about.cta.text": "About · Closing invitation, text",
   "about.cta.button": "About · Closing invitation, button (opens Contact)",
@@ -245,7 +263,7 @@ const labelOverrides: Record<string, string> = {
 export const SHORT_TEXT_LIMIT = 1500;
 /** Biographies and other long-form text. The database allows 30000 for every text. */
 export const LONG_TEXT_LIMIT = 30000;
-const longTextKeys = new Set(["about.heroStory", "home.about.p1", "home.about.p2"]);
+const longTextKeys = new Set(["home.about.t1", "home.about.t2", "home.about.t3", "about.part1.text", "about.part2.text", "about.part3.text", "about.part4.text"]);
 
 /** How long a piece of text may be: long for biographies and paragraph-length text, short for the rest. */
 export function maxTextLength(key: string) {
