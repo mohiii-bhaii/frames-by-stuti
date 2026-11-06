@@ -28,6 +28,8 @@ function VerticalWords({ className = "" }: { className?: string }) {
  * dips through "YOUR" into a trough under "SESSION" and rises again at the end, like a ribbon.
  */
 const SESSION_CURVE = "M104 235C388 -74 681 440 932 186";
+/** The same curve, run on a little past both ends along its own direction, as spare room for the letters. */
+const SESSION_CURVE_LONG = "M44 300L104 235C388 -74 681 440 932 186L992 125";
 
 export default function HomePage() {
   return (
@@ -204,7 +206,8 @@ export default function HomePage() {
             <PathT
               id="home.sessions.heading"
               uppercase
-              d={SESSION_CURVE}
+              d={SESSION_CURVE_LONG}
+              fitD={SESSION_CURVE}
               viewBox="0 10 1000 300"
               size={110}
               letterSpacing="0.02em"
