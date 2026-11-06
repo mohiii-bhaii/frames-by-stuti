@@ -41,6 +41,7 @@ export const navigation = [
   { href: "/about", label: "About", inMenu: false },
   { href: "/galleries", label: "Galleries" },
   { href: "/pricing", label: "Pricing & Packages" },
+  { href: "/blog", label: "Journal" },
 ] as readonly { href: string; label: string; inMenu?: boolean }[];
 
 /** The pages shown in the site menu and the footer menu. */

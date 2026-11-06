@@ -4,6 +4,7 @@ import { seoKey, seoPages, type SeoPage } from "@/content/seo";
 import { site, siteUrl } from "@/content/site";
 import { instagramProfileUrl } from "@/lib/links";
 import { getPublishedImages } from "@/lib/site-images";
+import type { PublishedFaq, PublishedPost } from "@/lib/journal";
 import { getPublishedTexts, type TextMap } from "@/lib/site-texts";
 
 const textOr = (texts: TextMap, key: string, fallback: string) => (texts[key]?.trim() ? texts[key].trim() : fallback);
@@ -114,6 +115,65 @@ export function breadcrumbJsonLd(steps: { name: string; path: string }[]) {
       position: index + 1,
       name: step.name,
       item: `${siteUrl}${step.path}`,
+    })),
+  };
+}
+
+/** Title, description, canonical link and share details for one Journal article. */
+export function articleMetadata(post: PublishedPost): Metadata {
+  const title = post.seoTitle.trim() || post.title;
+  const description = post.seoDescription.trim() || post.excerpt;
+  const path = `/blog/${post.slug}`;
+  const image = post.image
+    ? { url: `${siteUrl}/_next/image?url=${encodeURIComponent(post.image.url)}&w=1200&q=75`, width: 1200, height: Math.round((1200 * post.image.height) / post.image.width), alt: post.image.alt || post.title }
+    : null;
+  const shown = `${title} | ${site.name}`;
+  return {
+    title,
+    description: description || undefined,
+    alternates: { canonical: path },
+    openGraph: {
+      type: "article",
+      siteName: site.name,
+      locale: "en_CA",
+      url: path,
+      title: shown,
+      description: description || undefined,
+      publishedTime: post.publishedAt ?? undefined,
+      modifiedTime: post.updatedAt ?? undefined,
+      images: image ? [image] : undefined,
+    },
+    twitter: { card: image ? "summary_large_image" : "summary", title: shown, description: description || undefined, images: image ? [image.url] : undefined },
+  };
+}
+
+/** BlogPosting structured data for a published article, from what is on the page. */
+export function articleJsonLd(post: PublishedPost) {
+  const description = post.seoDescription.trim() || post.excerpt;
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    ...(description ? { description } : {}),
+    ...(post.image ? { image: [post.image.url] } : {}),
+    ...(post.publishedAt ? { datePublished: post.publishedAt } : {}),
+    dateModified: post.updatedAt ?? post.publishedAt ?? undefined,
+    mainEntityOfPage: { "@type": "WebPage", "@id": `${siteUrl}/blog/${post.slug}` },
+    author: { "@type": "Person", name: "Stuti" },
+    publisher: { "@type": "LocalBusiness", "@id": `${siteUrl}/#business`, name: site.name },
+    inLanguage: "en-CA",
+  };
+}
+
+/** FAQPage structured data: the same questions and answers that are written on the page. */
+export function faqJsonLd(faqs: PublishedFaq[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: { "@type": "Answer", text: item.answer },
     })),
   };
 }

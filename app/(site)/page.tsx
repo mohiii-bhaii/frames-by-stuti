@@ -4,6 +4,9 @@ import type { CSSProperties } from "react";
 import { PathT, SplitHeadingT, T, WaveT } from "@/components/editable-text";
 import { HomeMarker } from "@/components/home-marker";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
+import { HomeFaqSection } from "@/components/faq/home-faq-section";
+import { HomeFinalInvitation } from "@/components/home-final-invitation";
+import { JournalPreview } from "@/components/journal/journal-preview";
 import { JsonLd } from "@/components/json-ld";
 import { WindowPhoto } from "@/components/window-photo";
 import { localBusinessJsonLd, pageMetadata } from "@/lib/seo";
@@ -307,6 +310,11 @@ export default async function HomePage() {
       <TestimonialsSection
         photo={<Photo slot="home-testimonial" parallax={0.06} className="aspect-square w-full md:aspect-auto md:h-full" sizes="(min-width: 48rem) 50vw, 100vw" />}
       />
+
+      {/* Questions people ask, then the newest Journal articles, then a last invitation. Each is hidden until it has published content. */}
+      <HomeFaqSection />
+      <JournalPreview />
+      <HomeFinalInvitation />
 
       <ScrollMotion />
     </>

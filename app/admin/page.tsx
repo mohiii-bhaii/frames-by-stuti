@@ -77,6 +77,21 @@ async function Dashboard() {
       </section>
 
       <section className="mt-4 rounded-2xl bg-white p-5 shadow-sm">
+        <h2 className="text-lg font-semibold">The Journal and FAQ</h2>
+        <p className="mt-1 text-sm text-neutral-700">
+          Write articles, add photos, preview and publish them, and manage the questions on the FAQ page and home page. Nothing is visible to visitors until you publish it.
+        </p>
+        <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <Link href="/admin/journal" className="flex min-h-12 items-center rounded-lg border border-neutral-300 px-4 font-medium">
+            Write and manage articles
+          </Link>
+          <Link href="/admin/faq" className="flex min-h-12 items-center rounded-lg border border-neutral-300 px-4 font-medium">
+            Manage the FAQ
+          </Link>
+        </div>
+      </section>
+
+      <section className="mt-4 rounded-2xl bg-white p-5 shadow-sm">
         <h2 className="text-lg font-semibold">Inquiries</h2>
         <p className="mt-1 text-sm text-neutral-700">
           Messages sent from the Contact page.
