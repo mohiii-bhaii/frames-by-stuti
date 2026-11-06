@@ -2,6 +2,7 @@
 
 import { createElement, Fragment, type HTMLAttributes, type KeyboardEvent, type MouseEvent } from "react";
 import { CurvedText } from "@/components/curved-text";
+import { PathText } from "@/components/path-text";
 import { SplitHeading } from "@/components/split-heading";
 import { WaveText } from "@/components/wave-text";
 import { useIsEditingText, useText } from "@/components/site-texts-provider";
@@ -66,6 +67,13 @@ export function T({ id, as = "span", plain = false, emptyLabel, ...props }: Text
   const editing = useIsEditingText();
   const shown = text === "" && editing && emptyLabel ? emptyLabel : text;
   return createElement(as, { ...props, ...(plain ? null : edit) }, <Lines text={shown} />);
+}
+
+/** Editable text set along a custom curve. */
+export function PathT({ id, ...props }: { id: string } & Omit<React.ComponentProps<typeof PathText>, "text">) {
+  const text = useText(id);
+  const edit = useTextEdit(id);
+  return <PathText text={text} {...props} {...edit} />;
 }
 
 /** An editable heading shown as a small first line over a large last word. */

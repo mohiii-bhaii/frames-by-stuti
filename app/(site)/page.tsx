@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { CurvedT, SplitHeadingT, T, WaveT } from "@/components/editable-text";
+import { CurvedT, PathT, SplitHeadingT, T, WaveT } from "@/components/editable-text";
 import { HomeMarker } from "@/components/home-marker";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
 import { WindowPhoto } from "@/components/window-photo";
@@ -22,6 +22,12 @@ function VerticalWords({ className = "" }: { className?: string }) {
     </p>
   );
 }
+
+/**
+ * The curve of "CHOOSE YOUR SESSION": it starts low on the left, climbs to a crest over "CHOOSE",
+ * dips through "YOUR" into a trough under "SESSION" and rises again at the end, like a ribbon.
+ */
+const SESSION_CURVE = "M40 235C355 -74 681 440 960 186";
 
 export default function HomePage() {
   return (
@@ -191,9 +197,18 @@ export default function HomePage() {
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[62%] bg-gradient-to-b from-transparent via-espresso/30 to-espresso/85 [transform:translateZ(0)]"
         />
-        <div className="absolute inset-x-[2%] bottom-[11%] z-20 mx-auto max-w-[1137px] text-terracotta [transform:translateZ(0)]">
+        <div className="absolute inset-x-[1%] bottom-[9%] z-20 mx-auto max-w-[1137px] text-terracotta [transform:translateZ(0)]">
           <h2>
-            <CurvedT id="home.sessions.heading" uppercase italic={false} rise={0.13} size={80} className="w-full" />
+            <PathT
+              id="home.sessions.heading"
+              uppercase
+              d={SESSION_CURVE}
+              viewBox="0 10 1000 300"
+              size={110}
+              letterSpacing="0.02em"
+              opticalSize={40}
+              className="w-full"
+            />
           </h2>
         </div>
       </section>
