@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { CurvedT, PathT, SplitHeadingT, T, WaveT } from "@/components/editable-text";
+import { PathT, SplitHeadingT, T, WaveT } from "@/components/editable-text";
 import { HomeMarker } from "@/components/home-marker";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
 import { WindowPhoto } from "@/components/window-photo";
@@ -90,31 +90,56 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Meet your photographer */}
+      {/* Meet your photographer. On phones it is a compact editorial pair (photo left, introduction right);
+          from tablet width up it is the original layout. */}
       <section className="paper overflow-x-clip">
-        <div className="relative mx-auto max-w-[1200px] px-6 pb-16 pt-14 lg:px-[70px] lg:pb-[96px] lg:pt-[88px]">
+        <div className="relative mx-auto max-w-[1200px] px-5 pb-12 pt-11 md:px-6 md:pb-16 md:pt-14 lg:px-[70px] lg:pb-[96px] lg:pt-[88px]">
+          {/* Phones: a small eyebrow over a refined heading. */}
+          <div data-reveal="title" className="text-center md:hidden">
+            <T as="p" id="home.about.eyebrow" className="eyebrow text-[11px] tracking-[0.3em] text-terracotta" />
+            <T as="h2" id="home.about.heading" style={{ textTransform: "capitalize" }} className="display mt-2 text-[clamp(25px,7.6vw,32px)] leading-[1.1] text-espresso" />
+          </div>
+          {/* Tablet and desktop: the original two-line heading. */}
           <SplitHeadingT
             id="home.about.heading"
             data-reveal="title"
-            className="display mx-auto max-w-[900px] text-[clamp(28px,9.4vw,46px)] uppercase leading-[1.05] text-espresso md:text-[72px] lg:text-[96px]"
+            className="display mx-auto hidden max-w-[900px] text-[clamp(28px,9.4vw,46px)] uppercase leading-[1.05] text-espresso md:block md:text-[72px] lg:text-[96px]"
           />
 
-          <div className="mt-12 grid items-center gap-y-10 md:mt-12 lg:mt-[64px] lg:grid-cols-[minmax(0,540px)_minmax(0,1fr)] lg:gap-x-[80px]">
+          <div className="mt-7 grid grid-cols-[44fr_56fr] items-start gap-x-4 md:mt-12 md:grid-cols-1 md:items-center md:gap-x-0 md:gap-y-10 lg:mt-[64px] lg:grid-cols-[minmax(0,540px)_minmax(0,1fr)] lg:gap-x-[80px]">
             <div className="relative mx-auto w-full max-w-[420px] md:max-w-[480px] lg:mx-0 lg:max-w-none">
               <ApertureBloom data-speed="-0.2" className="absolute -right-[30%] top-[6%] hidden w-[70%] text-walnut/15 md:block" />
-              <div data-reveal="left" className="rounded-[89px] border border-terracotta p-[3px] lg:p-0">
+              <div data-reveal="left" className="rounded-b-[18px] rounded-t-[999px] border border-terracotta p-[2px] md:rounded-[89px] md:p-[3px] lg:p-0">
                 <Photo
                   slot="home-portrait"
                   parallax={0.06}
-                  className="aspect-[480/659] w-full rounded-[87px]"
-                  sizes="(min-width: 64rem) 540px, (min-width: 48rem) 480px, 85vw"
+                  position="50% 28%"
+                  className="aspect-[3/4] w-full rounded-b-[16px] rounded-t-[999px] md:aspect-[480/659] md:rounded-[87px]"
+                  sizes="(min-width: 64rem) 540px, (min-width: 48rem) 480px, 44vw"
                 />
               </div>
-              <Sparkle data-speed="0.3" className="absolute -top-4 right-[6%] w-8" />
-              <Sparkle data-speed="0.45" className="absolute -top-5 right-[18%] w-5 md:-top-8" />
+              <Sparkle data-speed="0.3" className="absolute -top-4 right-[6%] hidden w-8 md:block" />
+              <Sparkle data-speed="0.45" className="absolute -top-5 right-[18%] hidden w-5 md:-top-8 md:block" />
             </div>
 
-            <div className="text-center lg:text-left">
+            {/* Phones: the short introduction beside the photo. */}
+            <div className="min-w-0 md:hidden">
+              <T as="p" id="home.about.greeting" data-reveal="up" className="script text-[clamp(24px,7vw,28px)] leading-none text-terracotta" />
+              <div data-reveal="up" className="mt-3 space-y-2.5 text-[14px] leading-[1.65] text-walnut">
+                <T as="p" id="home.about.m1" />
+                <T as="p" id="home.about.m2" />
+              </div>
+              <Link
+                href="/about"
+                data-reveal="up"
+                className="eyebrow mt-3 inline-flex min-h-11 items-center text-[11px] tracking-[0.16em] text-rust underline decoration-terracotta/50 underline-offset-[7px] transition-colors duration-500 hover:text-terracotta"
+              >
+                <T id="home.about.link" />
+              </Link>
+            </div>
+
+            {/* Tablet and desktop: the original introduction. */}
+            <div className="hidden text-center md:block lg:text-left">
               <div className="flex flex-wrap items-baseline justify-center gap-x-3 lg:justify-start">
                 <T as="p" id="home.about.greeting" data-reveal="up" className="script text-[28px] text-walnut lg:text-[34px]" />
                 <T
