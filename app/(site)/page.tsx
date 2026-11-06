@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { CurvedT, T } from "@/components/editable-text";
+import { CurvedT, T, WaveT } from "@/components/editable-text";
 import { HomeMarker } from "@/components/home-marker";
 import { PhotoSlideshow } from "@/components/photo-slideshow";
 import { SessionLink } from "@/components/session-link";
@@ -70,12 +70,12 @@ export default function HomePage() {
       </section>
 
       {/* Tagline */}
-      <section className="paper flex flex-col items-center px-6 pb-11 pt-12 text-center lg:h-[277px] lg:justify-between lg:px-0 lg:pb-6 lg:pt-[62px]">
-        <div data-reveal="title" className="w-full max-w-[682px]">
-          <CurvedT id="home.tagline" className="w-full text-walnut" />
+      <section className="paper flex flex-col items-center px-4 pb-10 pt-8 text-center md:pb-12 md:pt-12 lg:px-0 lg:pb-14 lg:pt-14">
+        <div data-reveal="title" className="w-full max-w-[640px]">
+          <WaveT id="home.tagline" className="w-full text-[#654737]" />
         </div>
-        <div data-reveal="up" style={{ "--reveal-delay": "0.25s" } as CSSProperties} className="mt-8 lg:mt-0">
-          <Link href="/contact" className="btn">
+        <div data-reveal="up" style={{ "--reveal-delay": "0.25s" } as CSSProperties} className="mt-1 md:mt-2">
+          <Link href="/contact" className="btn btn-invite">
             <T id="home.tagline.button" />
           </Link>
         </div>

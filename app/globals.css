@@ -140,6 +140,58 @@
   }
 }
 
+/* The homepage's "Save my memories": a richer, softly shaded invitation. */
+.btn.btn-invite {
+  min-width: 0;
+  min-height: 0;
+  padding: 14px 32px;
+  border-radius: 14px;
+  background-image: linear-gradient(155deg, #9b4b29 0%, #874122 46%, #6c3b22 100%);
+  background-size: 140% 140%;
+  background-position: 0% 0%;
+  color: var(--color-cream);
+  font-size: 12.500px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  box-shadow:
+    0 12px 22px -14px rgb(94 69 47 / 0.6),
+    0 2px 5px -1px rgb(94 69 47 / 0.22);
+  transition:
+    background-position 0.7s var(--ease-soft),
+    translate 0.5s var(--ease-soft),
+    scale 0.25s var(--ease-soft),
+    box-shadow 0.5s var(--ease-soft);
+}
+
+@media (hover: hover) {
+  .btn.btn-invite:hover {
+    background-color: var(--color-rust);
+    color: var(--color-cream);
+    background-position: 100% 100%;
+    translate: 0 -2px;
+    box-shadow:
+      0 16px 26px -14px rgb(94 69 47 / 0.62),
+      0 3px 7px -1px rgb(94 69 47 / 0.24);
+  }
+}
+
+.btn.btn-invite:active {
+  translate: 0 0;
+  scale: 0.97;
+  box-shadow:
+    0 6px 12px -8px rgb(94 69 47 / 0.55),
+    0 1px 3px -1px rgb(94 69 47 / 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn.btn-invite,
+  .btn.btn-invite:hover,
+  .btn.btn-invite:active {
+    translate: none;
+    scale: 1;
+  }
+}
+
 /* Scroll reveals. Elements only start hidden when scripting can reveal them.
    They move with `translate` and `clip-path`, never `transform`, so they
    combine with the scroll depth below. Set --reveal-delay to stagger a group.

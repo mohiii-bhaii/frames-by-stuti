@@ -2,6 +2,7 @@
 
 import { createElement, Fragment, type HTMLAttributes, type KeyboardEvent, type MouseEvent } from "react";
 import { CurvedText } from "@/components/curved-text";
+import { WaveText } from "@/components/wave-text";
 import { useIsEditingText, useText } from "@/components/site-texts-provider";
 import { editorStore, useEditorStore } from "@/lib/editor-store";
 
@@ -64,6 +65,13 @@ export function T({ id, as = "span", plain = false, emptyLabel, ...props }: Text
   const editing = useIsEditingText();
   const shown = text === "" && editing && emptyLabel ? emptyLabel : text;
   return createElement(as, { ...props, ...(plain ? null : edit) }, <Lines text={shown} />);
+}
+
+/** Editable text set along a soft wave. */
+export function WaveT({ id, ...props }: { id: string } & Omit<React.ComponentProps<typeof WaveText>, "text">) {
+  const text = useText(id);
+  const edit = useTextEdit(id);
+  return <WaveText text={text} {...props} {...edit} />;
 }
 
 /** Editable text set along an arc. */
