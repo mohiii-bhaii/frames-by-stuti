@@ -269,11 +269,11 @@ export default async function HomePage() {
         />
         {/* ...and fades into the cream testimonials below. */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[90px] bg-gradient-to-b from-transparent to-cream" />
-        <ul className="relative mx-auto grid max-w-[270px] grid-cols-1 gap-y-12 py-14 md:max-w-[1200px] md:grid-cols-8 md:gap-x-5 md:px-6 lg:gap-x-7 lg:px-[29px] lg:pb-[80px] lg:pt-[84px]">
+        <ul className="relative mx-auto grid max-w-[270px] grid-cols-1 gap-y-12 py-14 md:max-w-[1200px] md:grid-cols-6 md:gap-x-5 md:gap-y-12 md:px-6 lg:max-w-[1440px] lg:grid-cols-5 lg:items-start lg:gap-x-[clamp(14px,1.6vw,28px)] lg:px-[clamp(24px,3vw,56px)] lg:pb-[80px] lg:pt-[84px]">
           {sessionCards.map((category, index) => (
             <li
               key={category.id}
-              className={index === 4 ? "md:col-span-2 md:col-start-4" : "md:col-span-2"}
+              className={index === 3 ? "md:col-span-2 md:col-start-2 lg:col-span-1 lg:col-start-auto" : "md:col-span-2 lg:col-span-1"}
               data-reveal="up"
               style={{ "--reveal-delay": `${index * 0.12}s` } as CSSProperties}
             >
@@ -296,7 +296,7 @@ export default async function HomePage() {
                   className="mx-auto block h-[42px] w-px origin-top bg-espresso/45 transition-[scale] duration-700 group-hover:scale-y-125"
                   aria-hidden="true"
                 />
-                <T as="h3" id={`category.${category.id}`} className="display text-[34px] md:text-[26px] lg:text-[35px]" />
+                <T as="h3" id={`category.${category.id}`} className="display text-[34px] md:text-[26px] lg:text-[clamp(22px,2.2vw,32px)]" />
               </SessionLink>
             </li>
           ))}
