@@ -1,7 +1,7 @@
 import type { ImageSlot } from "@/lib/images";
 
 /**
- * The Portfolio: five categories, each a row of photographs in the order
+ * The Galleries page: five categories, each a row of photographs in the order
  * listed. Every entry is a permanent photo spot in the visual editor. A spot
  * with no published photograph is hidden from visitors, and a category with no
  * photographs at all is hidden completely, so rows grow as photos are added.

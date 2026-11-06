@@ -82,7 +82,7 @@ Object.assign(texts, {
   "about.cta.text": "I'd love to hear your story and capture the moments that mean the most to you.",
   "about.cta.button": "Get in touch",
 
-  // Portfolio
+  // Galleries (the keys keep their original "portfolio." names so saved texts are not lost)
 
   // Services
   "services.title": "it's all about the experience",
@@ -274,7 +274,7 @@ export function maxTextLength(key: string) {
 const groupRoutes: Record<string, string[]> = {
   home: ["/"],
   about: ["/about"],
-  portfolio: ["/portfolio"],
+  portfolio: ["/galleries"],
   services: ["/services"],
   packages: ["/services"],
   faq: ["/services"],
@@ -297,7 +297,7 @@ export function textAppearsOn(key: string, pathname: string) {
 const groupNames: Record<string, string> = {
   home: "Home",
   about: "About",
-  portfolio: "Portfolio",
+  portfolio: "Galleries",
   services: "Services",
   contact: "Contact",
   faq: "FAQ",

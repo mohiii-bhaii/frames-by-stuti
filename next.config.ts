@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
   // The old Services page now lives at /pricing. Temporary on purpose, until the new pages are confirmed.
   async redirects() {
     return [
+      // The Portfolio page is now Galleries. A permanent (301) redirect keeps old links and search results working.
+      { source: "/portfolio", destination: "/galleries", statusCode: 301 },
+      { source: "/portfolio/:path*", destination: "/galleries", statusCode: 301 },
       { source: "/services", destination: "/pricing", permanent: false },
       // The pricing pages also answer to the /investments addresses.
       { source: "/investments", destination: "/pricing", permanent: false },

@@ -398,7 +398,7 @@ function Row({ category, shown, editing, index }: { category: PortfolioCategory;
 }
 
 /**
- * All the Portfolio rows. Visitors see only photographs that are published;
+ * All the Galleries rows. Visitors see only photographs that are published;
  * a category with none is hidden, and so is the whole list if nothing is
  * published yet. While editing, every spot is shown so photos can be added.
  */
